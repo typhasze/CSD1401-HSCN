@@ -11,11 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Inc\gamelevel.h" />
+    <ClInclude Include="..\Inc\mainmenu.h" />
     <ClInclude Include="..\Inc\splashscreen.h" />
+    <ClInclude Include="..\Inc\utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Src\gamelevel.c" />
     <ClCompile Include="..\Src\main.c" />
+    <ClCompile Include="..\Src\mainmenu.c" />
     <ClCompile Include="..\Src\splashscreen.c" />
+    <ClCompile Include="..\Src\utils.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

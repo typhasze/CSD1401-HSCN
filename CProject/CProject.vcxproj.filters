@@ -18,12 +18,30 @@
     <ClInclude Include="..\Inc\splashscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Inc\mainmenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\gamelevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\splashscreen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\mainmenu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\gamelevel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
