@@ -7,3 +7,5 @@ void Game_Level_Update(void);
 void Game_Level_Exit(void);
 
 int randNum(void);
+
+void HUD(void);
