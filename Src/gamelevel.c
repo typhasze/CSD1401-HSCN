@@ -35,6 +35,7 @@ void Game_Level_Update() {
 	CP_Graphics_DrawRect(0, CP_System_GetWindowHeight()-50.0f, CP_System_GetWindowWidth()-280, 50.0f);
 	//CP_Graphics_DrawRect(CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() - 130.0f, 80.0f, 80.0f);
 	CP_Image_Draw(Bob, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
+
 	if (CP_Input_KeyDown(KEY_A))
 	{
 		if (Bobx > 40) {
