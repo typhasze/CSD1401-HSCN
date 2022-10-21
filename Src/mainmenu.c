@@ -32,7 +32,6 @@ void Main_Menu_Init()
 	CP_System_SetWindowSize(windowSizeX, windowSizeY);
 	CP_Settings_TextSize(50.0f);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
-
 }
 
 void Main_Menu_Update()

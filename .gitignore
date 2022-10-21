@@ -1,0 +1,12 @@
+# ignore everything:
+*
+
+# except:
+!.gitignore
+!Inc/
+!Inc/*
+!Src/
+!Src/*
+!Assets/
+!Assets/*
+
