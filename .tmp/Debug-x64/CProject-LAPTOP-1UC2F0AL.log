@@ -1,0 +1,6 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\typha\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CProject\.tmp\Debug-x64\) contains files shared from another project (CProject-LAPTOP-1UC2F0AL.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.c
+C:\Users\typha\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CProject\Src\main.c(2,10): fatal  error C1083: Cannot open include file: 'splashscreen.h': No such file or directory
+  splashscreen.c
+C:\Users\typha\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CProject\Src\splashscreen.c(2,10): fatal  error C1083: Cannot open include file: 'splashscreen.h': No such file or directory
+  Generating Code...

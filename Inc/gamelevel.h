@@ -11,3 +11,5 @@ int randNum(void);
 void HUD(void);
 
 void scoreMultiplier(int x);
+
+void playerMovement(void);

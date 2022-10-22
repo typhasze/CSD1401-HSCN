@@ -1,20 +1,29 @@
 ﻿  gamelevel.c
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(35,87): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(37,21): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(37,27): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(37,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(37,57): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(43,24): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(43,30): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(43,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(43,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(29,44): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(30,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(31,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(32,19): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(33,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(34,26): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  CProject.vcxproj -> C:\Users\User\Desktop\CSD1401-HSCN\bin\Debug-x64\CProject.exe
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(35,91): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(37,48): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(37,54): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(37,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(37,84): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(38,26): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(38,32): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(38,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(38,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(47,65): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(48,65): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(80,2): warning C4013: 'sprintf_s' undefined; assuming extern returning int
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(96,24): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(111,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(112,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(113,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(114,13): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(115,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(116,20): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(121,24): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(121,30): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(121,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(121,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\Src\gamelevel.c(154): warning C4716: 'randNum': must return a value
+  CProject.vcxproj -> D:\OneDrive SIT\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
-  3 File(s) copied
+  4 File(s) copied
