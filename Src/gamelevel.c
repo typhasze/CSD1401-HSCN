@@ -16,6 +16,7 @@ int currentElapsedTime, jump, gravity;
 float position, jumpposition, gravityposition;
 // Variables for Platform Creation
 float platformX[100], platformY[100], platformWidth[100], platformHeight = 50.0f;
+int no_of_platforms = 3;
 // Pause and BobStagnant 
 bool gIsPaused, BobDirection;
 
@@ -74,18 +75,21 @@ void Game_Level_Exit() {
 	CP_Image_Free(&heart);
 }
 
-//Test To Create Random platforms
+// Creating Platforms
 void createPlatformXY() {
-	for (int i = 1; i < 20; i++) {
+	//For Creating Random Platforms to Test
+	for (int i = 1; i < no_of_platforms; i++) {
 		platformX[i] = rand() % 1280;
-		platformY[i] = rand() % 720;
+		platformY[i] = rand() % 720 - 60;
 		platformWidth[i] = rand() % 400;
 	}
+	// Format to Create a Platform
+	//platformX[1] = 0; platformY[1] = 0; platformWidth[1] = 0;
 }
 
 void drawPlatform() {
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < no_of_platforms; i++) {
 		CP_Graphics_DrawRect(platformX[i], platformY[i], platformWidth[i], platformHeight);
 	}
 }
@@ -116,13 +120,19 @@ void HUD() {
 }
 
 int playerPlatformCollision(void) {
+	//TODO: FIX DETECTION BELOW PLATFORM
 	int collision = 0;
-	for (int i = 0; i < 20; i++) {
-		if (Bobx + BobWidth - 2 >= platformX[i]  && Bobx + 2<= platformX[i] + platformWidth[i]
-			&& Boby + BobHeight + 2 >= platformY[i]  && Boby + BobHeight <= platformY[i] + platformHeight){
-			collision = 1;
-			//Boby += 100;
+	for (int i = 0; i < no_of_platforms; i++) {
+		//For Top of Platform (Check Btm of Player to Top of Platform)
+		if (Boby + BobHeight > platformY[i] - 5 && Boby + BobHeight < platformY[i] + 5 &&
+			Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i]) collision = 1;
+		//For Player sides Touching Platform Sides
+		else if (Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i] &&
+			Boby + BobHeight > platformY[i] && Boby < platformY[i] + platformHeight) {
+			collision = 2;
 		}
+		//For Head Touching Underneath Platform
+		
 	}
 	return collision;
 }
@@ -139,14 +149,24 @@ void scoreMultiplier(int combo) {
 // Logic For Player Movement
 void playerMovement() {
 	currentElapsedTime = CP_System_GetDt() * 300;
-	jump = CP_System_GetDt() * 10000;
+	static double maxJump = 0;
+	static int doubleJump = 0;
+	jump = CP_System_GetDt() * 500.0;
 	gravity = CP_System_GetDt() * 400;
 	position = currentElapsedTime;
-	jumpposition = jump;
-	gravityposition = gravity;
+	//jumpposition = jump;
+	//gravityposition = gravity;
+
+	if (playerPlatformCollision() == 0 && maxJump <= 0) {
+		Boby += gravity;
+	}
+
 	if (CP_Input_KeyDown(KEY_A))
 	{
-		if (Bobx > 0) {
+		if (playerPlatformCollision() == 2) {
+			Bobx += 1.5 * position;
+		}
+		else if (Bobx > 0) {
 			Bobx -= position;
 		}
 		BobDirection = TRUE;
@@ -154,31 +174,32 @@ void playerMovement() {
 
 	if (CP_Input_KeyDown(KEY_D))
 	{
-		if (Bobx < CP_System_GetWindowWidth() - BobWidth) {
+		if (playerPlatformCollision() == 2) {
+
+			Bobx -= 1.5 * position;
+		}
+		else if (Bobx < CP_System_GetDisplayWidth() - BobWidth) {
 			Bobx += position;
 		}
 		BobDirection = FALSE;
 	}
 	if (CP_Input_KeyTriggered(KEY_SPACE))
 	{
-		Boby -= 100;
-
-	}
-
-	if (playerPlatformCollision() == 0) {
-		Boby += gravity;
-	}
-	// Collision Section (Base)
-	/*
-	if (Bobx > 1040) {
-		if (Boby < CP_System_GetWindowHeight() - 40) {
-			Boby += 5;
+		if (doubleJump != 1 && maxJump < 10) {
+			maxJump = 100.0f;
+			++doubleJump;
 		}
+		doubleJump = 0;
 	}
 
-	if (Boby < CP_System_GetWindowHeight() - 90) {
-		Boby += 5;
-	}*/
+	if (maxJump > 0) {
+		Boby -= jump;
+		maxJump -= jump;
+	}
+	// die
+	if (Boby > 720) {
+		CP_Engine_Terminate();
+	}
 }
 
 
