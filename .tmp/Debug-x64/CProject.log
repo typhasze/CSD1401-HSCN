@@ -1,25 +1,4 @@
-﻿  gamelevel.c
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(34,118): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(42,47): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(42,53): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(42,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(42,83): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(43,25): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(43,31): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(43,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(43,61): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(51,65): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(52,65): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(82,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(83,31): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(84,29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(102,2): warning C4013: 'sprintf_s' undefined; assuming extern returning int
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(118,24): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(151,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(154,27): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(155,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\sandbox\CSD1401-HSCN\Src\gamelevel.c(156,13): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  CProject.vcxproj -> C:\sandbox\CSD1401-HSCN\bin\Debug-x64\CProject.exe
+﻿  CProject.vcxproj -> C:\Users\typha\OneDrive - DigiPen Institute of Technology\Y1T1\CSD1401 - Software Engineering Project 1\Projects\CSD1401-HSCN\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
   4 File(s) copied

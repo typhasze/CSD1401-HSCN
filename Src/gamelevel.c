@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 CP_Image Bob, BobL, heart;
 double static Bobx = 1280 / 2, Boby = 720 - 130.0f;
@@ -16,7 +17,7 @@ int currentElapsedTime, jump, gravity;
 float position, jumpposition, gravityposition;
 // Variables for Platform Creation
 float platformX[100], platformY[100], platformWidth[100], platformHeight = 50.0f;
-int no_of_platforms = 3;
+int no_of_platforms = 7;
 // Pause and BobStagnant 
 bool gIsPaused, BobDirection;
 
@@ -80,7 +81,7 @@ void createPlatformXY() {
 	//For Creating Random Platforms to Test
 	for (int i = 1; i < no_of_platforms; i++) {
 		platformX[i] = rand() % 1280;
-		platformY[i] = rand() % 720 - 60;
+		platformY[i] = rand() % 720;
 		platformWidth[i] = rand() % 400;
 	}
 	// Format to Create a Platform
@@ -119,20 +120,34 @@ void HUD() {
 	}
 }
 
+//TODO: SCOTT FIX PLS
 int playerPlatformCollision(void) {
 	//TODO: FIX DETECTION BELOW PLATFORM
 	int collision = 0;
 	for (int i = 0; i < no_of_platforms; i++) {
+		
 		//For Top of Platform (Check Btm of Player to Top of Platform)
-		if (Boby + BobHeight > platformY[i] - 5 && Boby + BobHeight < platformY[i] + 5 &&
-			Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i]) collision = 1;
+		if (Boby + BobHeight> platformY[i] - 5 && Boby + BobHeight < platformY[i] + 5 &&
+			Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i]) {
+			collision =  1;
+		}
+		//TODO: For Head Touching Underneath Platform
+		else if (Boby < platformY[i] + platformHeight + 10 && Boby > platformY[i] + platformHeight - 10 &&
+			Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i]) {
+			collision =  3;
+		}
 		//For Player sides Touching Platform Sides
+
 		else if (Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i] &&
 			Boby + BobHeight > platformY[i] && Boby < platformY[i] + platformHeight) {
 			collision = 2;
 		}
-		//For Head Touching Underneath Platform
-		
+		/*
+		//All in One Collision For reference
+		if (Bobx - 5 < platformX[i] + platformWidth[i] && Bobx + BobWidth + 5 > platformX[i] &&
+			Boby - 5 < platformY[i] + platformHeight && Boby + BobHeight + 5 > platformY[i]) {
+			collision = 1;
+		}*/
 	}
 	return collision;
 }
@@ -149,22 +164,21 @@ void scoreMultiplier(int combo) {
 // Logic For Player Movement
 void playerMovement() {
 	currentElapsedTime = CP_System_GetDt() * 300;
-	static double maxJump = 0;
-	static int doubleJump = 0;
-	jump = CP_System_GetDt() * 500.0;
-	gravity = CP_System_GetDt() * 400;
+	static double maxJump = 0, jumpCD = 0;
+	static int jumpCounter = 2;
+	jump = CP_System_GetDt() * 1500;
+	gravity = CP_System_GetDt() * 500;
 	position = currentElapsedTime;
-	//jumpposition = jump;
-	//gravityposition = gravity;
 
-	if (playerPlatformCollision() == 0 && maxJump <= 0) {
+	//For Player if not jumping and in air
+	if (playerPlatformCollision() != 1 ) {
 		Boby += gravity;
 	}
 
 	if (CP_Input_KeyDown(KEY_A))
-	{
+	{	//For Player If Hit Platform Sides
 		if (playerPlatformCollision() == 2) {
-			Bobx += 1.5 * position;
+			Bobx += 2 * position;
 		}
 		else if (Bobx > 0) {
 			Bobx -= position;
@@ -173,33 +187,33 @@ void playerMovement() {
 	}
 
 	if (CP_Input_KeyDown(KEY_D))
-	{
+	{	//For Player If Hit Platform Sides
 		if (playerPlatformCollision() == 2) {
-
-			Bobx -= 1.5 * position;
+			Bobx -= 2 * position;
 		}
 		else if (Bobx < CP_System_GetDisplayWidth() - BobWidth) {
 			Bobx += position;
 		}
 		BobDirection = FALSE;
 	}
-	if (CP_Input_KeyTriggered(KEY_SPACE))
-	{
-		if (doubleJump != 1 && maxJump < 10) {
-			maxJump = 100.0f;
-			++doubleJump;
+	//Only Jump when
+	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0)
+	{	 
+		--jumpCounter;
+		maxJump = 200;
+		if (jumpCounter == 0) {
+			jumpCD = 1.0;
+			jumpCounter = 2;
 		}
-		doubleJump = 0;
 	}
-
+	//Jump CD Decrement every deltaTime
+	jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
+	
 	if (maxJump > 0) {
 		Boby -= jump;
 		maxJump -= jump;
 	}
-	// die
-	if (Boby > 720) {
-		CP_Engine_Terminate();
-	}
+	printf("%f\n", jumpCD);
 }
 
 
