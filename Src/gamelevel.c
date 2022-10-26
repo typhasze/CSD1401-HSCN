@@ -132,13 +132,13 @@ int playerPlatformCollision(void) {
 			collision =  1;
 		}
 		//TODO: For Head Touching Underneath Platform
-		if (Boby < platformY[i] + platformHeight + 10 && Boby > platformY[i] + platformHeight - 10 &&
+		else if (Boby < platformY[i] + platformHeight + 10 && Boby > platformY[i] + platformHeight - 10 &&
 			Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i]) {
 			collision =  3;
 		}
 		//For Player sides Touching Platform Sides
 
-		if (Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i] &&
+		else if (Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i] &&
 			Boby + BobHeight > platformY[i] && Boby < platformY[i] + platformHeight) {
 			collision = 2;
 		}
