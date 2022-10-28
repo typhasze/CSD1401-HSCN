@@ -17,7 +17,7 @@ int currentElapsedTime, jump, gravity;
 float position, jumpposition, gravityposition;
 // Variables for Platform Creation
 float platformX[100], platformY[100], platformWidth[100], platformHeight = 50.0f;
-int no_of_platforms = 4;
+int no_of_platforms = 6;
 static double maxJump = 0, jumpCD = 0;
 // Pause and BobStagnant 
 bool gIsPaused, BobDirection;
@@ -43,10 +43,10 @@ void Game_Level_Update() {
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 	(BobDirection == FALSE) ? CP_Image_Draw(Bob, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255)
 		: CP_Image_Draw(BobL, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
-	
+
 	gIsPaused = CP_Input_KeyTriggered(KEY_P) ? !gIsPaused : gIsPaused;	//Press P to Pause
 	CP_Input_KeyTriggered(KEY_Q) ? CP_Engine_Terminate() : 0;			//Press Q to Terminate
-	
+
 	//TESTCODE
 	{
 		//TO REMOVE: Test Health Increment and Cap at 3
@@ -82,10 +82,11 @@ void createPlatformXY() {
 	//For Creating Random Platforms to Test
 	for (int i = 1; i < no_of_platforms; i++) {
 		platformX[0] = 400, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 780;
-		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 210.0f, platformWidth[1] = CP_System_GetWindowWidth() - 780;
-		platformX[2] = 950, platformY[2] = CP_System_GetWindowHeight() - 210.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1030;
+		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 780;
+		platformX[2] = 950, platformY[2] = CP_System_GetWindowHeight() - 200.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1030;
 		platformX[3] = 750, platformY[3] = CP_System_GetWindowHeight() - 100.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1030;
-		//platformX[4] = 500, platformY[4] = CP_System_GetWindowHeight() - 100.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1180;
+		platformX[4] = 850, platformY[4] = CP_System_GetWindowHeight() - 150.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1030;
+		platformX[5] = 400, platformY[5] = CP_System_GetWindowHeight() - 350.0f, platformWidth[5] = CP_System_GetWindowWidth() - 780;
 	}
 	// Format to Create a Platform
 	//platformX[1] = 0; platformY[1] = 0; platformWidth[1] = 0;
@@ -106,7 +107,7 @@ void HUD() {
 	sprintf_s(Timer, _countof(Timer), "Timer: %.0f", timer);
 	sprintf_s(Points, _countof(Points), "Points: %i", points);
 	sprintf_s(Multiplier, _countof(Multiplier), "Multiplier: %ix", multiplier);
-	
+
 	//Timer and Points Display
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_LEFT, 0);
 	CP_Font_DrawText(Timer, 5, 25);
@@ -129,7 +130,8 @@ int playerPlatformCollision(void) {
 	//TODO: FIX DETECTION BELOW PLATFORM
 	int collision = 0;
 	for (int i = 0; i < no_of_platforms; i++) {
-		
+
+		//bottom collision
 		if (Boby + BobHeight + 5 >= platformY[i] && Boby + BobHeight - 5 <= platformY[i] &&
 			Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i]) {
 			//collision =  1;
@@ -148,45 +150,23 @@ int playerPlatformCollision(void) {
 }
 
 int playerPlatformCollision2(int i) {
-	//TODO: FIX DETECTION BELOW PLATFORM
 	int collision = 0;
-		
-		//For Top of Platform (Check Btm of Player to Top of Platform)
+
+	//Initial check on Bob position
 	if (Boby + BobHeight > platformY[i] && Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i] && Boby < platformY[i] + platformHeight) {
-		printf("collision stats\n"
-				"Bob min x is %f y is %f\n"
-				"Bob max x is %f y is %f\n"
-				"platform min x is %f y is %f\n"
-			"platform max x is %f y is %f\n", Bobx, Boby, Bobx + BobWidth, Boby + BobHeight, platformX[i], platformY[i], platformX[i] + platformWidth[i], platformY[i] + platformHeight);
 		//unique left collision check
-		if (Bobx < platformX[i] + platformWidth[i] && Bobx + BobWidth > platformX[i] + platformWidth[i] 
+		if (Bobx < platformX[i] + platformWidth[i] && Bobx + BobWidth > platformX[i] + platformWidth[i]
 			&& Bobx > platformX[i]) {
 			return 1;
 		}
 		//unique right collision check
-		if (Bobx + BobWidth > platformX[i] && Bobx + BobWidth < platformX[i] + platformWidth[i] 
+		if (Bobx + BobWidth > platformX[i] && Bobx + BobWidth < platformX[i] + platformWidth[i]
 			&& Boby + BobHeight > platformY[i] && Bobx < platformX[i]) {
 			return 2;
 		}
-		//unique bottom collision check
-		//if (Boby + BobHeight > platformY[i] && Boby < platformY[i] 
-			//&& Bobx + BobWidth < platformX[i]+platformWidth[i] && Bobx > platformX[i]) {
-			//return 3;
-		//}
-		//unique upward collision
-		//if (Boby < platformY[i] + platformHeight && Bobx > platformX[i] 
-			//&& Bobx + BobWidth < platformX[i] + platformWidth[i] && Boby + BobHeight > platformY[i]) {
-			//return 4;
-		//}
-		
+
 	}
 
-		/*
-		//All in One Collision For reference
-		if (Bobx - 5 < platformX[i] + platformWidth[i] && Bobx + BobWidth + 5 > platformX[i] &&
-			Boby - 5 < platformY[i] + platformHeight && Boby + BobHeight + 5 > platformY[i]) {
-			collision = 1;
-		}*/
 
 	return collision;
 }
@@ -202,7 +182,7 @@ void scoreMultiplier(int combo) {
 
 void playerMovement() {
 	currentElapsedTime = CP_System_GetDt() * 300;
-	
+
 	static int jumpCounter = 2;
 	jump = CP_System_GetDt() * 1500;
 	gravity = CP_System_GetDt() * 500;
@@ -212,13 +192,10 @@ void playerMovement() {
 	if (playerPlatformCollision() == 0) {
 		Boby += gravity;
 	}
-	
+
 
 	if (CP_Input_KeyDown(KEY_A))
-	{	//For Player If Hit Platform Sides
-		//if (playerPlatformCollision() == 2) {
-			//Bobx += 2 * position;
-		//}
+	{	
 		if (Bobx > 0) {
 			Bobx -= position;
 		}
@@ -226,42 +203,22 @@ void playerMovement() {
 	}
 
 	if (CP_Input_KeyDown(KEY_D))
-	{	//For Player If Hit Platform Sides
-		//if (playerPlatformCollision() == 2) {
-			//Bobx -= 2 * position;
-		//}
+	{	
 		if (Bobx < 1280 - BobWidth) {
 			Bobx += position;
 		}
 		BobDirection = FALSE;
 	}
 
-	if (CP_Input_KeyDown(KEY_W))
-	{
-		Boby -= gravity;
-	}
-	if (CP_Input_KeyDown(KEY_S))
-	{
-		Boby += gravity;
-	}
-
-
 	for (int i = 0; i < no_of_platforms; i++) {
 		int collision = playerPlatformCollision2(i);
 		printf("collision is %d\n", collision);
-		
+
 		if (collision == 1) {
-			Bobx += 2 * position;
+			Bobx = platformX[i] + platformWidth[i];
 		}
 		if (collision == 2) {
-			Bobx -= 2 * position;
-		}
-		if (collision == 3) {
-			Boby = platformY[i] - BobHeight;
-			
-		}
-		if (collision == 4) {
-			Boby += 2*position;
+			Bobx = platformX[i] - BobWidth;
 		}
 	}
 
@@ -274,7 +231,7 @@ void playerMovement() {
 			jumpCD = 1.0;
 			jumpCounter = 2;
 		}
-		
+
 	}
 	//Jump CD Decrement every deltaTime
 	jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
@@ -287,57 +244,4 @@ void playerMovement() {
 }
 
 
-// Logic For Player Movement
-/*void playerMovement() {
-	currentElapsedTime = CP_System_GetDt() * 300;
-	static double maxJump = 0, jumpCD = 0;
-	static int jumpCounter = 2;
-	jump = CP_System_GetDt() * 1500;
-	gravity = CP_System_GetDt() * 500;
-	position = currentElapsedTime;
 
-	//For Player if not jumping and in air
-	if (playerPlatformCollision() != 1 ) {
-		Boby += gravity;
-	}
-
-	if (CP_Input_KeyDown(KEY_A))
-	{	//For Player If Hit Platform Sides
-		if (playerPlatformCollision() == 2) {
-			Bobx += 2 * position;
-		}
-		else if (Bobx > 0) {
-			Bobx -= position;
-		}
-		BobDirection = TRUE;
-	}
-
-	if (CP_Input_KeyDown(KEY_D))
-	{	//For Player If Hit Platform Sides
-		if (playerPlatformCollision() == 2) {
-			Bobx -= 2 * position;
-		}
-		else if (Bobx < CP_System_GetDisplayWidth() - BobWidth) {
-			Bobx += position;
-		}
-		BobDirection = FALSE;
-	}
-	//Only Jump when
-	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0)
-	{	 
-		--jumpCounter;
-		maxJump = 200;
-		if (jumpCounter == 0) {
-			jumpCD = 1.0;
-			jumpCounter = 2;
-		}
-	}
-	//Jump CD Decrement every deltaTime
-	jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
-	
-	if (maxJump > 0) {
-		Boby -= jump;
-		maxJump -= jump;
-	}
-	printf("%f\n", jumpCD);
-}*/
