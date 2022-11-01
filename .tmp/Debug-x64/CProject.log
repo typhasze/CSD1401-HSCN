@@ -44,6 +44,28 @@ C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(723,38): warning C4
 C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(723,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(749,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(749,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  main.c
+  mainmenu.c
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\mainmenu.c(13,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\mainmenu.c(14,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\mainmenu.c(45,123): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\mainmenu.c(46,124): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\mainmenu.c(40,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\mainmenu.c(41,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  splashscreen.c
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\splashscreen.c(36,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\splashscreen.c(36,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\splashscreen.c(36,51): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\splashscreen.c(36,58): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\splashscreen.c(36,65): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\splashscreen.c(38,94): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\splashscreen.c(39,94): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\splashscreen.c(30,46): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  utils.c
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\utils.c(23,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\utils.c(24,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  LINK : C:\Users\stron\Documents\GitHub\CSD1401-HSCN\bin\Debug-x64\CProject.exe not found or not built by the last incremental link; performing full link
   CProject.vcxproj -> C:\Users\stron\Documents\GitHub\CSD1401-HSCN\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
