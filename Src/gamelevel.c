@@ -39,8 +39,7 @@ void createPlatformXY() {
 }
 
 void Game_Level_Init() {
-	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0);
-	srand(3);
+	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0); srand(3);
 	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png");
 	heart = CP_Image_Load("Assets/heart.png");
 	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png");
@@ -55,19 +54,20 @@ void Game_Level_Init() {
 void Game_Level_Update() {
 	//Main Code 
 	{
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		//Draw Bob
-		(BobDirection == FALSE) ? CP_Image_Draw(Bob, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255)
-			: CP_Image_Draw(BobL, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
 		//Press P to Pause
-		//gIsPaused = CP_Input_KeyTriggered(KEY_P) ? !gIsPaused : gIsPaused;	
+		gIsPaused = CP_Input_KeyTriggered(KEY_P) ? !gIsPaused : gIsPaused;	
+		//Conditions for Pausing the Game (Dying, Time finish, Player Pause game)
+		gIsPaused = (health == 0 || gameTimer <= 0.10 || gIsPaused == TRUE || Boby > 720) ? TRUE : FALSE;
 		//Press Q to Terminate
 		CP_Input_KeyTriggered(KEY_Q) ? CP_Engine_Terminate() : 0;			
 
-		//Conditions for Pausing the Game (Dying, Time finish, Player Pause game)
-		gIsPaused = ((CP_Input_KeyTriggered(KEY_P)|| health == 0 || gameTimer <= 0.10 || gIsPaused == TRUE || Boby > 720)) ? TRUE : FALSE;
+		
+		//Draw Bob
+		(BobDirection == FALSE) ? CP_Image_Draw(Bob, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255)
+			: CP_Image_Draw(BobL, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
 		//Rendering
-		HUD(), drawPlatform();
+		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255)), HUD(), drawPlatform();
+
 		switch (gIsPaused) {
 		case TRUE: //Game is paused
 			Clear_Fail_Pause();
@@ -94,6 +94,7 @@ void Game_Level_Exit() {
 }
 //rendering createPlatformXY();
 void drawPlatform() {
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	for (int i = 0; i < no_of_platforms; i++) {
 		CP_Graphics_DrawRect(platformX[i], platformY[i], platformWidth[i], platformHeight);
@@ -102,8 +103,10 @@ void drawPlatform() {
 
 //Displays Timer, Score, Score Multiplier, Health Remaining
 void HUD() {
+
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	char Timer[10] = { 0 }, Points[50] = { 0 }, Multiplier[15] = { 0 };
+	CP_Settings_TextSize(30);
 	//Combine String and integer 
 	sprintf_s(Timer, _countof(Timer), "Timer: %.0f", gameTimer);
 	sprintf_s(Points, _countof(Points), "Points: %i", points);
@@ -123,6 +126,13 @@ void HUD() {
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
 		CP_Image_Draw(heart, x, 35, 30, 30, 255);
 	}
+
+	//Multiplier Timer Bar
+	static float x;
+	x = multiplierTimer * 100;
+	CP_Settings_RectMode(CP_POSITION_CENTER);
+	CP_Settings_Fill(CP_Color_Create(145, 224, 255, 255));
+	CP_Graphics_DrawRectAdvanced(1280 / 2, 35, x, 35, 0, 15);
 }
 
 void playerPlatformCollision(void) {
@@ -162,7 +172,8 @@ int playerPlatformCollision2(int i) {
 
 //scoreMultiplier Sets the Multiplier based on the game state.
 void scoreMultiplier(void) {
-	multiplierTimer -= CP_System_GetDt();
+	//Only Decrease if Timer > 0
+	(multiplierTimer > 0) ? multiplierTimer -= CP_System_GetDt() : multiplier;
 	if (multiplierTimer >= 0) {
 		multiplier = (multiplierCombo < 5) ? 1 : multiplier;
 		multiplier = (multiplierCombo >= 5 && multiplierCombo < 10) ? 2 : multiplier;
@@ -234,10 +245,15 @@ void playerMovement() {
 }
 
 void Clear_Fail_Pause(void) {
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	char Points[50] = { 0 };
+	sprintf_s(Points, _countof(Points), "%i", points);
+	CP_Settings_TextSize(75); CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 	//Clear Condition
-	if (gameTimer <= 0) {
+	if (gameTimer <= 0.10) {
 		//TODO: SHOW MENU FOR CLEAR - CLEAR! => POINTS EARNED, HEALTH REMAINING, RETRY STAGE / GOTO NEXT STAGE
 		CP_Image_Draw(clear_screen, 0, 0, CP_Image_GetWidth(clear_screen), CP_Image_GetHeight(clear_screen), 255);
+		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() / 2 - 45);
 		if (CP_Input_MouseClicked()) {
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 				Game_Level_Init();
@@ -254,6 +270,7 @@ void Clear_Fail_Pause(void) {
 	else if (health == 0 || Boby > 720) {
 		//TODO: SHOW MENU FOR FAIL - YOU DIED => POINTS EARNED, 0 HEALTH, RETRY STAGE / GOTO NEXT STAGE 
 		CP_Image_Draw(fail_screen, 0, 0, CP_Image_GetWidth(fail_screen), CP_Image_GetHeight(fail_screen), 255);
+		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() / 2 - 45) ;
 		if (CP_Input_MouseClicked()) {
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 				Game_Level_Init();

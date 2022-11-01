@@ -19,3 +19,5 @@ void playerMovement(void);
 void playerPlatformCollision(void);
 
 void Clear_Fail_Pause(void);
+
+void TimerBar(void);
