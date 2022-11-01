@@ -17,3 +17,7 @@ void scoreMultiplier(int x);
 void playerMovement(void);
 
 int playerPlatformCollision(void);
+
+void purpleOrb(void);
+
+void yellowOrb(void);
