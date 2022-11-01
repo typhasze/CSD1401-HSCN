@@ -26,16 +26,16 @@ void splash_screen_update(void)
 	*/
 	double logoW = CP_Image_GetWidth(logo) * windowSizeX / 1920
 		, logoH = CP_Image_GetHeight(logo) * windowSizeY / 1080;
-	float currentElapsedTime = CP_System_GetDt()*127.5;
+	float currentElapsedTime = CP_System_GetDt() * 127.5;
 	static float totalElapsedTime = 0;
 	totalElapsedTime += currentElapsedTime;
 	//totalElapsedTime = (int) totalElapsedTime % 255;
 	//Display Image
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Image_Draw(logo, windowSizeX/2, windowSizeY/2,logoW, logoH, totalElapsedTime);
+	CP_Image_Draw(logo, windowSizeX / 2, windowSizeY / 2, logoW, logoH, totalElapsedTime);
 
 	CP_Input_KeyDown(KEY_1) ? splash_screen_init(), windowSizeX = 1280, windowSizeY = 720 : NULL;
-	CP_Input_KeyDown(KEY_2) ? splash_screen_init(), windowSizeX = 1920, windowSizeY = 1080: NULL;
+	CP_Input_KeyDown(KEY_2) ? splash_screen_init(), windowSizeX = 1920, windowSizeY = 1080 : NULL;
 
 	red = CP_Color_Create(255, 0, 0, 255);
 

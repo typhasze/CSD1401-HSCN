@@ -12,11 +12,15 @@ void drawPlatform(void);
 
 void HUD(void);
 
-void scoreMultiplier(int x);
+void scoreMultiplier(void);
 
 void playerMovement(void);
 
-int playerPlatformCollision(void);
+void playerPlatformCollision(void);
+
+void Clear_Fail_Pause(void);
+
+void TimerBar(void);
 
 void purpleOrb(void);
 
