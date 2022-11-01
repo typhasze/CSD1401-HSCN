@@ -9,7 +9,7 @@ CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 
 void drawMenu() {
-
+	CP_Settings_RectMode(CP_POSITION_CENTER);
 	float halfX = CP_System_GetWindowWidth() / 2;
 	float halfY = CP_System_GetWindowHeight() / 2;
 	red = CP_Color_Create(255, 0, 0, 255);
@@ -31,7 +31,6 @@ void Main_Menu_Init()
 	CP_System_SetFrameRate(60);
 	CP_System_SetWindowSize(windowSizeX, windowSizeY);
 	CP_Settings_TextSize(50.0f);
-	CP_Settings_RectMode(CP_POSITION_CENTER);
 }
 
 void Main_Menu_Update()

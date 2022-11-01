@@ -16,6 +16,13 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 	return 0;
 }
 
+int isRectangleClicked(float rec_x, float rec_y, float rec_w, float rec_h, float click_x, float click_y) {
+	if (click_x >= rec_x && click_x <= rec_x + rec_w &&
+		click_y >= rec_y && click_y <= rec_y + rec_h)
+		return 1;
+	return 0;
+}
+
 CP_Vector AngleToVector(float radian_angle)
 {
 	// cos A = x

@@ -6,7 +6,7 @@
 
 CP_Image logo;
 CP_Color red;
-int windowSizeX = 1920, windowSizeY = 1080;
+int windowSizeX = 1280, windowSizeY = 720;
 
 void splash_screen_init(void)
 {
@@ -16,7 +16,6 @@ void splash_screen_init(void)
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_REPEAT);
 	CP_System_SetWindowSize(windowSizeX, windowSizeY);
-	
 }
 
 void splash_screen_update(void)
