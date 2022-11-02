@@ -16,7 +16,8 @@ void scoreMultiplier(void);
 
 void playerMovement(void);
 
-void playerPlatformCollision(void);
+void platformMovement(void);
+int playerPlatformCollision(void);
 
 void Clear_Fail_Pause(void);
 
@@ -25,3 +26,9 @@ void TimerBar(void);
 void purpleOrb(void);
 
 void yellowOrb(void);
+
+void setOrbInitialPosition();
+void makeOrbsFall();
+void drawOrbs();
+void orbOnFloor();
+void orbsCollected(void);
