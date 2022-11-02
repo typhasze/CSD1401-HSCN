@@ -26,6 +26,13 @@ bool gIsPaused, BobDirection;
 static int purpleBalls[3];
 static int yellowBalls[3];
 
+struct Items
+{
+	int x, y;
+	float timer_to_drop, timer_on_floor;
+};
+struct Items pOrbs[10], yOrbs[10];
+
 // Creating Platforms XY Positions, call drawPlatform() to render
 void createPlatformXY() {
 	//For Creating Random Platforms to Test
@@ -52,6 +59,7 @@ void Game_Level_Init() {
 	gIsPaused = FALSE, BobDirection = FALSE; Bobx = 1280 / 2, Boby = 720 / 2;
 	//Base Platform
 	createPlatformXY();
+	setOrbInitialPosition();
 	for (int i = 0; i < 3; i++)
 	{
 		purpleBalls[i] = (rand() % (1200 + 1 - 25) + 25);
@@ -89,8 +97,7 @@ void Game_Level_Update() {
 			playerMovement();			//checks input for Movement
 			scoreMultiplier();	//Multiplier Logic
 			gameTimer -= CP_System_GetDt();	//Game Timer Reduction
-			yellowOrb();
-			purpleOrb();
+			drawOrbs();
 			break;
 		}
 	}
@@ -102,9 +109,9 @@ void Game_Level_Update() {
 		CP_Input_KeyTriggered(KEY_3) ? multiplierTimer = 5.00, points += 1 * multiplier, multiplierCombo++ : multiplierTimer;
 	}
 
-	purpleOrb();
+	//purpleOrb();
 
-	yellowOrb();
+	//yellowOrb();
 }
 void pointsCollected(int x) {
 	multiplierTimer = 5.00, points += x * multiplier, multiplierCombo++;
@@ -119,6 +126,7 @@ void drawPlatform() {
 	for (int i = 0; i < no_of_platforms; i++) {
 		CP_Graphics_DrawRect(platformX[i], platformY[i], platformWidth[i], platformHeight);
 	}
+	platformMovement();
 }
 
 //Displays Timer, Score, Score Multiplier, Health Remaining
@@ -155,39 +163,31 @@ void HUD() {
 	CP_Graphics_DrawRectAdvanced(1280 / 2, 35, x, 35, 0, 15);
 }
 
-void playerPlatformCollision(void) {
+int playerPlatformCollision(void) {
 	for (int i = 0; i < no_of_platforms; i++) {
-		//unique bottom collision
-		if (Boby + BobHeight + 5 >= platformY[i] && Boby + BobHeight - 5 <= platformY[i] &&
-			Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i]) {
-			//collision =  1;
-			gravity = 0;
-		}
-		//unique top collision
-		if (Boby - 10 <= platformY[i] + platformHeight && Boby + 10 >= platformY[i] + platformHeight &&
-			Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i]) {
-			//collision =  3;
-			maxJump = 0;
+		if (Boby + BobHeight > platformY[i] && Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i] && Boby < platformY[i] + platformHeight) {
+			return i;
 		}
 	}
+	return -1;
 }
 
-int playerPlatformCollision2(int i) {
-	int collision = 0;
-	//Initial check on Bob position
-	if (Boby + BobHeight > platformY[i] && Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i] && Boby < platformY[i] + platformHeight) {
-		//unique left collision check
-		if (Bobx < platformX[i] + platformWidth[i] && Bobx + BobWidth > platformX[i] + platformWidth[i]
-			&& Bobx > platformX[i]) {
-			return 1;
-		}
-		//unique right collision check
-		if (Bobx + BobWidth > platformX[i] && Bobx + BobWidth < platformX[i] + platformWidth[i]
-			&& Boby + BobHeight > platformY[i] && Bobx < platformX[i]) {
-			return 2;
+void platformMovement() {
+	float speed;
+	static int toggle = 0;
+	speed = CP_System_GetDt() * 100;
+	if (toggle == 0) {
+		platformX[5] -= speed;
+		if (platformX[5] < 0) {
+			toggle = 1;
 		}
 	}
-	return collision;
+	if (toggle == 1) {
+		platformX[5] += speed;
+		if (platformX[5] + platformWidth[5] > 1280) {
+			toggle = 0;
+		}
+	}
 }
 
 //scoreMultiplier Sets the Multiplier based on the game state.
@@ -207,60 +207,79 @@ void scoreMultiplier(void) {
 	}
 }
 
-//Run to Check for Movement
+// Logic For Player Movement
 void playerMovement() {
-	velocity = CP_System_GetDt() * 300;
+	float currentElapsedTime = CP_System_GetDt() * 300;
+	static double maxJump = 0, jumpCD = 0;
+	static int jumpCounter = 2;
 	jump = CP_System_GetDt() * 1500;
 	gravity = CP_System_GetDt() * 500;
-	static int jumpCounter = 2;
-	playerPlatformCollision();
+	float position = currentElapsedTime;
+
+	//For Player if not jumping and in air
+	int collidedPlatform = -1;
+	Boby += gravity;
+	collidedPlatform = playerPlatformCollision();
+	printf("collision is %d", collidedPlatform);
+	if (collidedPlatform >= 0)
+	{
+		Boby = platformY[collidedPlatform] - BobHeight - 1;
+		//Boby -= gravity;
+	}
+	collidedPlatform = -1;
+
 	if (CP_Input_KeyDown(KEY_A))
 	{
-		if (Bobx > 0) {
-			Bobx -= velocity;
-		}
+		Bobx -= position;
 		BobDirection = TRUE;
+
+		collidedPlatform = playerPlatformCollision();
+		if (collidedPlatform >= 0) {
+			Bobx = platformX[collidedPlatform] + platformWidth[collidedPlatform] + 1;
+		}
+		collidedPlatform = -1;
 	}
 
 	if (CP_Input_KeyDown(KEY_D))
 	{
-		if (Bobx < 1280 - BobWidth) {
-			Bobx += velocity;
-		}
+		Bobx += position;
 		BobDirection = FALSE;
+
+		collidedPlatform = playerPlatformCollision();
+		if (collidedPlatform >= 0) {
+			Bobx = platformX[collidedPlatform] - 1 - BobWidth;
+		}
+		collidedPlatform = -1;
 	}
 
-	for (int i = 0; i < no_of_platforms; i++) {
-		int collision = playerPlatformCollision2(i);
-		//printf("collision is %d\n", collision);
-
-		if (collision == 1) {
-			Bobx = platformX[i] + platformWidth[i];
-		}
-		if (collision == 2) {
-			Bobx = platformX[i] - BobWidth;
-		}
-	}
-
-	//Jump Section
+	//Only Jump when
+	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0)
 	{
-		if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0)
-		{
-			--jumpCounter;
-			maxJump = 200;
-			if (jumpCounter == 0) {
-				jumpCD = 0.75;
-				jumpCounter = 2;
-			}
+		--jumpCounter;
+		maxJump = 200;
+		if (jumpCounter == 0) {
+			jumpCD = .75;
+			jumpCounter = 2;
+		}
+	}
+	//Jump CD Decrement every deltaTime
+	jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
 
+	if (maxJump > 0) {
+		if (playerPlatformCollision() == 3) {
+			Boby += gravity;
 		}
-		//Jump CD Decrement every deltaTime
-		jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
-		if (maxJump > 0) {
+		else {
 			Boby -= jump;
-			maxJump -= jump;
+
+			collidedPlatform = playerPlatformCollision();
+			if (collidedPlatform >= 0) {
+				Boby = platformY[collidedPlatform] + platformHeight + 1;
+			}
+			collidedPlatform = -1;
 		}
-		Boby += gravity;
+		maxJump -= jump;
+		printf("%f\n", jumpCD);
 	}
 }
 
@@ -321,6 +340,84 @@ void Clear_Fail_Pause(void) {
 	}
 }
 
+void drawOrbs() {
+	CP_Color purple = CP_Color_Create(255, 0, 255, 255);
+	CP_Color yellow = CP_Color_Create(255, 255, 0, 255);
+	CP_Settings_Fill(purple);
+	for (int i = 0; i < 10; i++) {
+		CP_Settings_Fill(purple);
+		CP_Graphics_DrawCircle(pOrbs[i].x, pOrbs[i].y, 50);
+		CP_Settings_Fill(yellow);
+		CP_Graphics_DrawCircle(yOrbs[i].x, yOrbs[i].y, 50);
+	}
+	makeOrbsFall();
+	orbOnFloor();
+	orbsCollected();
+}
+
+void setOrbInitialPosition() {
+	for (int i = 0; i < 10; i++) {
+		pOrbs[i].x = rand() % 1280, pOrbs[i].y = 0 - 25;
+		yOrbs[i].x = rand() % 1280, yOrbs[i].y = 0 - 25;
+		pOrbs[i].timer_to_drop = rand() % 20;
+		yOrbs[i].timer_to_drop = rand() % 20;
+		pOrbs[i].timer_on_floor = 2;
+		yOrbs[i].timer_on_floor = 5;
+	}
+}
+
+void makeOrbsFall() {
+	int yDropSpeed = CP_System_GetDt() * 250;
+	int pDropSpeed = CP_System_GetDt() * 200;
+	for (int i = 0; i < 10; i++) {
+		if (pOrbs[i].timer_to_drop < 0 && pOrbs[i].timer_on_floor == 2) {
+			pOrbs[i].y += pDropSpeed;
+		} 
+		else pOrbs[i].timer_to_drop -= CP_System_GetDt();
+		if (yOrbs[i].timer_to_drop < 0 && yOrbs[i].timer_on_floor == 5) {
+			yOrbs[i].y += yDropSpeed;
+		} 
+		else yOrbs[i].timer_to_drop -= CP_System_GetDt();
+		//if DISSAPEARED(OOB or Too Long On Floor) or COLLECTED (TODO)
+		(pOrbs[i].y > 720 || pOrbs[i].timer_on_floor < 0) ? pOrbs[i].timer_to_drop = rand() % 20,
+			pOrbs[i].y = -25, pOrbs[i].x = rand() % 1280, pOrbs[i].timer_on_floor = (float)2 : 0;
+		(yOrbs[i].y > 720 || yOrbs[i].timer_on_floor < 0) ? yOrbs[i].timer_to_drop = rand() % 20,
+			yOrbs[i].y = -25, yOrbs[i].x = rand() % 1280, yOrbs[i].timer_on_floor = (float)5 : 0;
+	}
+}
+
+void orbOnFloor() {
+	for (int i = 0; i < 10; i++) {
+		for (int x = 0; x < no_of_platforms; x++) {
+			//for purple
+			if (circleCollision(pOrbs[i].x, pOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+				pOrbs[i].timer_on_floor -= CP_System_GetDt();
+			}
+			//for yellow
+			if (circleCollision(yOrbs[i].x, yOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+				yOrbs[i].timer_on_floor -= CP_System_GetDt();
+			}
+		}
+	}
+}
+
+void orbsCollected(void) {
+	for (int i = 0; i < 10; i++) {
+		//for purple
+		if (circleCollision(pOrbs[i].x, pOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
+			pointsCollected(5);
+			pOrbs[i].timer_to_drop = rand() % 20,
+				pOrbs[i].y = -25, pOrbs[i].x = rand() % 1280, pOrbs[i].timer_on_floor = (float)2;			
+		}
+		//for yellow
+		if (circleCollision(yOrbs[i].x, yOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
+			pointsCollected(5);
+			yOrbs[i].timer_to_drop = rand() % 20,
+				yOrbs[i].y = -25, yOrbs[i].x = rand() % 1280, yOrbs[i].timer_on_floor = (float)5;
+		}
+	}
+}
+/*
 void purpleOrb()
 {
 	static int sec = 0;
@@ -338,6 +435,7 @@ void purpleOrb()
 		int i = 0;
 		int collision = 0;
 		//left of ball, right of bob
+
 		if (((((purpleBalls[0] - 25) <= (Bobx + BobWidth)) && (purpleBalls[0] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
 			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
@@ -872,6 +970,5 @@ void yellowOrb()
 		{
 			CP_Graphics_DrawCircle(yellowBalls[2], time += 5, 50.0f);
 		}
-	}
-}
+	}*/
 
