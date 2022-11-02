@@ -109,9 +109,9 @@ void Game_Level_Update() {
 		CP_Input_KeyTriggered(KEY_3) ? multiplierTimer = 5.00, points += 1 * multiplier, multiplierCombo++ : multiplierTimer;
 	}
 
-	purpleOrb();
+	//purpleOrb();
 
-	yellowOrb();
+	//yellowOrb();
 }
 void pointsCollected(int x) {
 	multiplierTimer = 5.00, points += x * multiplier, multiplierCombo++;
