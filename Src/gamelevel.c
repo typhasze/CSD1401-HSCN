@@ -48,7 +48,7 @@ void Game_Level_Init() {
 	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
-	gameTimer = 10.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
+	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
 	gIsPaused = FALSE, BobDirection = FALSE; Bobx = 1280 / 2, Boby = 720 / 2;
 	//Base Platform
 	createPlatformXY();
@@ -87,8 +87,10 @@ void Game_Level_Update() {
 
 		case FALSE: //Game not paused
 			playerMovement();			//checks input for Movement
-			scoreMultiplier(points);	//Multiplier Logic
+			scoreMultiplier();	//Multiplier Logic
 			gameTimer -= CP_System_GetDt();	//Game Timer Reduction
+			yellowOrb();
+			purpleOrb();
 			break;
 		}
 	}
@@ -104,7 +106,9 @@ void Game_Level_Update() {
 
 	yellowOrb();
 }
-
+void pointsCollected(int x) {
+	multiplierTimer = 5.00, points += x * multiplier, multiplierCombo++;
+}
 void Game_Level_Exit() {
 	CP_Image_Free(&heart);
 }
@@ -336,39 +340,43 @@ void purpleOrb()
 		//left of ball, right of bob
 		if (((((purpleBalls[0] - 25) <= (Bobx + BobWidth)) && (purpleBalls[0] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop = 0;
 			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 		//right of ball, left of bob
 		if (((((purpleBalls[0] + 25) >= (Bobx)) && (purpleBalls[0] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop = 0;
 			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 		//bottom of ball, top of bob
 		if (((((purpleBalls[0]) >= (Bobx)) && (purpleBalls[0]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop = 0;
 			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 
 		//top of ball, bottom of bob
 		if (((((purpleBalls[0]) >= (Bobx)) && (purpleBalls[0]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop = 0;
 			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 
 		for (i; i < no_of_platforms; i++)
@@ -422,39 +430,43 @@ void purpleOrb()
 		//left of ball, right of bob
 		if (((((purpleBalls[1] - 25) <= (Bobx + BobWidth)) && (purpleBalls[1] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop2 = 0;
 			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 		//right of ball, left of bob
 		if (((((purpleBalls[1] + 25) >= (Bobx)) && (purpleBalls[1] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop2 = 0;
 			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 		//bottom of ball, top of bob
 		if (((((purpleBalls[1]) >= (Bobx)) && (purpleBalls[1]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop2 = 0;
 			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 
 		//top of ball, bottom of bob
 		if (((((purpleBalls[1]) >= (Bobx)) && (purpleBalls[1]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop2 = 0;
 			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 		for (i; i < no_of_platforms; i++)
 		{
@@ -507,39 +519,43 @@ void purpleOrb()
 		//left of ball, right of bob
 		if (((((purpleBalls[2] - 25) <= (Bobx + BobWidth)) && (purpleBalls[2] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop3 = 0;
 			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 		//right of ball, left of bob
 		if (((((purpleBalls[2] + 25) >= (Bobx)) && (purpleBalls[2] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop3 = 0;
 			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 		//bottom of ball, top of bob
 		if (((((purpleBalls[2]) >= (Bobx)) && (purpleBalls[2]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop3 = 0;
 			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 
 		//top of ball, bottom of bob
 		if (((((purpleBalls[2]) >= (Bobx)) && (purpleBalls[2]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop3 = 0;
 			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(5);
 		}
 		for (i; i < no_of_platforms; i++)
 		{
@@ -601,39 +617,43 @@ void yellowOrb()
 		//left of ball, right of bob
 		if (((((yellowBalls[0] - 25) <= (Bobx + BobWidth)) && (yellowBalls[0] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop = 0;
 			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 		//right of ball, left of bob
 		if (((((yellowBalls[0] + 25) >= (Bobx)) && (yellowBalls[0] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop = 0;
 			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 		//bottom of ball, top of bob
 		if (((((yellowBalls[0]) >= (Bobx)) && (yellowBalls[0]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop = 0;
 			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 
 		//top of ball, bottom of bob
 		if (((((yellowBalls[0]) >= (Bobx)) && (yellowBalls[0]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop = 0;
 			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 
 		for (i; i < no_of_platforms; i++)
@@ -687,39 +707,43 @@ void yellowOrb()
 		//left of ball, right of bob
 		if (((((yellowBalls[1] - 25) <= (Bobx + BobWidth)) && (yellowBalls[1] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop2 = 0;
 			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 		//right of ball, left of bob
 		if (((((yellowBalls[1] + 25) >= (Bobx)) && (yellowBalls[1] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop2 = 0;
 			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 		//bottom of ball, top of bob
 		if (((((yellowBalls[1]) >= (Bobx)) && (yellowBalls[1]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop2 = 0;
 			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 
 		//top of ball, bottom of bob
 		if (((((yellowBalls[1]) >= (Bobx)) && (yellowBalls[1]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop2 = 0;
 			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 		for (i; i < no_of_platforms; i++)
 		{
@@ -772,39 +796,43 @@ void yellowOrb()
 		//left of ball, right of bob
 		if (((((yellowBalls[2] - 25) <= (Bobx + BobWidth)) && (yellowBalls[2] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop3 = 0;
 			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 		//right of ball, left of bob
 		if (((((yellowBalls[2] + 25) >= (Bobx)) && (yellowBalls[2] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop3 = 0;
 			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 		//bottom of ball, top of bob
 		if (((((yellowBalls[2]) >= (Bobx)) && (yellowBalls[2]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop3 = 0;
 			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 
 		//top of ball, bottom of bob
 		if (((((yellowBalls[2]) >= (Bobx)) && (yellowBalls[2]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
 		{
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(100, 100, 50.0f);
+			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			//CP_Graphics_DrawCircle(100, 100, 50.0f);
 			drop3 = 0;
 			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
 			time = 0;
+			pointsCollected(10);
 		}
 		for (i; i < no_of_platforms; i++)
 		{
@@ -847,4 +875,3 @@ void yellowOrb()
 	}
 }
 
-// this is a comment
