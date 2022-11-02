@@ -108,6 +108,10 @@ void Game_Level_Update() {
 		CP_Input_KeyTriggered(KEY_2) && (health < 3) ? ++health : NULL;
 		CP_Input_KeyTriggered(KEY_3) ? multiplierTimer = 5.00, points += 1 * multiplier, multiplierCombo++ : multiplierTimer;
 	}
+
+	purpleOrb();
+
+	yellowOrb();
 }
 void pointsCollected(int x) {
 	multiplierTimer = 5.00, points += x * multiplier, multiplierCombo++;
