@@ -26,10 +26,11 @@ bool gIsPaused, BobDirection;
 static int purpleBalls[3];
 static int yellowBalls[3];
 
+//Can Be Used for Chest, Bomb, Orbs
 struct Items
 {
 	int x, y;
-	float timer_to_drop, timer_on_floor;
+	float timer_to_drop, timer_on_floor, dropSpeed;
 };
 struct Items pOrbs[10], yOrbs[10];
 
@@ -60,6 +61,7 @@ void Game_Level_Init() {
 	//Base Platform
 	createPlatformXY();
 	setOrbInitialPosition();
+	/*
 	for (int i = 0; i < 3; i++)
 	{
 		purpleBalls[i] = (rand() % (1200 + 1 - 25) + 25);
@@ -68,7 +70,7 @@ void Game_Level_Init() {
 	for (int i = 0; i < 3; i++)
 	{
 		yellowBalls[i] = (rand() % (1200 + 1 - 25) + 25);
-	}
+	}*/
 }
 
 void Game_Level_Update() {
@@ -80,8 +82,6 @@ void Game_Level_Update() {
 		gIsPaused = (health == 0 || gameTimer <= 0.10 || gIsPaused == TRUE || Boby > 720) ? TRUE : FALSE;
 		//Press Q to Terminate
 		CP_Input_KeyTriggered(KEY_Q) ? CP_Engine_Terminate() : 0;
-
-
 		//Draw Bob
 		(BobDirection == FALSE) ? CP_Image_Draw(Bob, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255)
 			: CP_Image_Draw(BobL, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
@@ -90,14 +90,14 @@ void Game_Level_Update() {
 
 		switch (gIsPaused) {
 		case TRUE: //Game is paused
-			Clear_Fail_Pause();
+			Clear_Fail_Pause();				//Pause / Fail / Clear Screen
 			break;
 
 		case FALSE: //Game not paused
-			playerMovement();			//checks input for Movement
-			scoreMultiplier();	//Multiplier Logic
+			playerMovement();				//Movement Input
+			scoreMultiplier();				//Score and Multiplier
 			gameTimer -= CP_System_GetDt();	//Game Timer Reduction
-			drawOrbs();
+			drawOrbs();						//Orbs and Points
 			break;
 		}
 	}
@@ -108,14 +108,8 @@ void Game_Level_Update() {
 		CP_Input_KeyTriggered(KEY_2) && (health < 3) ? ++health : NULL;
 		CP_Input_KeyTriggered(KEY_3) ? multiplierTimer = 5.00, points += 1 * multiplier, multiplierCombo++ : multiplierTimer;
 	}
-
-	//purpleOrb();
-
-	//yellowOrb();
 }
-void pointsCollected(int x) {
-	multiplierTimer = 5.00, points += x * multiplier, multiplierCombo++;
-}
+
 void Game_Level_Exit() {
 	CP_Image_Free(&heart);
 }
@@ -124,6 +118,7 @@ void drawPlatform() {
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	for (int i = 0; i < no_of_platforms; i++) {
+		if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(platformX[i], platformY[i], platformWidth[i], platformHeight);
 	}
 	platformMovement();
@@ -175,7 +170,7 @@ int playerPlatformCollision(void) {
 void platformMovement() {
 	float speed;
 	static int toggle = 0;
-	speed = CP_System_GetDt() * 100;
+	speed = CP_System_GetDt() * 200;
 	if (toggle == 0) {
 		platformX[5] -= speed;
 		if (platformX[5] < 0) {
@@ -193,13 +188,14 @@ void platformMovement() {
 //scoreMultiplier Sets the Multiplier based on the game state.
 void scoreMultiplier(void) {
 	//Only Decrease if Timer > 0
-	(multiplierTimer > 0) ? multiplierTimer -= CP_System_GetDt() : multiplier;
+	//(multiplierTimer > 0 && multiplier == 1) ? multiplierTimer -= CP_System_GetDt() : multiplier;
+
 	if (multiplierTimer >= 0) {
-		multiplier = (multiplierCombo < 5) ? 1 : multiplier;
-		multiplier = (multiplierCombo >= 5 && multiplierCombo < 10) ? 2 : multiplier;
-		multiplier = (multiplierCombo >= 10 && multiplierCombo < 20) ? 3 : multiplier;
-		multiplier = (multiplierCombo >= 20 && multiplierCombo < 30) ? 4 : multiplier;
-		multiplier = (multiplierCombo >= 30) ? 5 : multiplier;
+		(multiplierCombo < 5) ? multiplier = 1, multiplierTimer -= CP_System_GetDt() : multiplier;
+		(multiplierCombo >= 5 && multiplierCombo < 10) ? multiplier = 2, multiplierTimer -= 1.2*CP_System_GetDt() : multiplier;
+		(multiplierCombo >= 10 && multiplierCombo < 20) ? multiplier = 3, multiplierTimer -= 1.4*CP_System_GetDt() : multiplier;
+		(multiplierCombo >= 20 && multiplierCombo < 30) ? multiplier = 4, multiplierTimer -= 1.8*CP_System_GetDt() : multiplier;
+		(multiplierCombo >= 30) ? multiplier = 5, multiplierTimer -= 2*CP_System_GetDt() : multiplier;
 	}
 	else {
 		multiplier = 1;
@@ -207,29 +203,32 @@ void scoreMultiplier(void) {
 	}
 }
 
+//When Collected Orb
+void pointsCollected(int x) {
+	multiplierTimer = 5.00, points += x * multiplier, multiplierCombo++;
+}
+
 // Logic For Player Movement
 void playerMovement() {
-	float currentElapsedTime = CP_System_GetDt() * 300;
+	float velocity = CP_System_GetDt() * 350;
+	static float deltaTime, speedMultiplier;
 	static double maxJump = 0, jumpCD = 0;
 	static int jumpCounter = 2;
 	jump = CP_System_GetDt() * 1500;
 	gravity = CP_System_GetDt() * 500;
-	float position = currentElapsedTime;
+	float position = velocity;
 
 	//For Player if not jumping and in air
 	int collidedPlatform = -1;
 	Boby += gravity;
 	collidedPlatform = playerPlatformCollision();
-	printf("collision is %d", collidedPlatform);
-	if (collidedPlatform >= 0)
-	{
+	//printf("collision is %d", collidedPlatform);
+	if (collidedPlatform >= 0) {
 		Boby = platformY[collidedPlatform] - BobHeight - 1;
-		//Boby -= gravity;
 	}
 	collidedPlatform = -1;
 
-	if (CP_Input_KeyDown(KEY_A))
-	{
+	if (CP_Input_KeyDown(KEY_A)) {
 		Bobx -= position;
 		BobDirection = TRUE;
 
@@ -240,8 +239,7 @@ void playerMovement() {
 		collidedPlatform = -1;
 	}
 
-	if (CP_Input_KeyDown(KEY_D))
-	{
+	if (CP_Input_KeyDown(KEY_D)) {
 		Bobx += position;
 		BobDirection = FALSE;
 
@@ -252,9 +250,8 @@ void playerMovement() {
 		collidedPlatform = -1;
 	}
 
-	//Only Jump when
-	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0)
-	{
+	//Jumping
+	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0) {
 		--jumpCounter;
 		maxJump = 200;
 		if (jumpCounter == 0) {
@@ -266,12 +263,11 @@ void playerMovement() {
 	jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
 
 	if (maxJump > 0) {
-		if (playerPlatformCollision() == 3) {
+		if (playerPlatformCollision() == 1) {
 			Boby += gravity;
 		}
 		else {
 			Boby -= jump;
-
 			collidedPlatform = playerPlatformCollision();
 			if (collidedPlatform >= 0) {
 				Boby = platformY[collidedPlatform] + platformHeight + 1;
@@ -279,7 +275,6 @@ void playerMovement() {
 			collidedPlatform = -1;
 		}
 		maxJump -= jump;
-		printf("%f\n", jumpCD);
 	}
 }
 
@@ -339,81 +334,97 @@ void Clear_Fail_Pause(void) {
 		}
 	}
 }
+//Orbs Variable to Change(game feel)
+int no_of_orbs = 5, start_pos_x = 1280 - 25, start_pos_y = -25, respawn_timer = 10;
+float yDespawn = 1, pDespawn = 2, pDropSpeed, yDropSpeed;
 
 void drawOrbs() {
+	makeOrbsFall();
+	orbOnFloor();
+	orbsCollected();
 	CP_Color purple = CP_Color_Create(255, 0, 255, 255);
 	CP_Color yellow = CP_Color_Create(255, 255, 0, 255);
 	CP_Settings_Fill(purple);
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < no_of_orbs; i++) {
 		CP_Settings_Fill(purple);
 		CP_Graphics_DrawCircle(pOrbs[i].x, pOrbs[i].y, 50);
 		CP_Settings_Fill(yellow);
 		CP_Graphics_DrawCircle(yOrbs[i].x, yOrbs[i].y, 50);
 	}
-	makeOrbsFall();
-	orbOnFloor();
-	orbsCollected();
 }
 
+//To Initialize Orbs at start of level
 void setOrbInitialPosition() {
-	for (int i = 0; i < 10; i++) {
-		pOrbs[i].x = rand() % 1280, pOrbs[i].y = 0 - 25;
-		yOrbs[i].x = rand() % 1280, yOrbs[i].y = 0 - 25;
-		pOrbs[i].timer_to_drop = rand() % 20;
-		yOrbs[i].timer_to_drop = rand() % 20;
-		pOrbs[i].timer_on_floor = 2;
-		yOrbs[i].timer_on_floor = 5;
+	for (int i = 0; i < no_of_orbs; i++) {
+		pOrbs[i].x = rand() % +start_pos_x, pOrbs[i].y = start_pos_y;
+		yOrbs[i].x = rand() % start_pos_x, yOrbs[i].y = start_pos_y;
+		pOrbs[i].timer_to_drop = rand() % respawn_timer;
+		yOrbs[i].timer_to_drop = rand() % respawn_timer;
+		pOrbs[i].timer_on_floor = pDespawn;
+		yOrbs[i].timer_on_floor = yDespawn;
 	}
 }
 
+//Orbs will Fall as Long as Timer_to_drop = 0
 void makeOrbsFall() {
-	int yDropSpeed = CP_System_GetDt() * 250;
-	int pDropSpeed = CP_System_GetDt() * 200;
-	for (int i = 0; i < 10; i++) {
-		if (pOrbs[i].timer_to_drop < 0 && pOrbs[i].timer_on_floor == 2) {
-			pOrbs[i].y += pDropSpeed;
-		} 
+	for (int i = 0; i < no_of_orbs; i++) {
+		if (pOrbs[i].timer_to_drop < 0) {
+			pOrbs[i].y += pOrbs[i].dropSpeed;
+		}
 		else pOrbs[i].timer_to_drop -= CP_System_GetDt();
-		if (yOrbs[i].timer_to_drop < 0 && yOrbs[i].timer_on_floor == 5) {
-			yOrbs[i].y += yDropSpeed;
-		} 
+		if (yOrbs[i].timer_to_drop < 0) {
+			yOrbs[i].y += yOrbs[i].dropSpeed;
+		}
 		else yOrbs[i].timer_to_drop -= CP_System_GetDt();
-		//if DISSAPEARED(OOB or Too Long On Floor) or COLLECTED (TODO)
-		(pOrbs[i].y > 720 || pOrbs[i].timer_on_floor < 0) ? pOrbs[i].timer_to_drop = rand() % 20,
-			pOrbs[i].y = -25, pOrbs[i].x = rand() % 1280, pOrbs[i].timer_on_floor = (float)2 : 0;
-		(yOrbs[i].y > 720 || yOrbs[i].timer_on_floor < 0) ? yOrbs[i].timer_to_drop = rand() % 20,
-			yOrbs[i].y = -25, yOrbs[i].x = rand() % 1280, yOrbs[i].timer_on_floor = (float)5 : 0;
+
+		//Reinitialize Orbs when OOB or Too Long on Floor
+		(pOrbs[i].y > 720 || pOrbs[i].timer_on_floor < 0) ? pOrbs[i].timer_to_drop = rand() % respawn_timer,
+			pOrbs[i].y = start_pos_y, pOrbs[i].x = rand() % start_pos_x, pOrbs[i].timer_on_floor = pDespawn : 0;
+
+		(yOrbs[i].y > 720 || yOrbs[i].timer_on_floor < 0) ? yOrbs[i].timer_to_drop = rand() % respawn_timer,
+			yOrbs[i].y = start_pos_y, yOrbs[i].x = rand() % start_pos_x, yOrbs[i].timer_on_floor = yDespawn : 0;
 	}
 }
 
+//Sets Orb Velocity, If detect collision = 0, no Collision = Velocity
+//Resets drop velocity > checks for collision and set new speed(if collision)
 void orbOnFloor() {
-	for (int i = 0; i < 10; i++) {
+	pDropSpeed = CP_System_GetDt() * 250;
+	yDropSpeed = CP_System_GetDt() * 200;
+	for (int i = 0; i < no_of_orbs; i++) {
+		pOrbs[i].dropSpeed = pDropSpeed;
+		yOrbs[i].dropSpeed = yDropSpeed;
 		for (int x = 0; x < no_of_platforms; x++) {
 			//for purple
-			if (circleCollision(pOrbs[i].x, pOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+			if (circleToPlatform(pOrbs[i].x, pOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
 				pOrbs[i].timer_on_floor -= CP_System_GetDt();
+				pOrbs[i].dropSpeed = 0;
 			}
 			//for yellow
-			if (circleCollision(yOrbs[i].x, yOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+			if (circleToPlatform(yOrbs[i].x, yOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
 				yOrbs[i].timer_on_floor -= CP_System_GetDt();
+				yOrbs[i].dropSpeed = 0;
 			}
 		}
 	}
 }
 
+//Collecting Orbs Give Points
 void orbsCollected(void) {
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < no_of_orbs; i++) {
 		//for purple
 		if (circleCollision(pOrbs[i].x, pOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
 			pointsCollected(5);
-			pOrbs[i].timer_to_drop = rand() % 20,
-				pOrbs[i].y = -25, pOrbs[i].x = rand() % 1280, pOrbs[i].timer_on_floor = (float)2;			
+			//Reinitialize when collected
+			pOrbs[i].timer_to_drop = rand() % respawn_timer,
+				pOrbs[i].y = start_pos_y, pOrbs[i].x = rand() % start_pos_x, pOrbs[i].timer_on_floor = pDespawn;
 		}
 		//for yellow
 		if (circleCollision(yOrbs[i].x, yOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
-			pointsCollected(5);
-			yOrbs[i].timer_to_drop = rand() % 20,
-				yOrbs[i].y = -25, yOrbs[i].x = rand() % 1280, yOrbs[i].timer_on_floor = (float)5;
+			pointsCollected(10);
+			//Reinitialize when collected
+			yOrbs[i].timer_to_drop = rand() % respawn_timer,
+				yOrbs[i].y = start_pos_y, yOrbs[i].x = rand() % start_pos_x, yOrbs[i].timer_on_floor = yDespawn;
 		}
 	}
 }
