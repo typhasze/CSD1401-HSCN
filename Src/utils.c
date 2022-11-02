@@ -30,6 +30,13 @@ int circleCollision(float circle_x, float circle_y, float diameter, float rec_x,
 	return 0;
 }
 
+int circleToPlatform(float circle_x, float circle_y, float diameter, float rec_x, float rec_y, float rec_w, float rec_h) {
+	if (circle_y + diameter / 2 >= rec_y && circle_y + (diameter / 2) - 10 <= rec_y
+		&& circle_x + (diameter / 2) >= rec_x && circle_x - (diameter / 2) <= rec_x + rec_w)
+		return 1;
+	return 0;
+}
+
 CP_Vector AngleToVector(float radian_angle)
 {
 	// cos A = x

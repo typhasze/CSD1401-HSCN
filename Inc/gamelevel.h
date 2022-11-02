@@ -21,14 +21,12 @@ int playerPlatformCollision(void);
 
 void Clear_Fail_Pause(void);
 
-void TimerBar(void);
+//void purpleOrb(void);
+//void yellowOrb(void);
 
-void purpleOrb(void);
+void setOrbInitialPosition(void);
+void makeOrbsFall(void);
 
-void yellowOrb(void);
-
-void setOrbInitialPosition();
-void makeOrbsFall();
-void drawOrbs();
-void orbOnFloor();
+void drawOrbs(void);
+void orbOnFloor(void);
 void orbsCollected(void);
