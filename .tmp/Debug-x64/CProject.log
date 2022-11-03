@@ -82,14 +82,25 @@ C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(490,24): war
 C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(490,32): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(495,24): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(495,32): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(511,5): error C2371: 'power_up': redefinition; different basic types
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Inc\gamelevel.h(50): message : see declaration of 'power_up'
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(512,25): warning C4047: '==': 'int (__cdecl *)()' differs in levels of indirection from 'int'
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(542,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(542,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(542,51): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(542,57): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(542,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(542,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(544,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(552,32): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(538,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(538,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(538,51): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(538,57): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(538,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(538,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(540,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(548,32): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+  main.c
+  mainmenu.c
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(13,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(14,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(44,123): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(45,124): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(39,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(40,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\gamelevel.c(533): warning C4716: 'power_up': must return a value
+  CProject.vcxproj -> C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\bin\Debug-x64\CProject.exe
+  1 File(s) copied
+  1 File(s) copied
+  9 File(s) copied

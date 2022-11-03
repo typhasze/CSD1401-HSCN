@@ -508,7 +508,7 @@ int ChestCollision()
 }
 
 // Power - Ups
-int power_up() {
+void power_up() {
 		int powerup = rand() % 5;
 		if (powerup == 1)
 		{
