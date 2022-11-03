@@ -32,3 +32,19 @@ void makeOrbsFall();
 void drawOrbs();
 void orbOnFloor();
 void orbsCollected(void);
+
+void drawTreasureChest(void);
+
+int ChestCollision(void);
+
+void immunity(void);
+
+void add_health(void);
+
+void jump_high(void);
+
+void move_fast(void);
+
+void time_extension(void);
+
+void power_up(void);
