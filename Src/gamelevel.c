@@ -527,7 +527,7 @@ int ChestCollision()
 // Power - Ups
 void power_up() {
 
-		int powerup =1;
+		int powerup =rand() % 5;
 		if (powerup == 1)
 		{
 			immunity();
