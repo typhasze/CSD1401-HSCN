@@ -32,7 +32,7 @@ void orbOnFloor(void);
 void orbsCollected(void);
 //void yellowOrb(void);
 
-void setOrbInitialPosition();
+//void setOrbInitialPosition();
 void makeOrbsFall();
 void drawOrbs();
 void orbOnFloor();
