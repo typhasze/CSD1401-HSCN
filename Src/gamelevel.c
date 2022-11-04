@@ -80,8 +80,8 @@ void Game_Level_Init() {
 	//Base Platform
 	initializePlatform(level_selector);
 	initializeOrbs();
-	createPlatformXY();
-	setOrbInitialPosition();
+	//createPlatformXY();
+	//setOrbInitialPosition();
 	for (int i = 0; i < 3; i++)
 	{
 		bomb[i] = (rand() % (1200 + 1 - 25) + 25);
@@ -394,10 +394,13 @@ void initializeOrbs() {
 	for (int i = 0; i < no_of_orbs; i++) {
 		pOrbs[i].x = rand() % +start_pos_x, pOrbs[i].y = start_pos_y;
 		yOrbs[i].x = rand() % start_pos_x, yOrbs[i].y = start_pos_y;
+		bOrbs[i].x = rand() % 1280, bOrbs[i].y = 0 - 25;
 		pOrbs[i].timer_to_drop = rand() % respawn_timer;
 		yOrbs[i].timer_to_drop = rand() % respawn_timer;
+		bOrbs[i].timer_to_drop = rand() % 20;	
 		pOrbs[i].timer_on_floor = pDespawn;
 		yOrbs[i].timer_on_floor = yDespawn;
+		bOrbs[i].timer_on_floor = 0;
 	}
 }
 
@@ -408,15 +411,14 @@ void drawOrbs() {
 	for (int i = 0; i < no_of_orbs; i++) {
 		CP_Color purple = CP_Color_Create(255, 0, 255, pOrbs[i].timer_on_floor * (255/pDespawn));
 		CP_Color yellow = CP_Color_Create(255, 255, 0, yOrbs[i].timer_on_floor * (255/yDespawn));
-	CP_Color red = CP_Color_Create(255, 0, 0, 255);
-	CP_Settings_Fill(purple);
+		CP_Color red = CP_Color_Create(255, 0, 0, 255);
 		CP_Settings_Fill(purple);
 		CP_Graphics_DrawCircle(pOrbs[i].x, pOrbs[i].y, 50);
 		CP_Settings_Fill(yellow);
 		CP_Graphics_DrawCircle(yOrbs[i].x, yOrbs[i].y, 50);
 		{
 			CP_Settings_Fill(red);
-			CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 50);
+			//CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 50);
 			CP_Image_Draw(Bomb, bOrbs[i].x - 25, bOrbs[i].y -25, CP_Image_GetWidth(Bomb), CP_Image_GetHeight(Bomb), 255);
 		}
 
@@ -439,6 +441,7 @@ void setOrbInitialPosition() {
 
 //Orbs will Fall as Long as Timer_to_drop = 0
 void makeOrbsFall() {
+	int bDropSpeed = CP_System_GetDt() * 150;
 	for (int i = 0; i < no_of_orbs; i++) {
 		if (pOrbs[i].timer_to_drop < 0) {
 			pOrbs[i].y += pOrbs[i].dropSpeed;
@@ -448,13 +451,19 @@ void makeOrbsFall() {
 			yOrbs[i].y += yOrbs[i].dropSpeed;
 		}
 		else yOrbs[i].timer_to_drop -= CP_System_GetDt();
+		if (bOrbs[i].timer_to_drop < 0 && bOrbs[i].timer_on_floor == 0)
+		{
+			bOrbs[i].y += bDropSpeed;
+		}
+		else bOrbs[i].timer_to_drop -= CP_System_GetDt();
 
 		//Reinitialize Orbs when OOB or Too Long on Floor
 		(pOrbs[i].y > 720 || pOrbs[i].timer_on_floor < 0) ? pOrbs[i].timer_to_drop = rand() % respawn_timer,
 			pOrbs[i].y = start_pos_y, pOrbs[i].x = rand() % start_pos_x, pOrbs[i].timer_on_floor = pDespawn : 0;
-
 		(yOrbs[i].y > 720 || yOrbs[i].timer_on_floor < 0) ? yOrbs[i].timer_to_drop = rand() % respawn_timer,
 			yOrbs[i].y = start_pos_y, yOrbs[i].x = rand() % start_pos_x, yOrbs[i].timer_on_floor = yDespawn : 0;
+		(bOrbs[i].y > 720 || bOrbs[i].timer_on_floor < 0) ? pOrbs[i].timer_to_drop = rand() % 5,
+			bOrbs[i].y = -25, pOrbs[i].x = rand() % 1280, pOrbs[i].timer_on_floor = (float)0.1 : 0;
 	}
 }
 
@@ -478,7 +487,7 @@ void orbOnFloor() {
 				yOrbs[i].dropSpeed = 0;
 			}
 				//for bomb
-			if (circleCollision(yOrbs[i].x, bOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+			if (circleCollision(bOrbs[i].x, bOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
 				bOrbs[i].timer_on_floor -= CP_System_GetDt();
 			}
 		}

@@ -6,6 +6,7 @@
 
 CP_Image Bob;
 CP_Color grey;
+int level_selector;
 
 void drawScreen() {
 	CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -46,14 +47,20 @@ void Level_Select_Update()
 	//Level 1 Button
 	if (CP_Input_MouseClicked()) {
 		//Checks for Play button clicked to run the carlevel state
-		if (boxClick = IsAreaClicked(halfX - 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (boxClick = IsAreaClicked(halfX - 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			level_selector = 1;
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);
+		}
+
 	}
 
 	//Level 2 Button
 	if (CP_Input_MouseClicked()) {
-		if (boxClick = IsAreaClicked(halfX, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (boxClick = IsAreaClicked(halfX, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			level_selector = 2;
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
+		}
+
 	}
 
 	//Level 3 Button

@@ -30,7 +30,7 @@ void makeOrbsFall(void);
 void drawOrbs(void);
 void orbOnFloor(void);
 void orbsCollected(void);
-void yellowOrb(void);
+//void yellowOrb(void);
 
 void setOrbInitialPosition();
 void makeOrbsFall();
