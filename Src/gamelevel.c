@@ -8,24 +8,33 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-CP_Image Bob, BobL, heart, fail_screen, clear_screen, pause_menu;
+CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu;
 double Bobx, Boby;
 int BobWidth, BobHeight;
 // Volatile Variables for Game 
 int health, points, multiplier, multiplierCombo;
-double gameTimer, multiplierTimer;
+double gameTimer, multiplierTimer, immune_timer;
 // Variables for Movement
 int velocity, jump, gravity;
+float currentElapsedTime, position;
+static int jumpCounter;
+
 // Variables for Platform Creation
 int level_selector = 1;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
 float platformX[100], platformY[100], platformWidth[100], platformHeight = 50.0f;
 int no_of_platforms = 6;
-static double maxJump = 0, jumpCD = 0;
+static double maxJump, maxJumpHeight = 250, jumpCD = 0;
 // Pause and BobStagnant 
-bool gIsPaused, BobDirection;
+bool gIsPaused, BobDirection, BobImmune = 0;
 //for balls
 static int purpleBalls[3];
 static int yellowBalls[3];
+static int bomb[3];
+
+//For Chest
+int cheststate = 1;
+static int chestX, chestY;
+int power = 0;
 
 //Can Be Used for Chest, Bomb, Orbs
 struct Items
@@ -33,7 +42,7 @@ struct Items
 	int x, y;
 	float timer_to_drop, timer_on_floor, dropSpeed;
 };
-struct Items pOrbs[10], yOrbs[10];
+struct Items pOrbs[10], yOrbs[10], bOrbs[10];
 
 //Initialize All Platforms for Selected Level
 void initializePlatform(int level) {
@@ -54,14 +63,30 @@ void Game_Level_Init() {
 	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0); srand(3);
 	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png");
 	heart = CP_Image_Load("Assets/heart.png");
+	chest = CP_Image_Load("Assets/Chest.png");
+	Bomb = CP_Image_Load("Assets/Bomb.png");
 	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
-	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
+	gameTimer = 45.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
 	gIsPaused = FALSE, BobDirection = FALSE; Bobx = 1280 / 2, Boby = 720 / 2;
+
+	//Movements by Hafiz
+	currentElapsedTime = CP_System_GetDt() * 300;
+	static double maxJump = 0, jumpCD = 0;
+	jumpCounter = 2;
+	position = currentElapsedTime;
+
 	//Base Platform
 	initializePlatform(level_selector);
 	initializeOrbs();
+	createPlatformXY();
+	setOrbInitialPosition();
+	for (int i = 0; i < 3; i++)
+	{
+		bomb[i] = (rand() % (1200 + 1 - 25) + 25);
+	}
+
 }
 
 void Game_Level_Update() {
@@ -78,6 +103,31 @@ void Game_Level_Update() {
 			: CP_Image_Draw(BobL, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
 		//Rendering
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255)), HUD(), drawPlatform();
+
+
+		//Draw Chest
+		if (gameTimer <= 45 && gameTimer >= 40 || gameTimer <= 25 && gameTimer >= 20)
+		{
+			drawTreasureChest();
+			CP_Settings_ImageMode(CP_POSITION_CORNER);
+			CP_Image_Draw(chest, chestX, chestY, CP_Image_GetWidth(chest), CP_Image_GetHeight(chest), 255);
+			ChestCollision();
+		}
+
+		if (gameTimer <= 40 && gameTimer >= 25)
+		{
+			power = 0;
+			cheststate = 1;
+		}
+
+		if (BobImmune == 1)
+		{
+			immune_timer -= CP_System_GetDt();
+			if (immune_timer <= 0)
+			{
+				BobImmune = 0;
+			}
+		}
 
 		switch (gIsPaused) {
 		case TRUE: //Game is paused
@@ -96,7 +146,6 @@ void Game_Level_Update() {
 	{
 		//TO REMOVE: Test Health Increment and Cap at 3
 		CP_Input_KeyTriggered(KEY_1) && (health > 0) ? --health : NULL;	//CP_Input_KeyTriggered(KEY_1) can be replaced for collision w/ bomb
-		CP_Input_KeyTriggered(KEY_2) && (health < 3) ? ++health : NULL;
 		CP_Input_KeyTriggered(KEY_3) ? multiplierTimer = 5.00, points += 1 * multiplier, multiplierCombo++ : multiplierTimer;
 	}
 }
@@ -255,7 +304,7 @@ void playerMovement() {
 	//Jumping
 	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0) {
 		--jumpCounter;
-		maxJump = 200;
+		maxJump = maxJumpHeight;
 		if (jumpCounter == 0) {
 			jumpCD = .75;
 			jumpCounter = 2;
@@ -359,10 +408,32 @@ void drawOrbs() {
 	for (int i = 0; i < no_of_orbs; i++) {
 		CP_Color purple = CP_Color_Create(255, 0, 255, pOrbs[i].timer_on_floor * (255/pDespawn));
 		CP_Color yellow = CP_Color_Create(255, 255, 0, yOrbs[i].timer_on_floor * (255/yDespawn));
+	CP_Color red = CP_Color_Create(255, 0, 0, 255);
+	CP_Settings_Fill(purple);
 		CP_Settings_Fill(purple);
 		CP_Graphics_DrawCircle(pOrbs[i].x, pOrbs[i].y, 50);
 		CP_Settings_Fill(yellow);
 		CP_Graphics_DrawCircle(yOrbs[i].x, yOrbs[i].y, 50);
+		{
+			CP_Settings_Fill(red);
+			CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 50);
+			CP_Image_Draw(Bomb, bOrbs[i].x - 25, bOrbs[i].y -25, CP_Image_GetWidth(Bomb), CP_Image_GetHeight(Bomb), 255);
+		}
+
+	}
+}
+
+void setOrbInitialPosition() {
+	for (int i = 0; i < 10; i++) {
+		pOrbs[i].x = rand() % 1280, pOrbs[i].y = 0 - 25;
+		yOrbs[i].x = rand() % 1280, yOrbs[i].y = 0 - 25;
+		bOrbs[i].x = rand() % 1280, bOrbs[i].y = 0 - 25;
+		pOrbs[i].timer_to_drop = rand() % 20;
+		yOrbs[i].timer_to_drop = rand() % 20;
+		bOrbs[i].timer_to_drop = rand() % 20;
+		pOrbs[i].timer_on_floor = 2;
+		yOrbs[i].timer_on_floor = 5;
+		bOrbs[i].timer_on_floor = 0;
 	}
 }
 
@@ -406,6 +477,10 @@ void orbOnFloor() {
 				yOrbs[i].timer_on_floor -= CP_System_GetDt();
 				yOrbs[i].dropSpeed = 0;
 			}
+				//for bomb
+			if (circleCollision(yOrbs[i].x, bOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+				bOrbs[i].timer_on_floor -= CP_System_GetDt();
+			}
 		}
 	}
 }
@@ -427,5 +502,107 @@ void orbsCollected(void) {
 			yOrbs[i].timer_to_drop = rand() % respawn_timer,
 				yOrbs[i].y = start_pos_y, yOrbs[i].x = rand() % start_pos_x, yOrbs[i].timer_on_floor = yDespawn;
 		}
+	
+
+		if (circleCollision(bOrbs[i].x, bOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
+			if (BobImmune == 0)
+			{
+				health--;
+			}
+			else if (BobImmune == 1)
+			{
+				health -= 0;
+			}
+			bOrbs[i].timer_to_drop = rand() % 30,
+				bOrbs[i].y = -25, bOrbs[i].x = rand() % 1280, bOrbs[i].timer_on_floor = (float)10;
+		}
 	}
+}
+
+//Treasure Chest
+void drawTreasureChest()
+{
+	if (cheststate == 1)
+	{
+		chestX = 500;
+		chestY = 620;
+		CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
+		CP_Graphics_DrawRect(chestX, chestY, 50, 50);
+	}
+	if (cheststate == 0)
+	{
+		chestX = 2000, chestY = 2000;
+		CP_Graphics_DrawRect(chestX, chestY, 0, 0);
+	}
+}
+
+int ChestCollision()
+{
+	if (Boby + BobHeight >= 620 && Boby <= 670 && Bobx + BobWidth > 500 && Bobx < 550)
+	{
+		if (power == 0)
+		{
+			power_up();
+		}
+		cheststate = 0;
+		return 1;
+	}
+	else { return 0; }
+}
+
+// Power - Ups
+void power_up() {
+
+		int powerup =rand() % 5;
+		if (powerup == 1)
+		{
+			immunity();
+			power = 1;
+		}
+		else if (powerup == 2)
+		{
+			add_health();
+			power = 1;
+		}
+		else if (powerup == 3)
+		{
+			jump_high();
+			power = 1;
+		}
+		else if (powerup == 4)
+		{
+			move_fast();
+			power = 1;
+		}
+		else if (powerup == 5)
+		{
+			time_extension();
+			power = 1;
+		}
+}
+
+void immunity(void)
+{
+	immune_timer = 5;
+	BobImmune = 1;
+}
+
+void add_health(void)
+{
+	(health < 3) ? ++health : NULL;
+}
+
+void jump_high(void)
+{
+	maxJumpHeight += 100;
+}
+
+void move_fast(void)
+{
+	position *= 1.5;
+}
+
+void time_extension(void)
+{
+	gameTimer += 10.0;
 }
