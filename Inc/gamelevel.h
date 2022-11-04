@@ -1,12 +1,12 @@
 #pragma once
-
+extern int level_selector;
 void Game_Level_Init(void);
 
 void Game_Level_Update(void);
 
 void Game_Level_Exit(void);
 
-void createPlatformXY(void);
+void initializePlatform(int x);
 
 void drawPlatform(void);
 
@@ -24,7 +24,7 @@ void Clear_Fail_Pause(void);
 //void purpleOrb(void);
 //void yellowOrb(void);
 
-void setOrbInitialPosition(void);
+void initializeOrbs(void);
 void makeOrbsFall(void);
 
 void drawOrbs(void);

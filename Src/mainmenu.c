@@ -7,6 +7,7 @@
 CP_Color red;
 CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
+int level_selector;
 
 void drawMenu() {
 	CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -47,8 +48,10 @@ void Main_Menu_Update()
 	//Play Button
 	if (CP_Input_MouseClicked()) {
 		//Checks for Play button clicked to run the carlevel state
-		if (boxClick = IsAreaClicked(halfX, halfY - 100, 150.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (boxClick = IsAreaClicked(halfX, halfY - 100, 150.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);
+			level_selector = 1;
+		}
 	}
 
 	//Exit Button
