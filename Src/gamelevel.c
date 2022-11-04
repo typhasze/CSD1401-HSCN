@@ -17,6 +17,7 @@ double gameTimer, multiplierTimer;
 // Variables for Movement
 int velocity, jump, gravity;
 // Variables for Platform Creation
+int level_selector = 1;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
 float platformX[100], platformY[100], platformWidth[100], platformHeight = 50.0f;
 int no_of_platforms = 6;
 static double maxJump = 0, jumpCD = 0;
@@ -34,10 +35,9 @@ struct Items
 };
 struct Items pOrbs[10], yOrbs[10];
 
-// Creating Platforms XY Positions, call drawPlatform() to render
-void createPlatformXY() {
-	//For Creating Random Platforms to Test
-	for (int i = 1; i < no_of_platforms; i++) {
+//Initialize All Platforms for Selected Level
+void initializePlatform(int level) {
+	if (level == 1) {
 		platformX[0] = 400, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 780;
 		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 780;
 		platformX[2] = 950, platformY[2] = CP_System_GetWindowHeight() - 200.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1030;
@@ -45,8 +45,9 @@ void createPlatformXY() {
 		platformX[4] = 850, platformY[4] = CP_System_GetWindowHeight() - 150.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1030;
 		platformX[5] = 400, platformY[5] = CP_System_GetWindowHeight() - 350.0f, platformWidth[5] = CP_System_GetWindowWidth() - 780;
 	}
-	// Format to Create a Platform, Set X, Y, Width
-	//platformX[1] = 0; platformY[1] = 0; platformWidth[1] = 0;
+	else if (level == 2) {
+		//Add More For More Levels
+	}
 }
 
 void Game_Level_Init() {
@@ -59,18 +60,8 @@ void Game_Level_Init() {
 	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
 	gIsPaused = FALSE, BobDirection = FALSE; Bobx = 1280 / 2, Boby = 720 / 2;
 	//Base Platform
-	createPlatformXY();
-	setOrbInitialPosition();
-	/*
-	for (int i = 0; i < 3; i++)
-	{
-		purpleBalls[i] = (rand() % (1200 + 1 - 25) + 25);
-	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		yellowBalls[i] = (rand() % (1200 + 1 - 25) + 25);
-	}*/
+	initializePlatform(level_selector);
+	initializeOrbs();
 }
 
 void Game_Level_Update() {
@@ -115,10 +106,21 @@ void Game_Level_Exit() {
 }
 //rendering createPlatformXY();
 void drawPlatform() {
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	//Test Platform Appearing/Dissapearing
+	static float alpha = 255, toggle = 0;
+	/*
+	if (toggle == 0) {
+		if (alpha > 0) alpha -= 85 * CP_System_GetDt();
+		else toggle = 1;
+	}
+	else {
+		if (alpha < 255) alpha += 85 * CP_System_GetDt();
+		else toggle = 0;
+	}*/
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, alpha));
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	for (int i = 0; i < no_of_platforms; i++) {
-		if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+		if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
 		CP_Graphics_DrawRect(platformX[i], platformY[i], platformWidth[i], platformHeight);
 	}
 	platformMovement();
@@ -203,7 +205,7 @@ void scoreMultiplier(void) {
 	}
 }
 
-//When Collected Orb
+//When Collected Orb, takes in amount of Points
 void pointsCollected(int x) {
 	multiplierTimer = 5.00, points += x * multiplier, multiplierCombo++;
 }
@@ -336,25 +338,10 @@ void Clear_Fail_Pause(void) {
 }
 //Orbs Variable to Change(game feel)
 int no_of_orbs = 5, start_pos_x = 1280 - 25, start_pos_y = -25, respawn_timer = 10;
-float yDespawn = 1, pDespawn = 2, pDropSpeed, yDropSpeed;
-
-void drawOrbs() {
-	makeOrbsFall();
-	orbOnFloor();
-	orbsCollected();
-	CP_Color purple = CP_Color_Create(255, 0, 255, 255);
-	CP_Color yellow = CP_Color_Create(255, 255, 0, 255);
-	CP_Settings_Fill(purple);
-	for (int i = 0; i < no_of_orbs; i++) {
-		CP_Settings_Fill(purple);
-		CP_Graphics_DrawCircle(pOrbs[i].x, pOrbs[i].y, 50);
-		CP_Settings_Fill(yellow);
-		CP_Graphics_DrawCircle(yOrbs[i].x, yOrbs[i].y, 50);
-	}
-}
+float yDespawn = 2, pDespawn = 3.5, pDropSpeed, yDropSpeed;
 
 //To Initialize Orbs at start of level
-void setOrbInitialPosition() {
+void initializeOrbs() {
 	for (int i = 0; i < no_of_orbs; i++) {
 		pOrbs[i].x = rand() % +start_pos_x, pOrbs[i].y = start_pos_y;
 		yOrbs[i].x = rand() % start_pos_x, yOrbs[i].y = start_pos_y;
@@ -362,6 +349,20 @@ void setOrbInitialPosition() {
 		yOrbs[i].timer_to_drop = rand() % respawn_timer;
 		pOrbs[i].timer_on_floor = pDespawn;
 		yOrbs[i].timer_on_floor = yDespawn;
+	}
+}
+
+void drawOrbs() {
+	makeOrbsFall();
+	orbOnFloor();
+	orbsCollected();
+	for (int i = 0; i < no_of_orbs; i++) {
+		CP_Color purple = CP_Color_Create(255, 0, 255, pOrbs[i].timer_on_floor * (255/pDespawn));
+		CP_Color yellow = CP_Color_Create(255, 255, 0, yOrbs[i].timer_on_floor * (255/yDespawn));
+		CP_Settings_Fill(purple);
+		CP_Graphics_DrawCircle(pOrbs[i].x, pOrbs[i].y, 50);
+		CP_Settings_Fill(yellow);
+		CP_Graphics_DrawCircle(yOrbs[i].x, yOrbs[i].y, 50);
 	}
 }
 
@@ -428,558 +429,3 @@ void orbsCollected(void) {
 		}
 	}
 }
-/*
-void purpleOrb()
-{
-	static int sec = 0;
-	static int drop = 0; //
-	static int drop2 = 0;//for purple orbs
-	static int drop3 = 0;//
-
-	sec = CP_System_GetSeconds();
-	CP_Color purple = CP_Color_Create(255, 0, 255, 255);
-	if ((sec % 2 == 0 && sec != 0) || drop == 1)
-	{
-		drop = 1;
-		static int time = 0;
-		CP_Settings_Fill(purple);
-		int i = 0;
-		int collision = 0;
-		//left of ball, right of bob
-
-		if (((((purpleBalls[0] - 25) <= (Bobx + BobWidth)) && (purpleBalls[0] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop = 0;
-			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-		//right of ball, left of bob
-		if (((((purpleBalls[0] + 25) >= (Bobx)) && (purpleBalls[0] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop = 0;
-			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-		//bottom of ball, top of bob
-		if (((((purpleBalls[0]) >= (Bobx)) && (purpleBalls[0]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop = 0;
-			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-
-		//top of ball, bottom of bob
-		if (((((purpleBalls[0]) >= (Bobx)) && (purpleBalls[0]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop = 0;
-			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-
-		for (i; i < no_of_platforms; i++)
-		{
-			if ((purpleBalls[0] > platformX[i] && purpleBalls[0] < (platformX[i] + platformWidth[i])) && ((time + 25) >= platformY[i]))
-			{
-				collision = 1;
-			}
-		}
-
-		if (collision == 1)
-		{
-			CP_Graphics_DrawCircle(purpleBalls[0], time, 50.0f);
-			//printf("Time: %d\n", time);
-			float currentElapsedTime = CP_System_GetDt();
-			static float totalElapsedTime = 0;
-			totalElapsedTime += currentElapsedTime;
-			printf("Time: %f\n", totalElapsedTime);
-			//printf("In touch\n");
-			if ((int)totalElapsedTime == 2)
-			{
-				drop = 0;
-				purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-				time = 0;
-				totalElapsedTime = 0;
-			}
-		}
-
-		else if (time == 720)
-		{
-			drop = 0;
-			purpleBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-
-		}
-
-		else
-		{
-			CP_Graphics_DrawCircle(purpleBalls[0], time += 3, 50.0f);
-		}
-
-	}
-
-	if ((sec % 4 == 0 && sec != 0) || drop2 == 1)
-	{
-		drop2 = 1;
-		static int time = 0;
-		CP_Settings_Fill(purple);
-		int i = 0;
-		int collision = 0;
-		//left of ball, right of bob
-		if (((((purpleBalls[1] - 25) <= (Bobx + BobWidth)) && (purpleBalls[1] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop2 = 0;
-			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-		//right of ball, left of bob
-		if (((((purpleBalls[1] + 25) >= (Bobx)) && (purpleBalls[1] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop2 = 0;
-			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-		//bottom of ball, top of bob
-		if (((((purpleBalls[1]) >= (Bobx)) && (purpleBalls[1]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop2 = 0;
-			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-
-		//top of ball, bottom of bob
-		if (((((purpleBalls[1]) >= (Bobx)) && (purpleBalls[1]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop2 = 0;
-			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-		for (i; i < no_of_platforms; i++)
-		{
-			if ((purpleBalls[1] > platformX[i] && purpleBalls[1] < (platformX[i] + platformWidth[i])) && ((time + 25) >= platformY[i]))
-			{
-				collision = 1;
-			}
-		}
-
-		if (collision == 1)
-		{
-			CP_Graphics_DrawCircle(purpleBalls[1], time, 50.0f);
-			//printf("Time: %d\n", time);
-			float currentElapsedTime = CP_System_GetDt();
-			static float totalElapsedTime = 0;
-			totalElapsedTime += currentElapsedTime;
-			printf("Time: %f\n", totalElapsedTime);
-			//printf("In touch\n");
-			if ((int)totalElapsedTime == 2)
-			{
-				drop2 = 0;
-				purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-				time = 0;
-				totalElapsedTime = 0;
-			}
-		}
-
-		else if (time == 720)
-		{
-			drop2 = 0;
-			purpleBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-
-		}
-
-		else
-		{
-			CP_Graphics_DrawCircle(purpleBalls[1], time += 3, 50.0f);
-		}
-
-	}
-
-	if ((sec % 8 == 0 && sec != 0) || drop3 == 1)
-	{
-		drop3 = 1;
-		static int time = 0;
-		CP_Settings_Fill(purple);
-		int i = 0;
-		int collision = 0;
-		//left of ball, right of bob
-		if (((((purpleBalls[2] - 25) <= (Bobx + BobWidth)) && (purpleBalls[2] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop3 = 0;
-			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-		//right of ball, left of bob
-		if (((((purpleBalls[2] + 25) >= (Bobx)) && (purpleBalls[2] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop3 = 0;
-			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-		//bottom of ball, top of bob
-		if (((((purpleBalls[2]) >= (Bobx)) && (purpleBalls[2]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop3 = 0;
-			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-
-		//top of ball, bottom of bob
-		if (((((purpleBalls[2]) >= (Bobx)) && (purpleBalls[2]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop3 = 0;
-			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(5);
-		}
-		for (i; i < no_of_platforms; i++)
-		{
-			if ((purpleBalls[2] > platformX[i] && purpleBalls[2] < (platformX[i] + platformWidth[i])) && ((time + 25) >= platformY[i]))
-			{
-				collision = 1;
-			}
-		}
-
-		if (collision == 1)
-		{
-			CP_Graphics_DrawCircle(purpleBalls[2], time, 50.0f);
-			//printf("Time: %d\n", time);
-			float currentElapsedTime = CP_System_GetDt();
-			static float totalElapsedTime = 0;
-			totalElapsedTime += currentElapsedTime;
-			printf("Time: %f\n", totalElapsedTime);
-			//printf("In touch\n");
-			if ((int)totalElapsedTime == 2)
-			{
-				drop3 = 0;
-				purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-				time = 0;
-				totalElapsedTime = 0;
-			}
-		}
-
-		else if (time == 720)
-		{
-			drop3 = 0;
-			purpleBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-
-		}
-
-		else
-		{
-			CP_Graphics_DrawCircle(purpleBalls[2], time += 3, 50.0f);
-		}
-	}
-}
-
-void yellowOrb()
-{
-	static int sec = 0;
-	static int drop = 0; //
-	static int drop2 = 0;//for yellow orbs
-	static int drop3 = 0;//
-
-	sec = CP_System_GetSeconds();
-	CP_Color yellow = CP_Color_Create(255, 255, 0, 255);
-	if ((sec % 3 == 0 && sec != 0) || drop == 1)
-	{
-		drop = 1;
-		static int time = 0;
-		CP_Settings_Fill(yellow);
-		int i = 0;
-		int collision = 0;
-		//left of ball, right of bob
-		if (((((yellowBalls[0] - 25) <= (Bobx + BobWidth)) && (yellowBalls[0] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop = 0;
-			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-		//right of ball, left of bob
-		if (((((yellowBalls[0] + 25) >= (Bobx)) && (yellowBalls[0] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop = 0;
-			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-		//bottom of ball, top of bob
-		if (((((yellowBalls[0]) >= (Bobx)) && (yellowBalls[0]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop = 0;
-			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-
-		//top of ball, bottom of bob
-		if (((((yellowBalls[0]) >= (Bobx)) && (yellowBalls[0]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop = 0;
-			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-
-		for (i; i < no_of_platforms; i++)
-		{
-			if ((yellowBalls[0] > platformX[i] && yellowBalls[0] < (platformX[i] + platformWidth[i])) && ((time + 25) >= platformY[i]))
-			{
-				collision = 1;
-			}
-		}
-
-		if (collision == 1)
-		{
-			CP_Graphics_DrawCircle(yellowBalls[0], time, 50.0f);
-			//printf("Time: %d\n", time);
-			float currentElapsedTime = CP_System_GetDt();
-			static float totalElapsedTime = 0;
-			totalElapsedTime += currentElapsedTime;
-			printf("Time: %f\n", totalElapsedTime);
-			//printf("In touch\n");
-			if ((int)totalElapsedTime == 3)
-			{
-				drop = 0;
-				yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-				time = 0;
-				totalElapsedTime = 0;
-			}
-		}
-
-		else if (time == 720)
-		{
-			drop = 0;
-			yellowBalls[0] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-
-		}
-
-		else
-		{
-			CP_Graphics_DrawCircle(yellowBalls[0], time += 5, 50.0f);
-		}
-
-	}
-
-	if ((sec % 6 == 0 && sec != 0) || drop2 == 1)
-	{
-		drop2 = 1;
-		static int time = 0;
-		CP_Settings_Fill(yellow);
-		int i = 0;
-		int collision = 0;
-		//left of ball, right of bob
-		if (((((yellowBalls[1] - 25) <= (Bobx + BobWidth)) && (yellowBalls[1] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop2 = 0;
-			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-		//right of ball, left of bob
-		if (((((yellowBalls[1] + 25) >= (Bobx)) && (yellowBalls[1] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop2 = 0;
-			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-		//bottom of ball, top of bob
-		if (((((yellowBalls[1]) >= (Bobx)) && (yellowBalls[1]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop2 = 0;
-			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-
-		//top of ball, bottom of bob
-		if (((((yellowBalls[1]) >= (Bobx)) && (yellowBalls[1]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop2 = 0;
-			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-		for (i; i < no_of_platforms; i++)
-		{
-			if ((yellowBalls[1] > platformX[i] && yellowBalls[1] < (platformX[i] + platformWidth[i])) && ((time + 25) >= platformY[i]))
-			{
-				collision = 1;
-			}
-		}
-
-		if (collision == 1)
-		{
-			CP_Graphics_DrawCircle(yellowBalls[1], time, 50.0f);
-			//printf("Time: %d\n", time);
-			float currentElapsedTime = CP_System_GetDt();
-			static float totalElapsedTime = 0;
-			totalElapsedTime += currentElapsedTime;
-			printf("Time: %f\n", totalElapsedTime);
-			//printf("In touch\n");
-			if ((int)totalElapsedTime == 3)
-			{
-				drop2 = 0;
-				yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-				time = 0;
-				totalElapsedTime = 0;
-			}
-		}
-
-		else if (time == 720)
-		{
-			drop2 = 0;
-			yellowBalls[1] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-
-		}
-
-		else
-		{
-			CP_Graphics_DrawCircle(yellowBalls[1], time += 5, 50.0f);
-		}
-
-	}
-
-	if ((sec % 9 == 0 && sec != 0) || drop3 == 1)
-	{
-		drop3 = 1;
-		static int time = 0;
-		CP_Settings_Fill(yellow);
-		int i = 0;
-		int collision = 0;
-		//left of ball, right of bob
-		if (((((yellowBalls[2] - 25) <= (Bobx + BobWidth)) && (yellowBalls[2] + 25) >= (Bobx + BobWidth)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop3 = 0;
-			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-		//right of ball, left of bob
-		if (((((yellowBalls[2] + 25) >= (Bobx)) && (yellowBalls[2] - 25) <= (Bobx)) && ((time >= Boby) && (time < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop3 = 0;
-			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-		//bottom of ball, top of bob
-		if (((((yellowBalls[2]) >= (Bobx)) && (yellowBalls[2]) <= (Bobx + BobWidth)) && ((time + 25 >= Boby) && (time + 25 < Boby + BobHeight))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop3 = 0;
-			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-
-		//top of ball, bottom of bob
-		if (((((yellowBalls[2]) >= (Bobx)) && (yellowBalls[2]) <= (Bobx + BobWidth)) && ((time - 25 <= Boby + BobHeight) && (time - 25 >= Boby))))
-		{
-			//CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			//CP_Graphics_DrawCircle(100, 100, 50.0f);
-			drop3 = 0;
-			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-			pointsCollected(10);
-		}
-		for (i; i < no_of_platforms; i++)
-		{
-			if ((yellowBalls[2] > platformX[i] && yellowBalls[2] < (platformX[i] + platformWidth[i])) && ((time + 25) >= platformY[i]))
-			{
-				collision = 1;
-			}
-		}
-
-		if (collision == 1)
-		{
-			CP_Graphics_DrawCircle(yellowBalls[2], time, 50.0f);
-			//printf("Time: %d\n", time);
-			float currentElapsedTime = CP_System_GetDt();
-			static float totalElapsedTime = 0;
-			totalElapsedTime += currentElapsedTime;
-			printf("Time: %f\n", totalElapsedTime);
-			//printf("In touch\n");
-			if ((int)totalElapsedTime == 3)
-			{
-				drop3 = 0;
-				yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-				time = 0;
-				totalElapsedTime = 0;
-			}
-		}
-
-		else if (time == 720)
-		{
-			drop3 = 0;
-			yellowBalls[2] = (rand() % (1200 + 1 - 25) + 25);
-			time = 0;
-
-		}
-
-		else
-		{
-			CP_Graphics_DrawCircle(yellowBalls[2], time += 5, 50.0f);
-		}
-	}*/
-
