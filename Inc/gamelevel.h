@@ -36,8 +36,7 @@ void orbsCollected(void);
 void makeOrbsFall();
 void drawOrbs();
 void orbOnFloor();
-void orbsCollected(void);
-
+int pointsCollected(int x);
 void drawTreasureChest(void);
 
 int ChestCollision(void);
@@ -53,3 +52,5 @@ void move_fast(void);
 void time_extension(void);
 
 void power_up(void);
+void textAbovePlayer(float x, float y, char* text);
+void setText(char* text);
