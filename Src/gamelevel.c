@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-CP_Image Bob, BobL, heart, chest, fail_screen, clear_screen, pause_menu, bombPic;
+CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu, purple_orb, yellow_orb, particle, jumpParticle, bombPic;
 // Bob Variables
 double Bobx, Boby;
 int BobWidth, BobHeight;
@@ -31,6 +31,10 @@ int cheststate = 1;
 static int chestX, chestY;
 int power = 0;
 
+//Text (Testing)
+float textTimer = 0;
+char textToShow[50] = {"Test"};
+
 //Can Be Used for Chest, Bomb, Orbs
 struct Items
 {
@@ -50,6 +54,9 @@ void initializePlatform(int level) {
 		platformX[5] = 400, platformY[5] = CP_System_GetWindowHeight() - 350.0f, platformWidth[5] = CP_System_GetWindowWidth() - 780;
 	}
 	else if (level == 2) {
+		memset(platformX, 0, sizeof(platformX)); 
+		memset(platformY, 0, sizeof(platformY));
+		memset(platformWidth, 0, sizeof(platformWidth));
 		//Add More For More Levels
 	}
 }
@@ -58,9 +65,10 @@ void Game_Level_Init() {
 	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0);
 	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png");
 	heart = CP_Image_Load("Assets/heart.png");
-	chest = CP_Image_Load("Assets/Chest.png");
-	bombPic = CP_Image_Load("Assets/Bomb.png");
+	chest = CP_Image_Load("Assets/Chest.png"); bombPic = CP_Image_Load("Assets/Bomb.png");
+	purple_orb = CP_Image_Load("Assets/porbs.png"); yellow_orb = CP_Image_Load("Assets/yorbs.png");
 	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png");
+	particle = CP_Image_Load("Assets/particle.png"); jumpParticle = CP_Image_Load("Assets/particle1.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
 	gameTimer = 45.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
@@ -102,14 +110,10 @@ void Game_Level_Update() {
 			cheststate = 1;
 		}
 
-		if (BobImmune == 1)
-		{
-			immune_timer -= CP_System_GetDt();
-			if (immune_timer <= 0)
-			{
-				BobImmune = 0;
-			}
-		}
+		//Shorter Ver. of Immunity
+		//Give Immunity Status based on immunity timer.
+		immune_timer -= CP_System_GetDt();
+		BobImmune = (immune_timer > 0) ? TRUE : FALSE;
 
 		switch (gIsPaused) {
 		case TRUE: //Game is paused
@@ -121,6 +125,7 @@ void Game_Level_Update() {
 			scoreMultiplier();				//Score and Multiplier
 			gameTimer -= CP_System_GetDt();	//Game Timer Reduction
 			drawOrbs();						//Orbs and Points
+			textAbovePlayer(Bobx, Boby, textToShow);
 			break;
 		}
 	}
@@ -237,8 +242,9 @@ void scoreMultiplier(void) {
 }
 
 //When Collected Orb, takes in amount of Points
-void pointsCollected(int x) {
+int pointsCollected(int x) {
 	multiplierTimer = 5.00, points += x * multiplier, multiplierCombo++;
+	return x*multiplier;
 }
 
 // Logic For Player Movement
@@ -284,6 +290,7 @@ void playerMovement() {
 
 	//Jumping
 	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0) {
+		//particleEffect(Bobx, Boby, "Jump!");
 		--jumpCounter;
 		maxJump = maxJumpHeight;
 		if (jumpCounter == 0) {
@@ -322,6 +329,7 @@ void Clear_Fail_Pause(void) {
 		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() / 2 - 45);
 		if (CP_Input_MouseClicked()) {
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+				level_selector = 2;
 				Game_Level_Init();
 				//TODO: LAUNCH NEW LEVEL
 			}
@@ -339,6 +347,7 @@ void Clear_Fail_Pause(void) {
 		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() / 2 - 45);
 		if (CP_Input_MouseClicked()) {
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+				level_selector = 2;
 				Game_Level_Init();
 				//TODO: LAUNCH NEW LEVEL
 			}
@@ -391,13 +400,8 @@ void drawOrbs() {
 	orbOnFloor();
 	orbsCollected();
 	for (int i = 0; i < no_of_orbs; i++) {
-		CP_Color purple = CP_Color_Create(255, 0, 255, pOrbs[i].timer_on_floor * (255 / pDespawn));
-		CP_Color yellow = CP_Color_Create(255, 255, 0, yOrbs[i].timer_on_floor * (255 / yDespawn));
-		CP_Color red = CP_Color_Create(255, 0, 0, 255);
-		CP_Settings_Fill(purple);
-		CP_Graphics_DrawCircle(pOrbs[i].x, pOrbs[i].y, 50);
-		CP_Settings_Fill(yellow);
-		CP_Graphics_DrawCircle(yOrbs[i].x, yOrbs[i].y, 50);
+		CP_Image_Draw(purple_orb, pOrbs[i].x - 25 , pOrbs[i].y - 25, 50, 50, pOrbs[i].timer_on_floor * (255 / pDespawn));
+		CP_Image_Draw(yellow_orb, yOrbs[i].x - 25, yOrbs[i].y - 25, 50, 50, yOrbs[i].timer_on_floor * (255 / pDespawn));
 		CP_Image_Draw(bombPic, bOrbs[i].x - 25, bOrbs[i].y - 25, 50, 50, 255);
 	}
 }
@@ -486,27 +490,33 @@ void orbOnFloor() {
 //Orbs + Bombs
 //Collecting Orbs Give Points
 void orbsCollected(void) {
+	int x;
+	char Points[50] = { 0 };
 	for (int i = 0; i < no_of_orbs; i++) {
 		//for purple
 		if (circleCollision(pOrbs[i].x, pOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
-			pointsCollected(5);
+			x = pointsCollected(5);
+			sprintf_s(Points, _countof(Points), "+ %i", x);
+			setText(Points);
 			//Reinitialize when collected
 			pOrbs[i].timer_to_drop = rand() % respawn_timer,
 				pOrbs[i].y = start_pos_y, pOrbs[i].x = 25 + rand() % start_pos_x, pOrbs[i].timer_on_floor = pDespawn;
 		}
 		//for yellow
 		if (circleCollision(yOrbs[i].x, yOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
-			pointsCollected(10);
+			x = pointsCollected(10);
+			sprintf_s(Points, _countof(Points), "+ %i", x);
+			setText(Points);
 			//Reinitialize when collected
 			yOrbs[i].timer_to_drop = rand() % respawn_timer,
 				yOrbs[i].y = start_pos_y, yOrbs[i].x = 25 + rand() % start_pos_x, yOrbs[i].timer_on_floor = yDespawn;
 		}
 		//for Bombs
 		if (circleCollision(bOrbs[i].x, bOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
-			if (BobImmune != 1)
+			if (BobImmune != 1) {
+				setText("Dodge plssssss");
 				health--;
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255)); //red color
-			CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
+			}
 			//Reinitialize when collected
 			bOrbs[i].timer_to_drop = rand() % respawn_timer,
 				bOrbs[i].y = start_pos_y, bOrbs[i].x = 25 + rand() % start_pos_x, bOrbs[i].timer_on_floor = bDespawn;
@@ -551,26 +561,31 @@ void power_up() {
 	int powerup = rand() % 5;
 	if (powerup == 1)
 	{
+		setText("Immunity");
 		immunity();
 		power = 1;
 	}
 	else if (powerup == 2)
 	{
+		setText("Add. Health");
 		add_health();
 		power = 1;
 	}
 	else if (powerup == 3)
 	{
+		setText("Higher Jump");
 		jump_high();
 		power = 1;
 	}
 	else if (powerup == 4)
 	{
+		setText("Increased Speed");
 		move_fast();
 		power = 1;
 	}
 	else if (powerup == 5)
 	{
+		setText("Add. Time");
 		time_extension();
 		power = 1;
 	}
@@ -579,7 +594,7 @@ void power_up() {
 void immunity(void)
 {
 	immune_timer = 5;
-	BobImmune = 1;
+	//BobImmune = 1;
 }
 
 void add_health(void)
@@ -600,4 +615,22 @@ void move_fast(void)
 void time_extension(void)
 {
 	gameTimer += 10.0;
+}
+
+void textAbovePlayer(float x, float y, char *text) {
+	//For Text On top of Bob
+	if (textTimer >= 0) {
+		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Font_DrawText(text, x + 40, y - 20);
+		textTimer -= CP_System_GetDt();
+	}
+}
+
+void setText(char* text) {
+	textTimer = 3;
+	memset(textToShow, 0, sizeof(textToShow));
+	for (int i = 0; text[i] != '\0'; i++) {
+		textToShow[i] = text[i];
+	}
 }
