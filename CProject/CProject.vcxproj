@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Inc\gamelevel.h" />
+    <ClInclude Include="..\Inc\levelselect.h" />
     <ClInclude Include="..\Inc\mainmenu.h" />
     <ClInclude Include="..\Inc\splashscreen.h" />
     <ClInclude Include="..\Inc\utils.h" />
@@ -22,6 +23,7 @@
     <ClCompile Include="..\Src\mainmenu.c" />
     <ClCompile Include="..\Src\splashscreen.c" />
     <ClCompile Include="..\Src\utils.c" />
+    <ClCompile Include="levelselect.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

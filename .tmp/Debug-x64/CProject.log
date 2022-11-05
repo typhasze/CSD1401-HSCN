@@ -1,63 +1,19 @@
-﻿  gamelevel.c
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(33,121): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(34,120): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(35,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(36,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(37,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(38,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(78,48): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(78,54): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(78,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(78,84): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(79,26): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(79,32): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(79,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(79,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(90,20): warning C4087: 'scoreMultiplier': declared with 'void' parameter list
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(98,65): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(99,65): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(143,24): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(148,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(208,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(209,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(210,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(271,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(271,70): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(272,55): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(272,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(288,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(288,68): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(289,55): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(289,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(303,35): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(303,66): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(327,8): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(384,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(384,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(410,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(410,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(469,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(469,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(495,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(495,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(554,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(554,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(580,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(580,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(592,8): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(649,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(649,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(675,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(675,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(734,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(734,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(760,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(760,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(819,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(819,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(845,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\gamelevel.c(845,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-  CProject.vcxproj -> C:\Users\stron\Documents\GitHub\CSD1401-HSCN\bin\Debug-x64\CProject.exe
+﻿  mainmenu.c
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(15,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(16,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(76,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(76,57): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(77,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(77,69): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(78,41): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(78,66): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(79,47): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(79,77): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(80,45): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(80,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(46,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\Src\mainmenu.c(47,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  CProject.vcxproj -> C:\Users\Clement\OneDrive\Desktop\CSD1401-HSCN-main\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
-  7 File(s) copied
+  13 File(s) copied
