@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu;
+CP_Image Bob, BobL, heart, chest, fail_screen, clear_screen, pause_menu, bombPic;
 // Bob Variables
 double Bobx, Boby;
 int BobWidth, BobHeight;
@@ -59,7 +59,7 @@ void Game_Level_Init() {
 	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png");
 	heart = CP_Image_Load("Assets/heart.png");
 	chest = CP_Image_Load("Assets/Chest.png");
-	Bomb = CP_Image_Load("Assets/Bomb.png");
+	bombPic = CP_Image_Load("Assets/Bomb.png");
 	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
@@ -398,7 +398,7 @@ void drawOrbs() {
 		CP_Graphics_DrawCircle(pOrbs[i].x, pOrbs[i].y, 50);
 		CP_Settings_Fill(yellow);
 		CP_Graphics_DrawCircle(yOrbs[i].x, yOrbs[i].y, 50);
-		CP_Image_Draw(Bomb, bOrbs[i].x - 25, bOrbs[i].y - 25, CP_Image_GetWidth(Bomb), CP_Image_GetHeight(Bomb), 255);
+		CP_Image_Draw(bombPic, bOrbs[i].x - 25, bOrbs[i].y - 25, 50, 50, 255);
 	}
 }
 //Orbs + Bombs
@@ -424,8 +424,33 @@ void makeOrbsFall() {
 			pOrbs[i].y = start_pos_y, pOrbs[i].x = 25 + rand() % start_pos_x, pOrbs[i].timer_on_floor = pDespawn : 0;
 		(yOrbs[i].y > 720 || yOrbs[i].timer_on_floor < 0) ? yOrbs[i].timer_to_drop = rand() % respawn_timer,
 			yOrbs[i].y = start_pos_y, yOrbs[i].x = 25 + rand() % start_pos_x, yOrbs[i].timer_on_floor = yDespawn : 0;
+		/*
 		(bOrbs[i].y > 720 || bOrbs[i].timer_on_floor < 0) ? bOrbs[i].timer_to_drop = rand() % respawn_timer,
 			bOrbs[i].y = start_pos_y, bOrbs[i].x = 25 + rand() % start_pos_x, bOrbs[i].timer_on_floor = bDespawn : 0;
+		*/
+
+		if (bOrbs[i].y > 720 || bOrbs[i].timer_on_floor < 0)
+		{
+			if (circleCollision(bOrbs[i].x, bOrbs[i].y, 200, Bobx, Boby, BobWidth, BobHeight) == 1)
+			{
+				health--;
+				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+				CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
+				bOrbs[i].timer_to_drop = rand() % respawn_timer;
+				bOrbs[i].y = start_pos_y; bOrbs[i].x = rand() % start_pos_x;
+				bOrbs[i].timer_on_floor = bDespawn;
+			}
+			else
+			{
+				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+				CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
+				bOrbs[i].timer_to_drop = rand() % respawn_timer;
+				bOrbs[i].y = start_pos_y; bOrbs[i].x = rand() % start_pos_x;
+				bOrbs[i].timer_on_floor = bDespawn;
+			}
+		}
+
+
 	}
 }
 //Orbs + Bombs
@@ -434,7 +459,7 @@ void makeOrbsFall() {
 void orbOnFloor() {
 	pDropSpeed = CP_System_GetDt() * 250;
 	yDropSpeed = CP_System_GetDt() * 200;
-	bDropSpeed = CP_System_GetDt() * 150;
+	bDropSpeed = CP_System_GetDt() * 400;
 	for (int i = 0; i < no_of_orbs; i++) {
 		pOrbs[i].dropSpeed = pDropSpeed;
 		yOrbs[i].dropSpeed = yDropSpeed;
@@ -480,6 +505,8 @@ void orbsCollected(void) {
 		if (circleCollision(bOrbs[i].x, bOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
 			if (BobImmune != 1)
 				health--;
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255)); //red color
+			CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
 			//Reinitialize when collected
 			bOrbs[i].timer_to_drop = rand() % respawn_timer,
 				bOrbs[i].y = start_pos_y, bOrbs[i].x = 25 + rand() % start_pos_x, bOrbs[i].timer_on_floor = bDespawn;
