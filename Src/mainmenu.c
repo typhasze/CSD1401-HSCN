@@ -73,7 +73,7 @@ void Main_Menu_Init()
 	HowToPlay = CP_Image_Load("Assets/HowToPlay.png");
 	Credits = CP_Image_Load("Assets/Credits.png");
 	background = CP_Image_Load("Assets/mainbackground.png");
-	intro = CP_Image_Load("Assets/intro2.png");
+	intro = CP_Image_Load("Assets/intro.png");
 	cross = CP_Image_Load("Assets/cross.png");
 	mainmenustate = 1;
 }
