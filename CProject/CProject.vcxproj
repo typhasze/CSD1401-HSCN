@@ -19,11 +19,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Src\gamelevel.c" />
+    <ClCompile Include="..\Src\levelselect.c" />
     <ClCompile Include="..\Src\main.c" />
     <ClCompile Include="..\Src\mainmenu.c" />
     <ClCompile Include="..\Src\splashscreen.c" />
     <ClCompile Include="..\Src\utils.c" />
-    <ClCompile Include="levelselect.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

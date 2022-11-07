@@ -47,7 +47,7 @@
     <ClCompile Include="..\Src\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="levelselect.c">
+    <ClCompile Include="..\Src\levelselect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

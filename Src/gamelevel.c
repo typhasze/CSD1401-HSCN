@@ -114,6 +114,11 @@ void Game_Level_Update() {
 		//Give Immunity Status based on immunity timer.
 		immune_timer -= CP_System_GetDt();
 		BobImmune = (immune_timer > 0) ? TRUE : FALSE;
+		if (BobImmune == FALSE)
+		{
+			Bob = CP_Image_Load("Assets/Bob.png");
+			BobL = CP_Image_Load("Assets/BobL.png");
+		}
 
 		switch (gIsPaused) {
 		case TRUE: //Game is paused
@@ -594,8 +599,9 @@ void power_up() {
 
 void immunity(void)
 {
+	Bob = CP_Image_Load("Assets/IBob.png");
+	BobL = CP_Image_Load("Assets/IBobL.png");
 	immune_timer = 5;
-	//BobImmune = 1;
 }
 
 void add_health(void)
