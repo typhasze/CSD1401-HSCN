@@ -4,12 +4,16 @@
 #include "gamelevel.h"
 #include "utils.h"
 #include "levelselect.h"
+#include <stdbool.h>
 
 CP_Color grey;
 CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 int level_selector;
-CP_Image Bob, Title, Play, HowToPlay, Credits;
+CP_Image Bob, Title, Play, HowToPlay, Credits,background,intro,cross;
+static int alpha = 255;
+static int mainmenustate = 0;
+int static boxClick = 0;
 
 void drawMenu() {
 	CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -27,6 +31,35 @@ void drawMenu() {
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Font_DrawText("Exit", halfX + 500, halfY + 250);
+
+	//Draws the graphics for the menu screen.
+	CP_Image_Draw(background, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), alpha);
+	CP_Image_Draw(Play, halfX, halfY - 50, CP_Image_GetWidth(Play), CP_Image_GetHeight(Play), alpha);
+	CP_Image_Draw(HowToPlay, halfX, halfY + 100, CP_Image_GetWidth(HowToPlay), CP_Image_GetHeight(HowToPlay), alpha);
+	CP_Image_Draw(Credits, halfX, halfY + 250, CP_Image_GetWidth(Credits), CP_Image_GetHeight(Credits), alpha);
+}
+
+void drawIntro() {
+	float halfX = CP_System_GetWindowWidth() / 2;
+	float halfY = CP_System_GetWindowHeight() / 2;
+	CP_Settings_RectMode(CP_POSITION_CENTER);
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
+	CP_Graphics_DrawRect(1200,60 , 40, 40);
+	CP_Image_Draw(intro, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), 255);
+	CP_Image_Draw(cross, 1200, 60, 40, 40, 255);
+	CP_Image_Draw(background, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), 20);
+	CP_Image_Draw(Play, halfX, halfY - 50, CP_Image_GetWidth(Play), CP_Image_GetHeight(Play), 20);
+	CP_Image_Draw(HowToPlay, halfX, halfY + 100, CP_Image_GetWidth(HowToPlay), CP_Image_GetHeight(HowToPlay), 20);
+	CP_Image_Draw(Credits, halfX, halfY + 250, CP_Image_GetWidth(Credits), CP_Image_GetHeight(Credits), 20);
+	if (CP_Input_MouseClicked()) {
+		if (boxClick = IsAreaClicked(1200, 60, 40, 40, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			mainmenustate = 1;
+		}
+	}
+	if (CP_Input_KeyTriggered(KEY_ESCAPE)) {
+		mainmenustate = 1;
+	}
+
 }
 
 void Main_Menu_Init()
@@ -35,10 +68,14 @@ void Main_Menu_Init()
 	CP_System_SetWindowSize(1280, 720);
 	CP_Settings_TextSize(50.0f);
 	Bob = CP_Image_Load("Assets/Bob.png");
-	Title = CP_Image_Load("Assets/Title.png");
+	Title = CP_Image_Load("Assets/thoseorbsarefine.png");
 	Play = CP_Image_Load("Assets/Play.png");
 	HowToPlay = CP_Image_Load("Assets/HowToPlay.png");
 	Credits = CP_Image_Load("Assets/Credits.png");
+	background = CP_Image_Load("Assets/mainbackground.png");
+	intro = CP_Image_Load("Assets/intro2.png");
+	cross = CP_Image_Load("Assets/cross.png");
+	mainmenustate = 1;
 }
 
 void Main_Menu_Update()
@@ -46,7 +83,6 @@ void Main_Menu_Update()
 	CP_Graphics_ClearBackground(CP_Color_Create(255, 255, 255, 255));
 	float halfX = CP_System_GetWindowWidth() / 2;
 	float halfY = CP_System_GetWindowHeight() / 2;
-	int static boxClick = 0;
 
 	//Play Button
 	if (CP_Input_MouseClicked()) {
@@ -61,8 +97,13 @@ void Main_Menu_Update()
 
 	//Instructions Button (SCOTT TODO)
 	if (CP_Input_MouseClicked()) {
-		if (boxClick = IsAreaClicked(halfX, halfY + 100, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
+		if (boxClick = IsAreaClicked(halfX, halfY + 100, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+			mainmenustate = 2;
+			
+			
+
+		}// PLS CHANGE
+		
 	}
 
 	// Credits Button
@@ -77,16 +118,17 @@ void Main_Menu_Update()
 		if (boxClick = IsAreaClicked(halfX + 500, halfY + 250, 150.0f, 60.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 			CP_Engine_Terminate();
 	}
-	//Draws the graphics for the menu screen.
-	CP_Image_Draw(Bob, 200, halfY, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
-	CP_Image_Draw(Title, halfX, halfY - 250, CP_Image_GetWidth(Title), CP_Image_GetHeight(Title), 255);
-	CP_Image_Draw(Play, halfX, halfY - 50, CP_Image_GetWidth(Play), CP_Image_GetHeight(Play), 255);
-	CP_Image_Draw(HowToPlay, halfX, halfY + 100, CP_Image_GetWidth(HowToPlay), CP_Image_GetHeight(HowToPlay), 255);
-	CP_Image_Draw(Credits, halfX, halfY + 250, CP_Image_GetWidth(Credits), CP_Image_GetHeight(Credits), 255);
-	drawMenu();
+	
+	if (mainmenustate == 1) {
+		drawMenu();
+	}
+	else if (mainmenustate == 2) {
+		drawIntro();
+	}
 }
 
 void Main_Menu_Exit()
 {
 
 }
+

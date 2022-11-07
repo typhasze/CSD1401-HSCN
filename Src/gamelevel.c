@@ -367,6 +367,7 @@ void Clear_Fail_Pause(void) {
 			}
 			//Menu
 			if (IsCircleClicked(684.5 + 37.5, 330, 75, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+				CP_Settings_ImageMode(CP_POSITION_CENTER);
 				CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 			}
 			//Resume
