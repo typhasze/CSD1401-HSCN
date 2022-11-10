@@ -9,6 +9,7 @@
 #include <stdio.h>
 
 CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu, purple_orb, yellow_orb, particle, jumpParticle, bombPic;
+CP_Image movingEffect1, movingEffect2, jumpingEffect;
 // Bob Variables
 double Bobx, Boby;
 int BobWidth, BobHeight;
@@ -64,6 +65,7 @@ void initializePlatform(int level) {
 void Game_Level_Init() {
 	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0);
 	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png");
+	movingEffect1 = CP_Image_Load("Assets/movingeffect1.png"), movingEffect2 = CP_Image_Load("Assets/movingeffect2.png"); jumpingEffect = CP_Image_Load("Assets/jumpeffect.png");
 	heart = CP_Image_Load("Assets/heart.png");
 	chest = CP_Image_Load("Assets/Chest.png"); bombPic = CP_Image_Load("Assets/Bomb.png");
 	purple_orb = CP_Image_Load("Assets/porbs.png"); yellow_orb = CP_Image_Load("Assets/yorbs.png");
@@ -254,6 +256,7 @@ int pointsCollected(int x) {
 
 // Logic For Player Movement
 void playerMovement() {
+	movingEffect();
 	float velocity = CP_System_GetDt() * 350;
 	static double maxJump = 0, jumpCD = 0;
 	static int jumpCounter = 2;
@@ -295,7 +298,6 @@ void playerMovement() {
 
 	//Jumping
 	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0) {
-		//particleEffect(Bobx, Boby, "Jump!");
 		--jumpCounter;
 		maxJump = maxJumpHeight;
 		if (jumpCounter == 0) {
@@ -444,6 +446,8 @@ void makeOrbsFall() {
 			if (circleCollision(bOrbs[i].x, bOrbs[i].y, 200, Bobx, Boby, BobWidth, BobHeight) == 1)
 			{
 				health--;
+				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 70));
+				CP_Graphics_DrawRect(0, 0, 1280, 720);
 				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 				CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
 				bOrbs[i].timer_to_drop = rand() % respawn_timer;
@@ -459,10 +463,9 @@ void makeOrbsFall() {
 				bOrbs[i].timer_on_floor = bDespawn;
 			}
 		}
-
-
 	}
 }
+
 //Orbs + Bombs
 //Sets Orb Velocity, If detect collision = 0, no Collision = Velocity
 //Resets drop velocity > checks for collision and set new speed(if collision)
@@ -522,6 +525,8 @@ void orbsCollected(void) {
 			if (BobImmune != 1) {
 				setText("Dodge plssssss");
 				health--;
+				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 70));
+				CP_Graphics_DrawRect(0, 0, 1280, 720);
 			}
 			//Reinitialize when collected
 			bOrbs[i].timer_to_drop = rand() % respawn_timer,
@@ -616,7 +621,7 @@ void jump_high(void)
 
 void move_fast(void)
 {
-	speedMultiplier += 0.5;
+	speedMultiplier += 0.33;
 }
 
 void time_extension(void)
@@ -641,3 +646,52 @@ void setText(char* text) {
 		textToShow[i] = text[i];
 	}
 }
+
+//Add streaks of line behind player for moving
+void movingEffect() {
+	static float alpha = 255, timer = 0;
+	static bool toggle = FALSE, movementToggle = FALSE, jumpToggle = FALSE;
+	float showTimer = 0;
+	if (CP_Input_KeyDown(KEY_A)) {
+		if (movementToggle == FALSE)
+			CP_Image_Draw(movingEffect1, Bobx + BobWidth + 5, Boby + 5, 50, 75, alpha);
+		if (movementToggle == TRUE)
+			CP_Image_Draw(movingEffect2, Bobx + BobWidth + 5, Boby + 5, 50, 75, alpha);
+	}
+	else if (CP_Input_KeyDown(KEY_D)) {
+		if (movementToggle == FALSE)
+			CP_Image_Draw(movingEffect1, Bobx - BobWidth + 25, Boby + 5, 50, 75, alpha);
+		if (movementToggle == TRUE)
+			CP_Image_Draw(movingEffect2, Bobx - BobWidth + 25, Boby + 5, 50, 75, alpha);
+	}
+	if (CP_Input_KeyTriggered(KEY_SPACE)) {
+		jumpToggle = TRUE;
+		showTimer = 20;
+		//CP_Image_Draw(jumpingEffect, Bobx - 25, Boby + 50, 125, 75, 255);
+	}
+	
+	if (jumpToggle) {
+		showTimer -= CP_System_GetDt();
+		CP_Image_Draw(jumpingEffect, Bobx - 25, Boby + 50, 125, 75, 255);
+		(showTimer <= 0) ? jumpToggle = FALSE : 0;
+	}
+
+	// For Moving Effect alternates between 2 pictures fading in and out.
+	if (toggle == 0) {
+		if (alpha > 0) alpha -= 755 * CP_System_GetDt();
+		else toggle = 1;
+	}
+	else {
+		if (alpha < 255) alpha += 755 * CP_System_GetDt();
+		else toggle = 0;
+	}
+	if (movementToggle == TRUE) {
+		if (timer > 0) timer -= 4 * CP_System_GetDt();
+		else movementToggle = !movementToggle;
+	}
+	else {
+		if (timer < 1) timer += 4 * CP_System_GetDt();
+		else movementToggle = !movementToggle;
+	}
+}
+
