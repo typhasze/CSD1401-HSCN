@@ -8,8 +8,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu,
-purple_orb, yellow_orb, particle, jumpParticle, bombPic, volcano, picPlatform;
+CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu, purple_orb, yellow_orb, particle, jumpParticle, bombPic;
+CP_Sound chestopen, explosion, orb, gameover;
 // Bob Variables
 double Bobx, Boby;
 int BobWidth, BobHeight;
@@ -30,6 +30,7 @@ bool gIsPaused, BobDirection, BobImmune = 0;
 //For Chest
 int cheststate = 1;
 static int chestX, chestY;
+int static soundCheck = 0; //sfx for bomb 
 int power = 0;
 
 //Text (Testing)
@@ -50,7 +51,7 @@ void initializePlatform(int level) {
 		platformX[0] = 400, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 900;
 		platformX[1] = 950, platformY[1] = CP_System_GetWindowHeight() - 50.0f, platformWidth[1] = CP_System_GetWindowWidth() - 1000;
 		platformX[2] = 0, platformY[2] = CP_System_GetWindowHeight() - 50.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1000;
-		platformX[3] = 300, platformY[3] = CP_System_GetWindowHeight() - 200.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1000;
+		platformX[3] = 300, platformY[3] = CP_System_GetWindowHeight() - 225.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1000;
 		platformX[4] = 700, platformY[4] = CP_System_GetWindowHeight() - 400.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1000;
 	}
 	else if (level == 2) {
@@ -65,28 +66,14 @@ void initializePlatform(int level) {
 		platformX[4] = 850, platformY[4] = CP_System_GetWindowHeight() - 150.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1030;
 		platformX[5] = 400, platformY[5] = CP_System_GetWindowHeight() - 350.0f, platformWidth[5] = CP_System_GetWindowWidth() - 780;
 	}
-	else if (level == 3) {
-		memset(platformX, 0, sizeof(platformX));
-		memset(platformY, 0, sizeof(platformY));
-		memset(platformWidth, 0, sizeof(platformWidth));
-		platformX[0] = 540, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 1080;
-		platformX[1] = 140, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 880;
-		platformX[2] = 740, platformY[2] = CP_System_GetWindowHeight() - 200.0f, platformWidth[2] = CP_System_GetWindowWidth() - 880;
-		platformX[3] = 140, platformY[3] = CP_System_GetWindowHeight() - 280.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1200;
-		platformX[4] = 440, platformY[4] = CP_System_GetWindowHeight() - 320.0f, platformWidth[4] = CP_System_GetWindowWidth() - 980;
-	}
-}
-
-void drawBackground()
-{
-	if (level_selector == 1) {
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		CP_Image_Draw(volcano, 0, 0, 1280, 720, 255);
-	}
 }
 
 void Game_Level_Init() {
 	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0);
+	chestopen = CP_Sound_Load("Assets/ChestOpen.wav");
+	explosion = CP_Sound_Load("Assets/Explosion.wav");
+	orb = CP_Sound_Load("Assets/Orb.wav");
+	gameover = CP_Sound_Load("Assets/GameOver.wav");
 	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png");
 	heart = CP_Image_Load("Assets/heart.png");
 	chest = CP_Image_Load("Assets/Chest.png"); bombPic = CP_Image_Load("Assets/Bomb.png");
@@ -94,8 +81,6 @@ void Game_Level_Init() {
 	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png");
 	particle = CP_Image_Load("Assets/particle.png"); jumpParticle = CP_Image_Load("Assets/particle1.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
-	volcano = CP_Image_Load("Assets/volcano.png");//background
-	picPlatform = CP_Image_Load("Assets/steps.png");//platform picture
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
 	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
 	gIsPaused = FALSE, BobDirection = FALSE; Bobx = 1280 / 2, Boby = 720 / 2;
@@ -103,15 +88,11 @@ void Game_Level_Init() {
 	//Base Platform
 	initializePlatform(level_selector);
 	initializeOrbs();
-	
-		
-	
 }
 
 void Game_Level_Update() {
 	//Main Code 
 	{
-		drawBackground();
 		//Press P to Pause
 		gIsPaused = CP_Input_KeyTriggered(KEY_P) ? !gIsPaused : gIsPaused;
 		//Conditions for Pausing the Game (Dying, Time finish, Player Pause game)
@@ -126,7 +107,7 @@ void Game_Level_Update() {
 
 
 		//Draw Chest
-		if (gameTimer <= 45 && gameTimer >= 40 || gameTimer <= 25 && gameTimer >= 20)
+		if (gameTimer <= 60 && gameTimer >= 40 || gameTimer <= 25 && gameTimer >= 20)
 		{
 			drawTreasureChest();
 			CP_Settings_ImageMode(CP_POSITION_CORNER);
@@ -174,6 +155,9 @@ void Game_Level_Update() {
 
 void Game_Level_Exit() {
 	CP_Image_Free(&heart);
+	CP_Sound_Free(gameover);
+	CP_Sound_Free(explosion);
+	CP_Sound_Free(chestopen);
 }
 //rendering createPlatformXY();
 void drawPlatform() {
@@ -193,16 +177,8 @@ void drawPlatform() {
 	for (int i = 0; i < no_of_platforms; i++) {
 		if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
 		CP_Graphics_DrawRect(platformX[i], platformY[i], platformWidth[i], platformHeight);
-		if (level_selector == 1)
-		{
-			CP_Image_Draw(picPlatform, platformX[i], platformY[i], platformWidth[i], platformHeight, 255);
-		}
 	}
-	
-	if (level_selector == 2) {
-		platformMovement();
-	}
-	
+	platformMovement();
 }
 
 //Displays Timer, Score, Score Multiplier, Health Remaining
@@ -265,10 +241,6 @@ void platformMovement() {
 		}
 	}
 }
-
-//void platformMovement3() {
-
-//}
 
 //scoreMultiplier Sets the Multiplier based on the game state.
 void scoreMultiplier(void) {
@@ -390,6 +362,9 @@ void Clear_Fail_Pause(void) {
 	//Fail Condition
 	else if (health == 0 || Boby > 720) {
 		//TODO: SHOW MENU FOR FAIL - YOU DIED => POINTS EARNED, 0 HEALTH, RETRY STAGE / GOTO NEXT STAGE 
+		if(health == 0)
+		CP_Sound_Play(gameover);
+		health--;
 		CP_Image_Draw(fail_screen, 0, 0, CP_Image_GetWidth(fail_screen), CP_Image_GetHeight(fail_screen), 255);
 		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() / 2 - 45);
 		if (CP_Input_MouseClicked()) {
@@ -456,7 +431,6 @@ void drawOrbs() {
 //Orbs + Bombs
 //Orbs will Fall as Long as Timer_to_drop = 0
 void makeOrbsFall() {
-	
 	for (int i = 0; i < no_of_orbs; i++) {
 		if (pOrbs[i].timer_to_drop < 0) {
 			pOrbs[i].y += pOrbs[i].dropSpeed;
@@ -491,6 +465,7 @@ void makeOrbsFall() {
 				bOrbs[i].timer_to_drop = rand() % respawn_timer;
 				bOrbs[i].y = start_pos_y; bOrbs[i].x = rand() % start_pos_x;
 				bOrbs[i].timer_on_floor = bDespawn;
+				soundCheck = 0;
 			}
 			else
 			{
@@ -499,6 +474,7 @@ void makeOrbsFall() {
 				bOrbs[i].timer_to_drop = rand() % respawn_timer;
 				bOrbs[i].y = start_pos_y; bOrbs[i].x = rand() % start_pos_x;
 				bOrbs[i].timer_on_floor = bDespawn;
+				soundCheck = 0;
 			}
 		}
 
@@ -512,6 +488,7 @@ void orbOnFloor() {
 	pDropSpeed = CP_System_GetDt() * 250;
 	yDropSpeed = CP_System_GetDt() * 200;
 	bDropSpeed = CP_System_GetDt() * 400;
+	
 	for (int i = 0; i < no_of_orbs; i++) {
 		pOrbs[i].dropSpeed = pDropSpeed;
 		yOrbs[i].dropSpeed = yDropSpeed;
@@ -529,6 +506,11 @@ void orbOnFloor() {
 			}
 			//for bomb
 			if (circleToPlatform(bOrbs[i].x, bOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+				if (soundCheck == 0)
+				{
+					CP_Sound_Play(explosion);
+					soundCheck = 1;
+				}
 				bOrbs[i].timer_on_floor -= CP_System_GetDt();
 				bOrbs[i].dropSpeed = 0;
 			}
@@ -544,6 +526,7 @@ void orbsCollected(void) {
 		//for purple
 		if (circleCollision(pOrbs[i].x, pOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
 			x = pointsCollected(5);
+			CP_Sound_Play(orb);
 			sprintf_s(Points, _countof(Points), "+ %i", x);
 			setText(Points);
 			//Reinitialize when collected
@@ -553,6 +536,7 @@ void orbsCollected(void) {
 		//for yellow
 		if (circleCollision(yOrbs[i].x, yOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
 			x = pointsCollected(10);
+			CP_Sound_Play(orb);
 			sprintf_s(Points, _countof(Points), "+ %i", x);
 			setText(Points);
 			//Reinitialize when collected
@@ -577,10 +561,20 @@ void drawTreasureChest()
 {
 	if (cheststate == 1)
 	{
-		chestX = 500;
-		chestY = 620;
-		CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
-		CP_Graphics_DrawRect(chestX, chestY, 50, 50);
+		if (level_selector == 1)
+		{
+			chestX = 800;
+			chestY = 260;
+			CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
+			CP_Graphics_DrawRect(chestX, chestY, 70, 60);
+		}
+		if (level_selector == 2)
+		{
+			chestX = 500;
+			chestY = 610;
+			CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
+			CP_Graphics_DrawRect(chestX, chestY, 70, 60);
+		}
 	}
 	if (cheststate == 0)
 	{
@@ -591,12 +585,13 @@ void drawTreasureChest()
 
 int ChestCollision()
 {
-	if (Boby + BobHeight >= 620 && Boby <= 670 && Bobx + BobWidth > 500 && Bobx < 550)
+	if (Boby + BobHeight >= chestY && Boby <= chestY + 60 && Bobx + BobWidth > chestX && Bobx < chestX + 70)
 	{
 		if (power == 0)
 		{
 			power_up();
 		}
+		CP_Sound_Play(chestopen);
 		cheststate = 0;
 		return 1;
 	}
