@@ -1,4 +1,19 @@
-﻿  CProject.vcxproj -> C:\Users\stron\Documents\GitHub\CSD1401-HSCN\bin\Debug-x64\CProject.exe
+﻿  levelselect.c
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(13,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(14,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(84,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(84,69): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(85,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(85,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(86,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(86,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(87,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(87,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(88,52): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(88,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(47,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\stron\Documents\GitHub\CSD1401-HSCN\Src\levelselect.c(48,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  CProject.vcxproj -> C:\Users\stron\Documents\GitHub\CSD1401-HSCN\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
   29 File(s) copied

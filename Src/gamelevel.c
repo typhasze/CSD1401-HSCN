@@ -64,6 +64,16 @@ void initializePlatform(int level) {
 		platformX[4] = 850, platformY[4] = CP_System_GetWindowHeight() - 150.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1030;
 		platformX[5] = 400, platformY[5] = CP_System_GetWindowHeight() - 350.0f, platformWidth[5] = CP_System_GetWindowWidth() - 780;
 	}
+	else if (level == 3) {
+		memset(platformX, 0, sizeof(platformX));
+		memset(platformY, 0, sizeof(platformY));
+		memset(platformWidth, 0, sizeof(platformWidth));
+		platformX[0] = 540, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 1080;
+		platformX[1] = 140, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 880;
+		platformX[2] = 740, platformY[2] = CP_System_GetWindowHeight() - 200.0f, platformWidth[2] = CP_System_GetWindowWidth() - 880;
+		platformX[3] = 140, platformY[3] = CP_System_GetWindowHeight() - 280.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1200;
+		platformX[4] = 440, platformY[4] = CP_System_GetWindowHeight() - 320.0f, platformWidth[4] = CP_System_GetWindowWidth() - 980;
+	}
 }
 
 void Game_Level_Init() {
@@ -169,7 +179,10 @@ void drawPlatform() {
 		if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
 		CP_Graphics_DrawRect(platformX[i], platformY[i], platformWidth[i], platformHeight);
 	}
-	platformMovement();
+	if (level_selector == 2) {
+		platformMovement();
+	}
+	
 }
 
 //Displays Timer, Score, Score Multiplier, Health Remaining
@@ -232,6 +245,10 @@ void platformMovement() {
 		}
 	}
 }
+
+//void platformMovement3() {
+
+//}
 
 //scoreMultiplier Sets the Multiplier based on the game state.
 void scoreMultiplier(void) {

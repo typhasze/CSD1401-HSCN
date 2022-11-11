@@ -70,6 +70,7 @@ void Level_Select_Update()
 	//Level 3 Button
 	if (CP_Input_MouseClicked()) {
 		if (boxClick = IsAreaClicked(halfX + 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+			level_selector = 3;
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
 	}
 
