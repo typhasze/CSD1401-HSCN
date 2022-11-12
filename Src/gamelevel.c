@@ -2,6 +2,7 @@
 #include "gamelevel.h"
 #include "splashscreen.h"
 #include "mainmenu.h"
+#include "highscore.h"
 #include "utils.h"
 #include <string.h>
 #include <stdlib.h>
@@ -35,6 +36,8 @@ int power = 0;
 //Text (Testing)
 float textTimer = 0;
 char textToShow[50] = {"Test"};
+
+int score[] = { 0,0,0,0,0 };
 
 //Can Be Used for Chest, Bomb, Orbs
 struct Items
@@ -73,7 +76,7 @@ void Game_Level_Init() {
 	particle = CP_Image_Load("Assets/particle.png"); jumpParticle = CP_Image_Load("Assets/particle1.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
-	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
+	gameTimer = 10.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0;
 	gIsPaused = FALSE, BobDirection = FALSE; Bobx = 1280 / 2, Boby = 720 / 2;
 
 	//Base Platform
@@ -132,7 +135,6 @@ void Game_Level_Update() {
 			scoreMultiplier();				//Score and Multiplier
 			gameTimer -= CP_System_GetDt();	//Game Timer Reduction
 			drawOrbs();						//Orbs and Points
-			textAbovePlayer(Bobx, Boby, textToShow);
 			break;
 		}
 	}
@@ -201,6 +203,8 @@ void HUD() {
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Settings_Fill(CP_Color_Create(145, 224, 255, 255));
 	CP_Graphics_DrawRectAdvanced(1280 / 2, 35, x, 35, 0, 15);
+
+	textAbovePlayer(Bobx, Boby, textToShow);
 }
 
 int playerPlatformCollision(void) {
@@ -331,6 +335,7 @@ void Clear_Fail_Pause(void) {
 	CP_Settings_TextSize(75); CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 	//Clear Condition
 	if (gameTimer <= 0.10) {
+		storescore(level_selector, points, score);
 		//TODO: SHOW MENU FOR CLEAR - CLEAR! => POINTS EARNED, HEALTH REMAINING, RETRY STAGE / GOTO NEXT STAGE
 		CP_Image_Draw(clear_screen, 0, 0, CP_Image_GetWidth(clear_screen), CP_Image_GetHeight(clear_screen), 255);
 		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() / 2 - 45);
