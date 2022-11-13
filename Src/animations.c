@@ -1,5 +1,6 @@
 #include "animations.h"
 
+
 CP_Image glowdefault;
 CP_Image Bob, BobL;
 
@@ -59,6 +60,7 @@ void lostHealth(int hp, int *p) {
 		*p = hp;
 	}
 	if (flip) {
+		CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
 		CP_Graphics_DrawRect(0, 0, 1280, 720);
 		alpha -= 85 * CP_System_GetDt();

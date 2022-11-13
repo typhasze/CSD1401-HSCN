@@ -36,7 +36,7 @@ int power = 0;
 
 //Text (Testing)
 float textTimer = 0;
-char textToShow[50] = {"Test"};
+char textToShow[50] = {"test"};
 
 int update_hp;
 int* hp = &update_hp;
@@ -97,6 +97,9 @@ void Game_Level_Init() {
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
 	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0; update_hp = 3;
+	textAbovePlayer(Bobx, Boby, "");
+	//Power Up Modifiers Reset
+	speedMultiplier = 1, maxJumpHeight = 200, BobImmune = FALSE;
 	gIsPaused = FALSE, BobDirection = FALSE; Bobx = 1280 / 2, Boby = 720 / 2;
 
 	//Base Platform
@@ -107,21 +110,16 @@ void Game_Level_Init() {
 void Game_Level_Update() {
 	//Main Code 
 	{
-		lostHealth(health, hp);
 		//Press P to Pause
 		gIsPaused = CP_Input_KeyTriggered(KEY_P) ? !gIsPaused : gIsPaused;
 		//Conditions for Pausing the Game (Dying, Time finish, Player Pause game)
 		gIsPaused = (health == 0 || gameTimer <= 0.10 || gIsPaused == TRUE || Boby > 720) ? TRUE : FALSE;
 		//Press Q to Terminate
 		CP_Input_KeyTriggered(KEY_Q) ? CP_Engine_Terminate() : 0;
-		//Draw Bob
-		//(BobDirection == FALSE) ? CP_Image_Draw(Bob, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255)
-			//: CP_Image_Draw(BobL, Bobx, Boby, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
 		//Rendering
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255)), HUD(), drawPlatform();
+		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	
-		//Draw Bob At Any Position
-		drawBob(Bobx, Boby, BobDirection, BobImmune);
+
 
 		//Draw Chest
 		if (gameTimer <= 60 && gameTimer >= 40 || gameTimer <= 25 && gameTimer >= 20)
@@ -143,13 +141,12 @@ void Game_Level_Update() {
 		immune_timer -= CP_System_GetDt();
 		BobImmune = (immune_timer > 0) ? TRUE : FALSE;
 
-		/*
-		if (BobImmune == FALSE)
-		{
-			Bob = CP_Image_Load("Assets/Bob.png");
-			BobL = CP_Image_Load("Assets/BobL.png");
-		}*/
-
+		//Actual Game Code Flow
+		HUD();	//Display HUD
+		drawBob(Bobx, Boby, BobDirection, BobImmune); //Display Bob.
+		lostHealth(health, hp);
+		textAbovePlayer(Bobx, Boby, textToShow);
+		drawPlatform();
 		switch (gIsPaused) {
 		case TRUE: //Game is paused
 			Clear_Fail_Pause();				//Pause / Fail / Clear Screen
@@ -158,17 +155,10 @@ void Game_Level_Update() {
 		case FALSE: //Game not paused
 			playerMovement();				//Movement Input
 			scoreMultiplier();				//Score and Multiplier
-			gameTimer -= CP_System_GetDt();	//Game Timer Reduction
 			drawOrbs();						//Orbs and Points
-			textAbovePlayer(Bobx, Boby, textToShow);
+			gameTimer -= CP_System_GetDt();	//Game Timer Reduction
 			break;
 		}
-	}
-	//TESTCODE
-	{
-		//TO REMOVE: Test Health Increment and Cap at 3
-		CP_Input_KeyTriggered(KEY_1) && (health > 0) ? --health : NULL;	//CP_Input_KeyTriggered(KEY_1) can be replaced for collision w/ bomb
-		CP_Input_KeyTriggered(KEY_3) ? multiplierTimer = 5.00, points += 1 * multiplier, multiplierCombo++ : multiplierTimer;
 	}
 }
 
@@ -178,6 +168,7 @@ void Game_Level_Exit() {
 	CP_Sound_Free(explosion);
 	CP_Sound_Free(chestopen);
 }
+
 //rendering createPlatformXY();
 void drawPlatform() {
 	//Test Platform Appearing/Dissapearing
@@ -195,6 +186,10 @@ void drawPlatform() {
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	for (int i = 0; i < no_of_platforms; i++) {
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		if (level_selector == 2) {
+			if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
+			else CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		}
 		if (level_selector == 3) {
 			if (i == 2 || i == 3) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
 			else CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -426,14 +421,15 @@ void Clear_Fail_Pause(void) {
 		CP_Image_Draw(fail_screen, 0, 0, CP_Image_GetWidth(fail_screen), CP_Image_GetHeight(fail_screen), 255);
 		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() / 2 - 45);
 		if (CP_Input_MouseClicked()) {
+			//Btn to Return Home
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-				level_selector = 2;
-				Game_Level_Init();
-				//TODO: LAUNCH NEW LEVEL
+				CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+
 			}
+			//Btn to Retry
 			if (isRectangleClicked(550, 455, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 				Game_Level_Init();
-				//TODO: RESTART LEVEL
+				
 			}
 		}
 	}

@@ -64,6 +64,7 @@ void drawIntro() {
 
 void Main_Menu_Init()
 {
+	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_System_SetFrameRate(60);
 	CP_System_SetWindowSize(1280, 720);
 	CP_Settings_TextSize(50.0f);
