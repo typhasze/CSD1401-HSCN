@@ -47,3 +47,8 @@ CP_Vector AngleToVector(float radian_angle)
 	ret = CP_Vector_Normalize(ret);
 	return ret;
 }
+
+int random_int(int min, int max)
+{
+	return min + rand() % (max + 1 - min);
+}

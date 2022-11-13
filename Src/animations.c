@@ -49,11 +49,11 @@ void blastRadius(float x, float y) {
 
 void lostHealth(int hp, int *p) {
 	static float alpha;
-	static bool flip = FALSE;
+	static int flip = 0;
 	if (hp != *p) {
 		//So when u lose hp
 		if (hp = *p - 1) {
-			flip = TRUE;
+			flip = 1;
 			alpha = 85;
 		}
 		*p = hp;
@@ -61,7 +61,7 @@ void lostHealth(int hp, int *p) {
 	if (flip) {
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
 		CP_Graphics_DrawRect(0, 0, 1280, 720);
-		alpha -= 127.5 * CP_System_GetDt();
+		alpha -= 85 * CP_System_GetDt();
 		flip = (alpha <= 0) ? FALSE : flip;
 	}
 }
