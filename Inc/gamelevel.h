@@ -33,7 +33,7 @@ void orbsCollected(void);
 //void yellowOrb(void);
 
 //void setOrbInitialPosition();
-void makeOrbsFall();
+//void makeOrbsFall();
 void drawOrbs();
 void orbOnFloor();
 int pointsCollected(int x);
@@ -55,4 +55,7 @@ void power_up(void);
 void textAbovePlayer(float x, float y, char* text);
 void setText(char* text);
 
-void drawBackground(void);
+//Balancing Variables to change
+void resetBomb(int i);
+void resetyOrb(int i);
+void resetpOrb(int i);

@@ -7,3 +7,4 @@ int isRectangleClicked(float rec_x, float rec_y, float rec_w, float rec_h, float
 int circleCollision(float circle_x, float circle_y, float diameter, float rec_x, float rec_y, float rec_w, float rec_h);
 int circleToPlatform(float circle_x, float circle_y, float diameter, float rec_x, float rec_y, float rec_w, float rec_h);
 union CP_Vector AngleToVector(float radian_angle);
+int random_int(int min, int max);
