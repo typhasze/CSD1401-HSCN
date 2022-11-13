@@ -18,7 +18,7 @@ int BobWidth, BobHeight;
 int health, points, multiplier, multiplierCombo;
 double gameTimer, multiplierTimer, immune_timer;
 // Variables for Movement by powerUps
-float maxJumpHeight = 200, speedMultiplier = 1;
+float maxJumpHeight = 200, speedMultiplier = 1,jumpcooldown = 0.6;
 
 // Variables for Platform Creation
 int level_selector = 1;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
@@ -71,6 +71,14 @@ void initializePlatform(int level) {
 		platformX[3] = 750, platformY[3] = CP_System_GetWindowHeight() - 100.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1030;
 		platformX[4] = 850, platformY[4] = CP_System_GetWindowHeight() - 150.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1030;
 		platformX[5] = 400, platformY[5] = CP_System_GetWindowHeight() - 350.0f, platformWidth[5] = CP_System_GetWindowWidth() - 780;
+	}
+	else if (level == 3) {
+		no_of_platforms = 4 + 1;
+		platformX[0] = 480, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 1020;
+		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 1000;
+		platformX[2] = 740, platformY[2] = CP_System_GetWindowHeight() - 50.0f, platformWidth[2] = CP_System_GetWindowWidth() - 980;
+		platformX[3] = 0, platformY[3] = CP_System_GetWindowHeight() - 350.0f, platformWidth[3] = CP_System_GetWindowWidth() - 980;
+		platformX[4] = 1040, platformY[4] = CP_System_GetWindowHeight() - 350.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1040;
 	}
 }
 
@@ -174,7 +182,7 @@ void Game_Level_Exit() {
 void drawPlatform() {
 	//Test Platform Appearing/Dissapearing
 	static float alpha = 255, toggle = 0;
-	/*
+
 	if (toggle == 0) {
 		if (alpha > 0) alpha -= 85 * CP_System_GetDt();
 		else toggle = 1;
@@ -182,13 +190,18 @@ void drawPlatform() {
 	else {
 		if (alpha < 255) alpha += 85 * CP_System_GetDt();
 		else toggle = 0;
-	}*/
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, alpha));
+	}
+	//CP_Settings_Fill(CP_Color_Create(255, 255, 255, alpha));
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	for (int i = 0; i < no_of_platforms; i++) {
-		if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		if (level_selector == 3) {
+			if (i == 2 || i == 3) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
+			else CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		}
 		CP_Graphics_DrawRect(platformX[i], platformY[i], platformWidth[i], platformHeight);
 	}
+
 	platformMovement();
 }
 
@@ -236,22 +249,54 @@ int playerPlatformCollision(void) {
 }
 
 void platformMovement() {
-	
-	float speed;
-	static int toggle = 0;
+	float speed, speed2;
+	static int toggle = 0, toggle2 = 0;
 	speed = CP_System_GetDt() * 200;
-	if (toggle == 0) {
-		platformX[5] -= speed;
-		if (platformX[5] < 0) {
-			toggle = 1;
+	speed2 = CP_System_GetDt() * 300;
+	if (level_selector == 2) {
+		if (toggle == 0) {
+			platformX[5] -= speed;
+
+			if (platformX[5] < 0) {
+				toggle = 1;
+			}
+		}
+		if (toggle == 1) {
+			platformX[5] += speed;
+			if (platformX[5] + platformWidth[5] > 1280) {
+				toggle = 0;
+			}
 		}
 	}
-	if (toggle == 1) {
-		platformX[5] += speed;
-		if (platformX[5] + platformWidth[5] > 1280) {
-			toggle = 0;
+	else if (level_selector == 3) {
+		if (toggle == 0) {
+			platformY[2] -= speed;
+			if (platformY[2] < CP_System_GetWindowHeight() - 350.0f) {
+				toggle = 1;
+			}
 		}
+		if (toggle == 1) {
+			platformY[2] += speed;
+			if (platformY[2] + platformHeight > 720) {
+				toggle = 0;
+			}
+		}
+
+		if (toggle2 == 0) {
+			platformX[3] -= speed2;
+			if (platformX[3] < 0) {
+				toggle2 = 1;
+			}
+		}
+		if (toggle2 == 1) {
+			platformX[3] += speed2;
+			if (platformX[3] + platformWidth[3] > 740) {
+				toggle2 = 0;
+			}
+		}
+
 	}
+
 }
 
 //scoreMultiplier Sets the Multiplier based on the game state.
@@ -324,8 +369,9 @@ void playerMovement() {
 		//particleEffect(Bobx, Boby, "Jump!");
 		--jumpCounter;
 		maxJump = maxJumpHeight;
+		//jumpCD = jumpcooldown;
 		if (jumpCounter == 0) {
-			jumpCD = 1.00;
+			jumpCD = jumpcooldown;
 			jumpCounter = 2;
 		}
 	}
@@ -511,11 +557,13 @@ void orbOnFloor() {
 			//for purple
 			if (circleToPlatform(pOrbs[i].x, pOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
 				pOrbs[i].timer_on_floor -= CP_System_GetDt();
+				pOrbs[i].y = platformY[x] - 25;
 				pOrbs[i].dropSpeed = 0;
 			}
 			//for yellow
 			if (circleToPlatform(yOrbs[i].x, yOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
 				yOrbs[i].timer_on_floor -= CP_System_GetDt();
+				yOrbs[i].y = platformY[x] - 25;
 				yOrbs[i].dropSpeed = 0;
 			}
 			//for bomb
@@ -525,7 +573,7 @@ void orbOnFloor() {
 					CP_Sound_Play(explosion);
 					soundCheck = 1;
 				}
-				bOrbs[i].timer_on_floor -= CP_System_GetDt();
+				bOrbs[i].timer_on_floor -= 50 * CP_System_GetDt();
 				bOrbs[i].dropSpeed = 0;
 			}
 		}
@@ -661,6 +709,7 @@ void add_health(void)
 void jump_high(void)
 {
 	maxJumpHeight += 25;
+	jumpcooldown += 0.5;
 }
 
 void move_fast(void)
