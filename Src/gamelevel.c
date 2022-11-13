@@ -17,7 +17,7 @@ int BobWidth, BobHeight;
 int health, points, multiplier, multiplierCombo;
 double gameTimer, multiplierTimer, immune_timer;
 // Variables for Movement by powerUps
-float maxJumpHeight = 200, speedMultiplier = 1,jumpcooldown=0.5;
+float maxJumpHeight = 200, speedMultiplier = 1,jumpcooldown = 0.6;
 
 // Variables for Platform Creation
 int level_selector = 1;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
@@ -703,7 +703,7 @@ void add_health(void)
 void jump_high(void)
 {
 	maxJumpHeight += 25;
-	jumpcooldown = 1.00;
+	jumpcooldown += 0.5;
 }
 
 void move_fast(void)
