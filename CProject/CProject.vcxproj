@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Inc\animations.h" />
     <ClInclude Include="..\Inc\gamelevel.h" />
     <ClInclude Include="..\Inc\levelselect.h" />
     <ClInclude Include="..\Inc\mainmenu.h" />
@@ -18,6 +19,7 @@
     <ClInclude Include="..\Inc\utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Src\animations.c" />
     <ClCompile Include="..\Src\gamelevel.c" />
     <ClCompile Include="..\Src\levelselect.c" />
     <ClCompile Include="..\Src\main.c" />
