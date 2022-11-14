@@ -54,8 +54,8 @@ void time_extension(void);
 void power_up(void);
 void textAbovePlayer(float x, float y, char* text);
 void setText(char* text);
-
 //Balancing Variables to change
 void resetBomb(int i);
 void resetyOrb(int i);
 void resetpOrb(int i);
+void start_timer(void);

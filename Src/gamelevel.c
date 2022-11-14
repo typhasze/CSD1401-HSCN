@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "animations.h"
 
-CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu, purple_orb, yellow_orb, particle, jumpParticle, bombPic;
+CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu, purple_orb, yellow_orb, particle, jumpParticle, bombPic, mainMenu, banner;
 CP_Sound chestopen, explosion, orb, gameover;
 // Bob Variables
 double Bobx, Boby;
@@ -34,12 +34,13 @@ static int chestX, chestY;
 int static soundCheck = 0; //sfx for bomb 
 int power = 0;
 
-//Text (Testing)
+//Text
 float textTimer = 0;
 char textToShow[50] = {"test"};
 
 int update_hp;
 int* hp = &update_hp;
+float starting_timer;
 
 //Can Be Used for Chest, Bomb, Orbs
 struct Items
@@ -84,23 +85,19 @@ void initializePlatform(int level) {
 
 void Game_Level_Init() {
 	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0);
-	chestopen = CP_Sound_Load("Assets/ChestOpen.wav");
-	explosion = CP_Sound_Load("Assets/Explosion.wav");
-	orb = CP_Sound_Load("Assets/Orb.wav");
-	gameover = CP_Sound_Load("Assets/GameOver.wav");
-	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png");
-	heart = CP_Image_Load("Assets/heart.png");
-	chest = CP_Image_Load("Assets/Chest.png"); bombPic = CP_Image_Load("Assets/Bomb.png");
-	purple_orb = CP_Image_Load("Assets/porbs.png"); yellow_orb = CP_Image_Load("Assets/yorbs.png");
-	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png");
-	particle = CP_Image_Load("Assets/particle.png"); jumpParticle = CP_Image_Load("Assets/particle1.png");
+	chestopen = CP_Sound_Load("Assets/ChestOpen.wav"); explosion = CP_Sound_Load("Assets/Explosion.wav"); orb = CP_Sound_Load("Assets/Orb.wav"); gameover = CP_Sound_Load("Assets/GameOver.wav");
+	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png"); heart = CP_Image_Load("Assets/heart.png");
+	chest = CP_Image_Load("Assets/Chest.png"); bombPic = CP_Image_Load("Assets/Bomb.png"); purple_orb = CP_Image_Load("Assets/porbs.png"); yellow_orb = CP_Image_Load("Assets/yorbs.png");
+	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png"); mainMenu = CP_Image_Load("Assets/MainMenu.png");
+	//particle = CP_Image_Load("Assets/particle.png"); jumpParticle = CP_Image_Load("Assets/particle1.png");
+	banner = CP_Image_Load("Assets/banner.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
-	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0; update_hp = 3;
+	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0; update_hp = 3; Bobx = 1280 / 2, Boby = 720 / 2; starting_timer = 3;
 	textAbovePlayer(Bobx, Boby, "");
 	//Power Up Modifiers Reset
 	speedMultiplier = 1, maxJumpHeight = 200, BobImmune = FALSE;
-	gIsPaused = FALSE, BobDirection = FALSE; Bobx = 1280 / 2, Boby = 720 / 2;
+	gIsPaused = FALSE, BobDirection = FALSE;
 
 	//Base Platform
 	initializePlatform(level_selector);
@@ -152,11 +149,14 @@ void Game_Level_Update() {
 			Clear_Fail_Pause();				//Pause / Fail / Clear Screen
 			break;
 
-		case FALSE: //Game not paused
-			playerMovement();				//Movement Input
-			scoreMultiplier();				//Score and Multiplier
-			drawOrbs();						//Orbs and Points
-			gameTimer -= CP_System_GetDt();	//Game Timer Reduction
+		case FALSE:							//Game not paused
+			if (starting_timer <= 0) {
+				playerMovement();				//Movement Input
+				scoreMultiplier();				//Score and Multiplier
+				drawOrbs();						//Orbs and Points
+				gameTimer -= CP_System_GetDt();	//Game Timer Reduction
+			}
+			else start_timer();
 			break;
 		}
 	}
@@ -398,12 +398,19 @@ void Clear_Fail_Pause(void) {
 	if (gameTimer <= 0.10) {
 		//TODO: SHOW MENU FOR CLEAR - CLEAR! => POINTS EARNED, HEALTH REMAINING, RETRY STAGE / GOTO NEXT STAGE
 		CP_Image_Draw(clear_screen, 0, 0, CP_Image_GetWidth(clear_screen), CP_Image_GetHeight(clear_screen), 255);
+		(level_selector == 3) ? CP_Image_Draw(mainMenu, 550-5, 360-5, 185+5, 85+5, 255) : 0;
 		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight() / 2 - 45);
 		if (CP_Input_MouseClicked()) {
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-				level_selector += 1;
-				Game_Level_Init();
-				//TODO: LAUNCH NEW LEVEL
+				//For Final Level > 3
+				if (level_selector == 3) {
+					CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+				}
+				else {
+					level_selector += 1;
+					Game_Level_Init();
+					//TODO: LAUNCH NEW LEVEL
+				}
 			}
 			if (isRectangleClicked(550, 455, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 				Game_Level_Init();
@@ -657,7 +664,7 @@ int ChestCollision()
 // Power - Ups
 void power_up() {
 
-	int powerup = rand() % 6;
+	int powerup = 2;
 	if (powerup == 1)
 	{
 		setText("Immunity");
@@ -759,4 +766,14 @@ void resetpOrb(int i) {
 		pOrbs[i].timer_on_floor = pDespawn;
 }
 
+void start_timer(void) {
+	char showtime[3] = { 0 };
+	sprintf_s(showtime, _countof(showtime), "%d", (int)starting_timer);
+	CP_Image_Draw(banner, 0, 0, 1280, 720, 255);
+	CP_Settings_TextSize(100);
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_BASELINE);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Font_DrawText(showtime, 1280 / 2, 720 / 2 + 50);
+	starting_timer -= CP_System_GetDt();
+}
 

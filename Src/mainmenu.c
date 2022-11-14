@@ -10,12 +10,13 @@ CP_Color grey;
 CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 int level_selector;
-CP_Image Bob, Title, Play, HowToPlay, Credits,background,intro,cross;
+CP_Image Bob, Title, Play, HowToPlay, Credits, background, intro, cross, glowdefault;
 static int alpha = 255;
 static int mainmenustate = 0;
 int static boxClick = 0;
 
 void drawMenu() {
+	
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	float halfX = CP_System_GetWindowWidth() / 2;
 	float halfY = CP_System_GetWindowHeight() / 2;
@@ -42,6 +43,7 @@ void drawMenu() {
 void drawIntro() {
 	float halfX = CP_System_GetWindowWidth() / 2;
 	float halfY = CP_System_GetWindowHeight() / 2;
+
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
 	CP_Graphics_DrawRect(1200,60 , 40, 40);
@@ -76,6 +78,7 @@ void Main_Menu_Init()
 	background = CP_Image_Load("Assets/mainbackground.png");
 	intro = CP_Image_Load("Assets/intro.png");
 	cross = CP_Image_Load("Assets/cross.png");
+	glowdefault = CP_Image_Load("Assets/glowdefault.png");
 	mainmenustate = 1;
 }
 

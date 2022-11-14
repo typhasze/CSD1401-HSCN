@@ -8,6 +8,7 @@ CP_Image IBob, Level1, Level2, Level3, MainMenu;
 CP_Color grey;
 int level_selector;
 
+/*
 void drawScreen() {
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	float halfX = CP_System_GetWindowWidth() / 2;
@@ -27,7 +28,7 @@ void drawScreen() {
 	//CP_Font_DrawText("2", halfX, halfY);
 	//CP_Font_DrawText("3", halfX + 400, halfY);
 	//CP_Font_DrawText("Main Menu", halfX + 400, halfY - 250);
-}
+}*/
 
 void Level_Select_Init()
 {
@@ -43,7 +44,7 @@ void Level_Select_Init()
 
 void Level_Select_Update()
 {
-	CP_Graphics_ClearBackground(CP_Color_Create(255, 255, 255, 255));
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	float halfX = CP_System_GetWindowWidth() / 2;
 	float halfY = CP_System_GetWindowHeight() / 2;
 	int static boxClick = 0;
@@ -85,8 +86,8 @@ void Level_Select_Update()
 	CP_Image_Draw(Level1, halfX - 400, halfY, CP_Image_GetWidth(Level1), CP_Image_GetHeight(Level1), 255);
 	CP_Image_Draw(Level2, halfX, halfY, CP_Image_GetWidth(Level2), CP_Image_GetHeight(Level2), 255);
 	CP_Image_Draw(Level3, halfX + 400, halfY, CP_Image_GetWidth(Level3), CP_Image_GetHeight(Level3), 255);
-	CP_Image_Draw(MainMenu, halfX + 500, halfY - 250, CP_Image_GetWidth(MainMenu), CP_Image_GetHeight(MainMenu), 255);
-	drawScreen();
+	CP_Image_Draw(MainMenu, halfX + 500, halfY - 250, 150, 60.0f, 255);
+	//drawScreen();
 }
 
 void Level_Select_Exit()
