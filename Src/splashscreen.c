@@ -40,9 +40,9 @@ void splash_screen_update(void)
 	red = CP_Color_Create(255, 0, 0, 255);
 
 	//This function sets the color of all subsequently drawn shapes or text.
-	CP_Settings_Fill(red);
+	//CP_Settings_Fill(red);
 	//Draw a circle at the current mouse pointer
-	CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), 20.0f);
+	//CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), 20.0f);
 
 	if (totalElapsedTime > 255) {
 		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);

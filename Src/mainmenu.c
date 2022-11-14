@@ -17,6 +17,7 @@ int static boxClick = 0;
 int static credPage = 1;
 
 void drawMenu() {
+	
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	float halfX = CP_System_GetWindowWidth() / 2;
 	float halfY = CP_System_GetWindowHeight() / 2;
@@ -43,6 +44,7 @@ void drawMenu() {
 void drawIntro() {
 	float halfX = CP_System_GetWindowWidth() / 2;
 	float halfY = CP_System_GetWindowHeight() / 2;
+
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
 	CP_Graphics_DrawRect(1200, 60, 40, 40);

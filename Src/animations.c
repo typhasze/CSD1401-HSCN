@@ -53,7 +53,7 @@ void lostHealth(int hp, int *p) {
 	static int flip = 0;
 	if (hp != *p) {
 		//So when u lose hp
-		if (hp = *p - 1) {
+		if (hp ==  (*p) - 1) {
 			flip = 1;
 			alpha = 85;
 		}
