@@ -84,7 +84,7 @@ void initializePlatform(int level) {
 
 void Game_Level_Init() {
 	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0);
-	chestopen = CP_Sound_Load("Assets/ChestOpen.wav");
+	chestopen = CP_Sound_Load("Assets/chestOpen.wav");
 	explosion = CP_Sound_Load("Assets/Explosion.wav");
 	orb = CP_Sound_Load("Assets/Orb.wav");
 	gameover = CP_Sound_Load("Assets/GameOver.wav");
@@ -122,7 +122,7 @@ void Game_Level_Update() {
 
 
 		//Draw Chest
-		if (gameTimer <= 60 && gameTimer >= 40 || gameTimer <= 25 && gameTimer >= 20)
+		if (gameTimer <= 45 && gameTimer >= 40 || gameTimer <= 25 && gameTimer >= 20)
 		{
 			drawTreasureChest();
 			CP_Settings_ImageMode(CP_POSITION_CORNER);
@@ -566,7 +566,8 @@ void orbOnFloor() {
 			if (circleToPlatform(bOrbs[i].x, bOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
 				if (soundCheck == 0)
 				{
-					CP_Sound_Play(explosion);
+					CP_Sound_PlayAdvanced(explosion, 0.3f, 1.0f, FALSE, CP_SOUND_GROUP_2);
+					//CP_Sound_Play(explosion);
 					soundCheck = 1;
 				}
 				bOrbs[i].timer_on_floor -= 50 * CP_System_GetDt();
@@ -631,6 +632,13 @@ void drawTreasureChest()
 			CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
 			CP_Graphics_DrawRect(chestX, chestY, 70, 60);
 		}
+		if (level_selector == 3)
+		{
+			chestX = 100;
+			chestY = 460;
+			CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
+			CP_Graphics_DrawRect(chestX, chestY, 70, 60);
+		}
 	}
 	if (cheststate == 0)
 	{
@@ -657,7 +665,7 @@ int ChestCollision()
 // Power - Ups
 void power_up() {
 
-	int powerup = rand() % 6;
+	int powerup = rand() % 5;
 	if (powerup == 1)
 	{
 		setText("Immunity");
