@@ -59,3 +59,4 @@ void resetBomb(int i);
 void resetyOrb(int i);
 void resetpOrb(int i);
 void start_timer(void);
+void addStarsRating(void);
