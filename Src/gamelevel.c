@@ -10,7 +10,7 @@
 #include "animations.h"
 
 CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu, purple_orb, 
-yellow_orb, particle, jumpParticle, bombPic, volcano, picPlatform;
+yellow_orb, particle, jumpParticle, bombPic, forest, volcano, stars, picPlatform;
 CP_Sound chestopen, explosion, orb, gameover;
 // Bob Variables
 double Bobx, Boby;
@@ -87,7 +87,15 @@ void drawBackground()
 {
 	if (level_selector == 1) {
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		CP_Image_Draw(forest, 0, 0, 1280, 720, 255);
+	}
+	if (level_selector == 2) {
+		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Image_Draw(volcano, 0, 0, 1280, 720, 255);
+	}
+	if (level_selector == 3) {
+		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		CP_Image_Draw(stars, 0, 0, 1280, 720, 255);
 	}
 }
 
@@ -104,7 +112,10 @@ void Game_Level_Init() {
 	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png");
 	particle = CP_Image_Load("Assets/particle.png"); jumpParticle = CP_Image_Load("Assets/particle1.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
-	volcano = CP_Image_Load("Assets/volcano.png");//background
+	//Background
+	forest = CP_Image_Load("Assets/Level2bg.png");
+	volcano = CP_Image_Load("Assets/volcano.png");
+	stars = CP_Image_Load("Assets/Level3bg.png");
 	picPlatform = CP_Image_Load("Assets/steps.png");//platform picture
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
 	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0; update_hp = 3;
@@ -199,8 +210,7 @@ void drawPlatform() {
 	for (int i = 0; i < no_of_platforms; i++) {
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		if (level_selector == 2) {
-			if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
-			else CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		}
 		if (level_selector == 3) {
 			if (i == 2 || i == 3) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
@@ -431,6 +441,11 @@ void Clear_Fail_Pause(void) {
 	//Fail Condition
 	else if (health <= 0 || Boby > 720) {
 		//TODO: SHOW MENU FOR FAIL - YOU DIED => POINTS EARNED, 0 HEALTH, RETRY STAGE / GOTO NEXT STAGE 
+		if (Boby > 720)
+		{
+			CP_Sound_Play(gameover);
+			Boby = 720;
+		}
 		if(health == 0)
 		CP_Sound_Play(gameover);
 		health = -1;
