@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "animations.h"
 
-CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu, purple_orb, 
+CP_Image Bob, BobL, heart, chest, Bomb, fail_screen, clear_screen, pause_menu, purple_orb, hudbackplate,
 yellow_orb, particle, jumpParticle, bombPic, forest, volcano, stars, picPlatform , mainMenu, banner;
 CP_Sound chestopen, explosion, orb, gameover;
 // Bob Variables
@@ -22,7 +22,7 @@ double gameTimer, multiplierTimer, immune_timer;
 float maxJumpHeight = 200, speedMultiplier = 1,jumpcooldown = 0.6;
 
 // Variables for Platform Creation
-//int level_selector = 0;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
+int level_selector;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
 float platformX[100], platformY[100], platformWidth[100], platformHeight = 50.0f;
 int no_of_platforms = 6;
 
@@ -93,6 +93,8 @@ void drawBackground()
 	if (level_selector == 2) {
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Image_Draw(volcano, 0, 0, 1280, 720, 255);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 80));
+		CP_Graphics_DrawRect(0, 0, 1280, 720);
 	}
 	if (level_selector == 3) {
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -103,9 +105,10 @@ void drawBackground()
 void Game_Level_Init() {
 	CP_System_SetFrameRate(60); CP_System_SetWindowSize(1280, 720); CP_Settings_TextSize(25.0);
 	chestopen = CP_Sound_Load("Assets/chestOpen.wav"); explosion = CP_Sound_Load("Assets/Explosion.wav"); orb = CP_Sound_Load("Assets/Orb.wav"); gameover = CP_Sound_Load("Assets/GameOver.wav");
-	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png"); heart = CP_Image_Load("Assets/heart.png");
+	Bob = CP_Image_Load("Assets/Bob.png"); BobL = CP_Image_Load("Assets/BobL.png"); heart = CP_Image_Load("Assets/heart.png"); hudbackplate = CP_Image_Load("Assets/hudbackplate.png");
 	chest = CP_Image_Load("Assets/Chest.png"); bombPic = CP_Image_Load("Assets/Bomb.png"); purple_orb = CP_Image_Load("Assets/porbs.png"); yellow_orb = CP_Image_Load("Assets/yorbs.png");
 	fail_screen = CP_Image_Load("Assets/fail.png"); clear_screen = CP_Image_Load("Assets/clear.png"); pause_menu = CP_Image_Load("Assets/pause.png"); mainMenu = CP_Image_Load("Assets/MainMenu.png");
+
 	//particle = CP_Image_Load("Assets/particle.png"); jumpParticle = CP_Image_Load("Assets/particle1.png");
 	banner = CP_Image_Load("Assets/banner.png");
 	BobWidth = CP_Image_GetWidth(Bob), BobHeight = CP_Image_GetHeight(Bob);
@@ -162,6 +165,7 @@ void Game_Level_Update() {
 		BobImmune = (immune_timer > 0) ? TRUE : FALSE;
 
 		//Actual Game Code Flow
+		drawBackground(); //draw level background
 		HUD();	//Display HUD
 		drawBob(Bobx, Boby, BobDirection, BobImmune); //Display Bob.
 		lostHealth(health, hp);
@@ -228,8 +232,16 @@ void drawPlatform() {
 
 //Displays Timer, Score, Score Multiplier, Health Remaining
 void HUD() {
+	//Backplate For HUD
+	CP_Settings_Fill(CP_Color_Create(153, 217, 234, 150));
+	CP_Settings_ImageMode(CP_POSITION_CORNER);
+	CP_Image_Draw(hudbackplate, 0, 0, CP_Image_GetWidth(hudbackplate), CP_Image_GetHeight(hudbackplate), 255);
+	//CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 0));
+	//CP_Graphics_DrawRect(0, 0, 150, 60);	//LEFT
+	//CP_Graphics_DrawRect(1280 - 170, 0, 170, 70);//RIGHT
 
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 255));
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	char Timer[10] = { 0 }, Points[50] = { 0 }, Multiplier[15] = { 0 };
 	CP_Settings_TextSize(30);
 	//Combine String and integer 
@@ -425,7 +437,7 @@ void Clear_Fail_Pause(void) {
 		//TODO: SHOW MENU FOR CLEAR - CLEAR! => POINTS EARNED, HEALTH REMAINING, RETRY STAGE / GOTO NEXT STAGE
 		CP_Image_Draw(clear_screen, 0, 0, CP_Image_GetWidth(clear_screen), CP_Image_GetHeight(clear_screen), 255);
 		(level_selector == 3) ? CP_Image_Draw(mainMenu, 550-5, 360-5, 185+5, 85+5, 255) : 0;	//for fiinal level
-		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 50, CP_System_GetWindowHeight() / 2 - 110);
+		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 50, CP_System_GetWindowHeight() / 2 - 105);
 		addStarsRating();
 		if (CP_Input_MouseClicked()) {
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
@@ -458,7 +470,7 @@ void Clear_Fail_Pause(void) {
 		CP_Sound_Play(gameover);
 		health = -1;
 		CP_Image_Draw(fail_screen, 0, 0, CP_Image_GetWidth(fail_screen), CP_Image_GetHeight(fail_screen), 255);
-		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 50, CP_System_GetWindowHeight() / 2 - 110);
+		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 50, CP_System_GetWindowHeight() / 2 - 105);
 		addStarsRating();
 		if (CP_Input_MouseClicked()) {
 			//Btn to Return Home
