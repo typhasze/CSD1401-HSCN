@@ -6,6 +6,7 @@
 
 CP_Image IBob, Level1, Level2, Level3, MainMenu;
 CP_Color grey;
+CP_Sound mainmenusound;
 int level_selector;
 
 /*
@@ -92,5 +93,5 @@ void Level_Select_Update()
 
 void Level_Select_Exit()
 {
-
+	CP_Sound_Free(&mainmenusound);
 }
