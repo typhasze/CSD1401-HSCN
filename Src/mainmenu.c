@@ -11,6 +11,7 @@ CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 int level_selector;
 CP_Image Bob, Title, Play, HowToPlay, Credits, background, intro, cross, credits1, credits2, credits3;
+CP_Sound mainmenusound;
 static int alpha = 255;
 static int mainmenustate = 0;
 int static boxClick = 0;
@@ -142,6 +143,8 @@ void Main_Menu_Init()
 	credits1 = CP_Image_Load("Assets/Credits1.png");
 	credits2 = CP_Image_Load("Assets/Credits2.png");
 	credits3 = CP_Image_Load("Assets/Credits3.png");
+	mainmenusound = CP_Sound_Load("Assets/jazzyfrenchy.mp3");
+	CP_Sound_PlayAdvanced(mainmenusound, 0.1f, 1.0f, TRUE, CP_SOUND_GROUP_0);
 	mainmenustate = 1;
 }
 
