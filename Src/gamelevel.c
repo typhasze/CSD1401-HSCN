@@ -821,11 +821,11 @@ void start_timer(void) {
 void addStarsRating(void) {
 	CP_Image stars = CP_Image_Load("Assets/IBob.png");
 	static int i;
-	static int star = 0;
+	int star = 0;
 	
-	(points >= 750) ? star = 1 : 0;
-	(points >= 1200) ? star = 2 : 0;
-	(points >= 1600) ? star = 3 : 0;
+	star = (points >= 750) ? 1 : star;
+	star = (points >= 1200) ? 2 : star;
+	star = (points >= 1600) ? 3 : star;
 	for (int x = 1280 / 2 - 100, i = 1; i <= star; i++, x += 75) {
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
 		CP_Image_Draw(stars, x, 720 / 2 - 65, 50, 50, 255);
