@@ -2,6 +2,7 @@
 #include "mainmenu.h"
 #include "gamelevel.h"
 #include "utils.h"
+#include "animations.h"
 
 
 CP_Image IBob, Level1, Level2, Level3, MainMenu;
@@ -83,11 +84,21 @@ void Level_Select_Update()
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 	}
 	//Draws the graphics for the menu screen.
+	GlowingBob(halfX, halfY + 250, CP_Image_GetWidth(IBob) + 25, CP_Image_GetWidth(IBob) + 25);
 	CP_Image_Draw(IBob, halfX , halfY + 250 , CP_Image_GetWidth(IBob), CP_Image_GetHeight(IBob), 255);
+
+	levelBoxesGlow(halfX - 400, halfY, CP_Image_GetWidth(Level1), CP_Image_GetHeight(Level1));
 	CP_Image_Draw(Level1, halfX - 400, halfY, CP_Image_GetWidth(Level1), CP_Image_GetHeight(Level1), 255);
+
+	levelBoxesGlow(halfX, halfY, CP_Image_GetWidth(Level2), CP_Image_GetHeight(Level2));
 	CP_Image_Draw(Level2, halfX, halfY, CP_Image_GetWidth(Level2), CP_Image_GetHeight(Level2), 255);
+
+	levelBoxesGlow(halfX+400, halfY, CP_Image_GetWidth(Level2), CP_Image_GetHeight(Level2));
 	CP_Image_Draw(Level3, halfX + 400, halfY, CP_Image_GetWidth(Level3), CP_Image_GetHeight(Level3), 255);
+
+	
 	CP_Image_Draw(MainMenu, halfX + 500, halfY - 250, 150, 60.0f, 255);
+	
 	//drawScreen();
 }
 

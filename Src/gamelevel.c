@@ -209,14 +209,18 @@ void drawPlatform() {
 		if (alpha < 255) alpha += 85 * CP_System_GetDt();
 		else toggle = 0;
 	}
-	//CP_Settings_Fill(CP_Color_Create(255, 255, 255, alpha));
+	//Logic To Draw All Platform
 	CP_Settings_RectMode(CP_POSITION_CORNER);
 	for (int i = 0; i < no_of_platforms; i++) {
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		
+		/* //For Drawing Platform as White/Red
 		if (level_selector == 2) {
+			//Rectangle White/Red As Platform
 			if (i == 5) CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			else CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		}
 		if (level_selector == 3) {
+			//Rectangle White/Red As Platform
 			if (i == 2 || i == 3) CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
 			else CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		}
@@ -224,9 +228,19 @@ void drawPlatform() {
 		if (level_selector == 1)
 		{
 			CP_Image_Draw(picPlatform, platformX[i], platformY[i], platformWidth[i], platformHeight, 255);
+		}*/
+
+		 //For Drawing Image As Platform (Will Include Lvl 3 Fade In/Out)
+		if (level_selector == 1 || level_selector == 2)
+		{
+			CP_Image_Draw(picPlatform, platformX[i], platformY[i], platformWidth[i], platformHeight, 255);
+		}
+		if (level_selector == 3) {
+		//Set Fade In and Out for Platform 2 & 3
+			if (i == 2 || i == 3) CP_Image_Draw(picPlatform, platformX[i], platformY[i], platformWidth[i], platformHeight, alpha);
+			else CP_Image_Draw(picPlatform, platformX[i], platformY[i], platformWidth[i], platformHeight, 255);
 		}
 	}
-
 	platformMovement();
 }
 
@@ -431,13 +445,13 @@ void Clear_Fail_Pause(void) {
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	char Points[50] = { 0 };
 	sprintf_s(Points, _countof(Points), "%i", points);
-	CP_Settings_TextSize(60); CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+	CP_Settings_TextSize(50); CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 	//Clear Condition
 	if (gameTimer <= 0.10 || (points >= 750 && health <= 0)) {
 		//TODO: SHOW MENU FOR CLEAR - CLEAR! => POINTS EARNED, HEALTH REMAINING, RETRY STAGE / GOTO NEXT STAGE
 		CP_Image_Draw(clear_screen, 0, 0, CP_Image_GetWidth(clear_screen), CP_Image_GetHeight(clear_screen), 255);
 		(level_selector == 3) ? CP_Image_Draw(mainMenu, 550-5, 360-5, 185+5, 85+5, 255) : 0;	//for fiinal level
-		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 50, CP_System_GetWindowHeight() / 2 - 105);
+		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 65, CP_System_GetWindowHeight() / 2 - 105);
 		addStarsRating();
 		if (CP_Input_MouseClicked()) {
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
@@ -470,7 +484,7 @@ void Clear_Fail_Pause(void) {
 		CP_Sound_Play(gameover);
 		health = -1;
 		CP_Image_Draw(fail_screen, 0, 0, CP_Image_GetWidth(fail_screen), CP_Image_GetHeight(fail_screen), 255);
-		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 50, CP_System_GetWindowHeight() / 2 - 105);
+		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 65, CP_System_GetWindowHeight() / 2 - 105);
 		addStarsRating();
 		if (CP_Input_MouseClicked()) {
 			//Btn to Return Home
@@ -717,7 +731,7 @@ int ChestCollision()
 // Power - Ups
 void power_up() {
 
-	int powerup = rand() % 5;
+	int powerup = random_int(1,5);
 	if (powerup == 1)
 	{
 		setText("Immunity");
@@ -834,13 +848,14 @@ void addStarsRating(void) {
 	CP_Image stars = CP_Image_Load("Assets/IBob.png");
 	static int i;
 	int star = 0;
-	
+	//750, 1200, 1600
 	star = (points >= 750) ? 1 : star;
 	star = (points >= 1200) ? 2 : star;
 	star = (points >= 1600) ? 3 : star;
 	for (int x = 1280 / 2 - 100, i = 1; i <= star; i++, x += 75) {
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
 		CP_Image_Draw(stars, x, 720 / 2 - 65, 50, 50, 255);
+		GlowingBob(x-7.5, 720 / 2 - 72.5, 65, 65);
 	}
 }
 
