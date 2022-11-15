@@ -1,7 +1,7 @@
 #include "animations.h"
 
 
-CP_Image glowdefault;
+CP_Image glowdefault, LevelBoxesGlow;
 CP_Image Bob, BobL;
 
 void glowingBob(float x, float y, bool BobImmune) {
@@ -67,3 +67,35 @@ void lostHealth(int hp, int *p) {
 		flip = (alpha <= 0) ? FALSE : flip;
 	}
 }
+
+void levelBoxesGlow(float x, float y, float w, float h) {
+	float static alpha = 255;
+	static bool toggle = FALSE;
+	LevelBoxesGlow = CP_Image_Load("Assets/LevelBoxesGlow.png");
+	CP_Image_Draw(LevelBoxesGlow, x, y, w, h, alpha);
+	//wrapAlphaValue(&alpha, &toggle, 125);
+	if (toggle == FALSE) {
+		alpha -= 40 * CP_System_GetDt();
+		toggle = (alpha <= 0) ? TRUE : toggle;
+	}
+	else {
+		alpha += 40 * CP_System_GetDt();
+		toggle = (alpha >= 255) ? FALSE : toggle;
+	}
+}
+
+void GlowingBob(float x, float y, float w, float h) {
+	static float alpha = 255;
+	static bool flip = FALSE;
+	if (flip == FALSE) {
+		alpha -= 127.5 * CP_System_GetDt();
+		flip = (alpha <= 0) ? TRUE : flip;
+	}
+	else {
+		alpha += 127.5 * CP_System_GetDt();
+		flip = (alpha >= 255) ? FALSE : flip;
+	}
+	glowdefault = CP_Image_Load("Assets/iglowdefault.png");
+	CP_Image_Draw(glowdefault, x, y, w, h, alpha);
+}
+
