@@ -22,7 +22,7 @@ double gameTimer, multiplierTimer, immune_timer;
 float maxJumpHeight = 200, speedMultiplier = 1,jumpcooldown = 0.6;
 
 // Variables for Platform Creation
-int level_selector;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
+//int level_selector;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
 float platformX[100], platformY[100], platformWidth[100], platformHeight = 50.0f;
 int no_of_platforms = 6;
 
