@@ -835,7 +835,7 @@ void resetpOrb(int i) {
 
 void start_timer(void) {
 	char showtime[3] = { 0 };
-	sprintf_s(showtime, _countof(showtime), "%d", (int)starting_timer);
+	sprintf_s(showtime, _countof(showtime), "%d", (int)starting_timer + 1);
 	CP_Image_Draw(banner, 0, 0, 1280, 720, 255);
 	CP_Settings_TextSize(100);
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_BASELINE);
