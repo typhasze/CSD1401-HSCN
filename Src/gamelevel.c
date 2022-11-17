@@ -165,7 +165,7 @@ void Game_Level_Update() {
 		BobImmune = (immune_timer > 0) ? TRUE : FALSE;
 
 		//Actual Game Code Flow
-		drawBackground(); //draw level background
+		
 		HUD();	//Display HUD
 		drawBob(Bobx, Boby, BobDirection, BobImmune); //Display Bob.
 		lostHealth(health, hp);
