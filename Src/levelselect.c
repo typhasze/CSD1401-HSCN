@@ -6,10 +6,12 @@
 #include <stdio.h>
 
 
-CP_Image IBob, Level1, Level2, Level3, MainMenu;
+CP_Image IBobL,IBobR, Level1, Level2, Level3, MainMenu;
 CP_Color grey;
 CP_Sound mainmenusound;
 int level_selector;
+bool BobDirection;
+double Bobx = 1280/2, Boby = 620;
 
 /*
 void drawScreen() {
@@ -38,7 +40,8 @@ void Level_Select_Init()
 	CP_System_SetFrameRate(60);
 	CP_System_SetWindowSize(1280, 720);
 	CP_Settings_TextSize(50.0f);
-	IBob = CP_Image_Load("Assets/IBob.png");
+	IBobL = CP_Image_Load("Assets/BobL.png");
+	IBobR = CP_Image_Load("Assets/Bob.png");
 	Level1 = CP_Image_Load("Assets/Level1.png");
 	Level2 = CP_Image_Load("Assets/Level2.png");
 	Level3 = CP_Image_Load("Assets/Level3.png");
@@ -78,7 +81,7 @@ void Level_Select_Update()
 	//Level 3 Button
 	if (CP_Input_MouseClicked()) {
 		//if (boxClick = IsAreaClicked(halfX + 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-		if (IsAreaClicked(halfX + 400, halfY- 150, CP_Image_GetWidth(Level3) / 1.5, CP_Image_GetHeight(Level3) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(halfX + 400, halfY- 150, CP_Image_GetWidth(Level3) / 1.5, CP_Image_GetHeight(Level3) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 3;
 		printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
@@ -100,8 +103,8 @@ void Level_Select_Update()
 	CP_Font_DrawText("SPACEBAR to jump", halfX, halfY + 130);
 
 
-	GlowingBob(halfX, halfY + 250, CP_Image_GetWidth(IBob) + 25, CP_Image_GetWidth(IBob) + 25);
-	CP_Image_Draw(IBob, halfX , halfY + 250 , CP_Image_GetWidth(IBob), CP_Image_GetHeight(IBob), 255);
+	//GlowingBob(halfX, halfY + 250, CP_Image_GetWidth(IBobR) + 25, CP_Image_GetWidth(IBobR) + 25);
+	
 
 	levelBoxesGlow(halfX - 400, halfY-150, CP_Image_GetWidth(Level1)/1.5, CP_Image_GetHeight(Level1)/1.5);
 	CP_Image_Draw(Level1, halfX - 400, halfY-150, CP_Image_GetWidth(Level1)/1.5, CP_Image_GetHeight(Level1)/1.5, 255);
@@ -114,11 +117,62 @@ void Level_Select_Update()
 
 	
 	CP_Image_Draw(MainMenu, halfX + 500, halfY +250, 150, 60.0f, 255);
+
+
+	CP_Graphics_DrawRect(halfX, 720, 1280, 120, 255);
+
+	float velocity = CP_System_GetDt() * 400;
+	float gravity = CP_System_GetDt() * 400;
+	static int jumpCounter = 1, maxJump;
+	float jump = CP_System_GetDt() * 1400;
+
+	if (BobDirection == FALSE) {
+		CP_Image_Draw(IBobR, Bobx, Boby, CP_Image_GetWidth(IBobR), CP_Image_GetHeight(IBobR), 255);
+	}
+	else { CP_Image_Draw(IBobL, Bobx, Boby, CP_Image_GetWidth(IBobL), CP_Image_GetHeight(IBobL), 255); }
+
+	if (CP_Input_KeyDown(KEY_A)) {
+		Bobx -= velocity;
+		BobDirection = TRUE;
+
+	}
+
+	if (CP_Input_KeyDown(KEY_D)) {
+		Bobx += velocity;
+		BobDirection = FALSE;
+
+	}
+	if (Boby <= 620) {
+		Boby += gravity;
+	}
+	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCounter != 0) {
+		//particleEffect(Bobx, Boby, "Jump!");
+		--jumpCounter;
+		//Boby -= jump;
+		maxJump = 175;
+
+	}
+	if (Boby >= 620) {
+		jumpCounter = 1;
+	}
+	//Jump CD Decrement every deltaTime
+	//jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
+	maxJump = (Boby <= 10) ? 0 : maxJump;	 //To stop at ceiling
+	if (maxJump > 0) {
+
+		Boby -= jump;
+		maxJump -= jump;
+
+	}
 	
-	//drawScreen();
+	
 }
 
 void Level_Select_Exit()
 {
 	CP_Sound_Free(&mainmenusound);
 }
+
+
+
+
