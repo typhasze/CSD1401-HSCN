@@ -1,15 +1,114 @@
-﻿  levelselect.c
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(86,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(86,69): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(87,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(87,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(88,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(88,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(89,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(89,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(49,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(50,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+﻿  gamelevel.c
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(62,121): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(63,121): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(64,119): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(65,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(66,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(71,121): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(72,120): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(73,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(74,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(75,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(76,122): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(80,121): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(81,120): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(82,121): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(83,120): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(84,123): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(123,18): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(123,24): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(153,25): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(153,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(153,41): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(153,67): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(171,11): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(171,17): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(173,19): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(173,25): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(195,24): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'CP_Sound'
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(195,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(196,25): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'CP_Sound'
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(196,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(197,25): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'CP_Sound'
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(197,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(241,115): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(253,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(253,69): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(279,24): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(284,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(507,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(507,70): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(509,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(509,97): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(541,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(541,68): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(542,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(542,97): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(559,35): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(559,66): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(578,51): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(605,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(605,58): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(605,96): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(606,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(606,57): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(606,95): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(607,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(607,54): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(616,26): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(620,26): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(624,26): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(638,32): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(638,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(638,53): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(638,59): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(638,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(638,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(643,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(643,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(651,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(651,48): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(675,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(675,45): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(677,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(681,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(681,45): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(683,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(687,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(687,45): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(708,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(708,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(708,51): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(708,57): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(708,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(708,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(717,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(717,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(717,51): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(717,57): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(717,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(717,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(726,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(726,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(726,51): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(726,57): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(726,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(726,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(747,25): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(747,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(754,25): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(754,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(761,25): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(761,33): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(767,24): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(767,32): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(831,32): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(871,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(878,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(884,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(911,24): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\gamelevel.c(912,15): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
   CProject.vcxproj -> C:\Users\User\Desktop\CSD1401-HSCN\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
-  54 File(s) copied
+  56 File(s) copied

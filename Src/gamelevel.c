@@ -18,8 +18,9 @@ int BobWidth, BobHeight;
 // Volatile Variables for Game 
 int health, points, multiplier, multiplierCombo;
 double gameTimer, multiplierTimer, immune_timer;
+static char playeronground = 0;
 // Variables for Movement by powerUps
-float maxJumpHeight = 200, speedMultiplier = 1,jumpcooldown = 0.6;
+float maxJumpHeight = 175, speedMultiplier = 1;
 
 // Variables for Platform Creation
 //int level_selector;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
@@ -78,9 +79,9 @@ void initializePlatform(int level) {
 		no_of_platforms = 4 + 1;
 		platformX[0] = 480, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 1020;
 		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 1000;
-		platformX[2] = 740, platformY[2] = CP_System_GetWindowHeight() - 50.0f, platformWidth[2] = CP_System_GetWindowWidth() - 980;
+		platformX[2] = 820, platformY[2] = CP_System_GetWindowHeight() - 50.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1060;
 		platformX[3] = 0, platformY[3] = CP_System_GetWindowHeight() - 350.0f, platformWidth[3] = CP_System_GetWindowWidth() - 980;
-		platformX[4] = 1040, platformY[4] = CP_System_GetWindowHeight() - 350.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1040;
+		platformX[4] = 1120, platformY[4] = CP_System_GetWindowHeight() - 350.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1040;
 	}
 }
 
@@ -121,7 +122,7 @@ void Game_Level_Init() {
 	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0; update_hp = 3; Bobx = 1280 / 2, Boby = 720 / 2; starting_timer = 3;
 	textAbovePlayer(Bobx, Boby, "");
 	//Power Up Modifiers Reset
-	speedMultiplier = 1, maxJumpHeight = 200, BobImmune = FALSE;
+	speedMultiplier = 1, maxJumpHeight = 175, BobImmune = FALSE;
 	gIsPaused = FALSE, BobDirection = FALSE;
 
 	//Base Platform
@@ -296,6 +297,8 @@ int playerPlatformCollision(void) {
 }
 
 void platformMovement() {
+	float velocity = CP_System_GetDt() * 125;
+	float position = speedMultiplier * velocity;
 	float speed, speed2;
 	static int toggle = 0, toggle2 = 0;
 	speed = CP_System_GetDt() * 200;
@@ -303,19 +306,41 @@ void platformMovement() {
 	if (level_selector == 2) {
 		if (toggle == 0) {
 			platformX[5] -= speed;
-
+			if (Boby <= platformY[5] - BobHeight - 1) {
+				Bobx -= speed;
+			}
+			if (Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_A)) {
+				Bobx -= (position - speed);
+				BobDirection = TRUE;
+			}
+			if (Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_D)) {
+				Bobx += (position + speed);
+				BobDirection = FALSE;
+			}
 			if (platformX[5] < 0) {
 				toggle = 1;
 			}
 		}
 		if (toggle == 1) {
 			platformX[5] += speed;
+			if (Boby <= platformY[5] - BobHeight - 1) {
+				Bobx += speed;
+			}
+			if (Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_A)) {
+				Bobx -= (position + speed);
+				BobDirection = TRUE;
+			}
+			if (Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_D)) {
+				Bobx += (position - speed);
+				BobDirection = FALSE;
+			}
 			if (platformX[5] + platformWidth[5] > 1280) {
 				toggle = 0;
 			}
 		}
 	}
 	else if (level_selector == 3) {
+		//To move platform up and down
 		if (toggle == 0) {
 			platformY[2] -= speed;
 			if (platformY[2] < CP_System_GetWindowHeight() - 350.0f) {
@@ -329,18 +354,45 @@ void platformMovement() {
 			}
 		}
 
+		//To move platform left and right
 		if (toggle2 == 0) {
 			platformX[3] -= speed2;
+			if (Boby <= platformY[3] - BobHeight - 1) {
+				Bobx -= speed2;
+			}
+			if (Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_A)) {
+				Bobx -= (position - speed2);
+				BobDirection = TRUE;
+			}
+			if (Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_D)) {
+				Bobx += (position + speed2);
+				BobDirection = FALSE;
+			}
 			if (platformX[3] < 0) {
+				
 				toggle2 = 1;
 			}
 		}
 		if (toggle2 == 1) {
 			platformX[3] += speed2;
+			if (Boby <= platformY[3] - BobHeight - 1) {
+				Bobx += speed2;
+			}
+			if (Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_A)) {
+				Bobx -= (position + speed2);
+				BobDirection = TRUE;
+			}
+			if (Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_D)) {
+				Bobx += (position - speed2);
+				BobDirection = FALSE;
+			}
 			if (platformX[3] + platformWidth[3] > 740) {
+
 				toggle2 = 0;
 			}
 		}
+
+
 
 	}
 
@@ -370,13 +422,14 @@ int pointsCollected(int x) {
 	return x*multiplier;
 }
 
+
 // Logic For Player Movement
 void playerMovement() {
 	float velocity = CP_System_GetDt() * 350;
 	static double maxJump = 0, jumpCD = 0;
-	static int jumpCounter = 2;
-	float jump = CP_System_GetDt() * 1500;
-	float gravity = CP_System_GetDt() * 500;
+	static int jumpCounter = 1;
+	float jump = CP_System_GetDt() * 1400;
+	float gravity = CP_System_GetDt() * 400;
 	float position = speedMultiplier * velocity;
 
 	//For Player if not jumping and in air
@@ -386,7 +439,9 @@ void playerMovement() {
 	//printf("collision is %d", collidedPlatform);
 	if (collidedPlatform >= 0) {
 		Boby = platformY[collidedPlatform] - BobHeight - 1;
+		playeronground = 1;
 	}
+	else { playeronground = 0;}
 	collidedPlatform = -1;
 
 	if (CP_Input_KeyDown(KEY_A)) {
@@ -412,18 +467,18 @@ void playerMovement() {
 	}
 
 	//Jumping
-	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCD <= 0 && jumpCounter != 0) {
+	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCounter != 0) {
 		//particleEffect(Bobx, Boby, "Jump!");
 		--jumpCounter;
+		//Boby -= jump;
 		maxJump = maxJumpHeight;
-		//jumpCD = jumpcooldown;
-		if (jumpCounter == 0) {
-			jumpCD = jumpcooldown;
-			jumpCounter = 2;
-		}
+		
+	}
+	if (playeronground) {
+		jumpCounter = 1;
 	}
 	//Jump CD Decrement every deltaTime
-	jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
+	//jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
 	maxJump = (Boby <= 10) ? 0 : maxJump;	 //To stop at ceiling
 	if (maxJump > 0) {
 		if (playerPlatformCollision() == 1) {
@@ -778,8 +833,7 @@ void add_health(void)
 
 void jump_high(void)
 {
-	maxJumpHeight += 25;
-	jumpcooldown += 0.5;
+	maxJumpHeight += 35;
 }
 
 void move_fast(void)
