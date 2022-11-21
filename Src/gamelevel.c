@@ -637,12 +637,15 @@ void makeOrbsFall() {
 		{
 			if (circleCollision(bOrbs[i].x, bOrbs[i].y, 200, Bobx, Boby, BobWidth, BobHeight) == 1)
 			{
-				health--;
-				//blastRadius(bOrbs[i].x, bOrbs[i].y);
-				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-				CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
-				resetBomb(i);
-				soundCheck = 0;
+				if (BobImmune != 1)
+				{
+					health--;
+				}
+					//blastRadius(bOrbs[i].x, bOrbs[i].y);
+					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+					CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
+					resetBomb(i);
+					soundCheck = 0;
 			}
 			else
 			{

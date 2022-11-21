@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 
-CP_Image IBobL,IBobR, Level1, Level2, Level3, MainMenu;
+CP_Image IBobL,IBobR, Level1, Level2, Level3, MainMenu, steps, bg;
 CP_Color grey;
 CP_Sound mainmenusound;
 int level_selector;
@@ -40,6 +40,8 @@ void Level_Select_Init()
 	CP_System_SetFrameRate(60);
 	CP_System_SetWindowSize(1280, 720);
 	CP_Settings_TextSize(50.0f);
+	bg = CP_Image_Load("Assets/pregame_bg.jpg");
+	steps = CP_Image_Load("Assets/steps.png");
 	IBobL = CP_Image_Load("Assets/BobL.png");
 	IBobR = CP_Image_Load("Assets/Bob.png");
 	Level1 = CP_Image_Load("Assets/Level1.png");
@@ -97,7 +99,8 @@ void Level_Select_Update()
 
 	//Draws the graphics for the menu screen.
 
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	CP_Image_Draw(bg, halfX, halfY, CP_Image_GetWidth(bg), CP_Image_GetHeight(bg), 255);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_TextSize(30);
 	CP_Font_DrawText("Press 'A' & 'D' to move left and right", halfX, halfY + 100);
 	CP_Font_DrawText("SPACEBAR to jump", halfX, halfY + 130);
@@ -118,8 +121,9 @@ void Level_Select_Update()
 	
 	CP_Image_Draw(MainMenu, halfX + 500, halfY +250, 150, 60.0f, 255);
 
+	//CP_Graphics_DrawRect(halfX, 720, 1280, 120, 255);
+	CP_Image_Draw(steps,halfX, 690, CP_Image_GetWidth(steps), CP_Image_GetHeight(steps) + 20, 255);
 
-	CP_Graphics_DrawRect(halfX, 720, 1280, 120, 255);
 
 	float velocity = CP_System_GetDt() * 400;
 	float gravity = CP_System_GetDt() * 400;
