@@ -102,8 +102,8 @@ void Level_Select_Update()
 	CP_Image_Draw(bg, halfX, halfY, CP_Image_GetWidth(bg), CP_Image_GetHeight(bg), 255);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_TextSize(30);
-	CP_Font_DrawText("Press 'A' & 'D' to move left and right", halfX, halfY + 100);
-	CP_Font_DrawText("SPACEBAR to jump", halfX, halfY + 130);
+	CP_Font_DrawText("Press 'A' & 'D' to move left and right", halfX-200, halfY + 150);
+	CP_Font_DrawText("SPACEBAR to jump", halfX- 100, halfY + 180);
 
 
 	//GlowingBob(halfX, halfY + 250, CP_Image_GetWidth(IBobR) + 25, CP_Image_GetWidth(IBobR) + 25);
