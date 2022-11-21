@@ -3,6 +3,7 @@
 #include "gamelevel.h"
 #include "utils.h"
 #include "animations.h"
+#include <stdio.h>
 
 
 CP_Image IBob, Level1, Level2, Level3, MainMenu;
@@ -49,13 +50,16 @@ void Level_Select_Update()
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	float halfX = CP_System_GetWindowWidth() / 2;
 	float halfY = CP_System_GetWindowHeight() / 2;
-	int static boxClick = 0;
+	//int static boxClick = 0;
+
+	//if (boxClick == 0);
 
 	//Level 1 Button
 	if (CP_Input_MouseClicked()) {
 		//Checks for Play button clicked to run the carlevel state
-		if (boxClick = IsAreaClicked(halfX - 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(halfX - 400, halfY-150, CP_Image_GetWidth(Level1) / 1.5, CP_Image_GetHeight(Level1) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 1;
+			printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);
 		}
 
@@ -63,8 +67,9 @@ void Level_Select_Update()
 
 	//Level 2 Button
 	if (CP_Input_MouseClicked()) {
-		if (boxClick = IsAreaClicked(halfX, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(halfX, halfY-150, CP_Image_GetWidth(Level2) / 1.5, CP_Image_GetHeight(Level2) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 2;
+			printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
 		}
 
@@ -72,32 +77,41 @@ void Level_Select_Update()
 
 	//Level 3 Button
 	if (CP_Input_MouseClicked()) {
-		if (boxClick = IsAreaClicked(halfX + 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(halfX + 400, halfY- 150, CP_Image_GetWidth(Level3) / 1.5, CP_Image_GetHeight(Level3) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 			level_selector = 3;
+		printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
 	}
 
 	//Main Menu Button
 	if (CP_Input_MouseClicked()) {
 		//Checks if Main Menu button clicked to shut down the program.
-		if (boxClick = IsAreaClicked(halfX + 500, halfY - 250, 150.0f, 60.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		if (IsAreaClicked(halfX + 500, halfY + 250, 150.0f, 60.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 	}
+
 	//Draws the graphics for the menu screen.
+
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	CP_Settings_TextSize(30);
+	CP_Font_DrawText("Press 'A' & 'D' to move left and right", halfX, halfY + 100);
+	CP_Font_DrawText("SPACEBAR to jump", halfX, halfY + 130);
+
+
 	GlowingBob(halfX, halfY + 250, CP_Image_GetWidth(IBob) + 25, CP_Image_GetWidth(IBob) + 25);
 	CP_Image_Draw(IBob, halfX , halfY + 250 , CP_Image_GetWidth(IBob), CP_Image_GetHeight(IBob), 255);
 
-	levelBoxesGlow(halfX - 400, halfY, CP_Image_GetWidth(Level1), CP_Image_GetHeight(Level1));
-	CP_Image_Draw(Level1, halfX - 400, halfY, CP_Image_GetWidth(Level1), CP_Image_GetHeight(Level1), 255);
+	levelBoxesGlow(halfX - 400, halfY-150, CP_Image_GetWidth(Level1)/1.5, CP_Image_GetHeight(Level1)/1.5);
+	CP_Image_Draw(Level1, halfX - 400, halfY-150, CP_Image_GetWidth(Level1)/1.5, CP_Image_GetHeight(Level1)/1.5, 255);
 
-	levelBoxesGlow(halfX, halfY, CP_Image_GetWidth(Level2), CP_Image_GetHeight(Level2));
-	CP_Image_Draw(Level2, halfX, halfY, CP_Image_GetWidth(Level2), CP_Image_GetHeight(Level2), 255);
+	levelBoxesGlow(halfX, halfY-150, CP_Image_GetWidth(Level2)/1.5, CP_Image_GetHeight(Level2)/1.5);
+	CP_Image_Draw(Level2, halfX, halfY-150, CP_Image_GetWidth(Level2)/1.5, CP_Image_GetHeight(Level2)/1.5, 255);
 
-	levelBoxesGlow(halfX+400, halfY, CP_Image_GetWidth(Level2), CP_Image_GetHeight(Level2));
-	CP_Image_Draw(Level3, halfX + 400, halfY, CP_Image_GetWidth(Level3), CP_Image_GetHeight(Level3), 255);
+	levelBoxesGlow(halfX+400, halfY-150, CP_Image_GetWidth(Level2)/1.5, CP_Image_GetHeight(Level2)/1.5);
+	CP_Image_Draw(Level3, halfX + 400, halfY-150, CP_Image_GetWidth(Level3)/1.5, CP_Image_GetHeight(Level3)/1.5, 255);
 
 	
-	CP_Image_Draw(MainMenu, halfX + 500, halfY - 250, 150, 60.0f, 255);
+	CP_Image_Draw(MainMenu, halfX + 500, halfY +250, 150, 60.0f, 255);
 	
 	//drawScreen();
 }
