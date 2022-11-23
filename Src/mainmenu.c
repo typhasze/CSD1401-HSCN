@@ -20,8 +20,8 @@ int static credPage = 1;
 void drawMenu() {
 	
 	CP_Settings_RectMode(CP_POSITION_CENTER);
-	float halfX = CP_System_GetWindowWidth() / 2;
-	float halfY = CP_System_GetWindowHeight() / 2;
+	float halfX = (float)CP_System_GetWindowWidth() / 2;
+	float halfY = (float)CP_System_GetWindowHeight() / 2;
 	grey = CP_Color_Create(255, 255, 255, 0);
 	//Draw Rectangle - Red
 	CP_Settings_Fill(grey);
@@ -36,29 +36,29 @@ void drawMenu() {
 	//CP_Font_DrawText("Exit", halfX + 500, halfY + 250);
 
 	//Draws the graphics for the menu screen.
-	CP_Image_Draw(background, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), alpha);
-	CP_Image_Draw(Play, halfX, halfY - 50, CP_Image_GetWidth(Play), CP_Image_GetHeight(Play), alpha);
-	CP_Image_Draw(HowToPlay, halfX, halfY + 100, CP_Image_GetWidth(HowToPlay), CP_Image_GetHeight(HowToPlay), alpha);
-	CP_Image_Draw(Credits, halfX, halfY + 250, CP_Image_GetWidth(Credits), CP_Image_GetHeight(Credits), alpha);
+	CP_Image_Draw(background, halfX, halfY, (float)CP_Image_GetWidth(background), (float)CP_Image_GetHeight(background), alpha);
+	CP_Image_Draw(Play, halfX, halfY - 50, (float)CP_Image_GetWidth(Play), (float)CP_Image_GetHeight(Play), alpha);
+	CP_Image_Draw(HowToPlay, halfX, halfY + 100, (float)CP_Image_GetWidth(HowToPlay), (float)CP_Image_GetHeight(HowToPlay), alpha);
+	CP_Image_Draw(Credits, halfX, halfY + 250, (float)CP_Image_GetWidth(Credits), (float)CP_Image_GetHeight(Credits), alpha);
 }
 
 void drawIntro() {
-	float halfX = CP_System_GetWindowWidth() / 2;
-	float halfY = CP_System_GetWindowHeight() / 2;
+	float halfX = (float)CP_System_GetWindowWidth() / 2;
+	float halfY = (float)CP_System_GetWindowHeight() / 2;
 
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
 	CP_Graphics_DrawRect(1200, 60, 40, 40);
-	CP_Image_Draw(intro, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), 255);
-	CP_Image_Draw(mainmenu, halfX + 400, halfY + 250, CP_Image_GetWidth(mainmenu)/2, CP_Image_GetHeight(mainmenu)/2, 255);
-	CP_Image_Draw(background, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), 20);
-	CP_Image_Draw(cross, halfX + 400, halfY - 500, CP_Image_GetWidth(cross), CP_Image_GetHeight(cross), 255);
-	CP_Image_Draw(Play, halfX, halfY - 50, CP_Image_GetWidth(Play), CP_Image_GetHeight(Play), 20);
-	CP_Image_Draw(HowToPlay, halfX, halfY + 100, CP_Image_GetWidth(HowToPlay), CP_Image_GetHeight(HowToPlay), 20);
-	CP_Image_Draw(Credits, halfX, halfY + 250, CP_Image_GetWidth(Credits), CP_Image_GetHeight(Credits), 20);
-	CP_Image_Draw(cross, halfX + 400, halfY - 500, CP_Image_GetWidth(cross), CP_Image_GetHeight(cross), 255);
+	CP_Image_Draw(intro, halfX, halfY, (float)CP_Image_GetWidth(background), (float)CP_Image_GetHeight(background), 255);
+	CP_Image_Draw(mainmenu, halfX + 400, halfY + 250, (float)CP_Image_GetWidth(mainmenu)/2.f, (float)CP_Image_GetHeight(mainmenu)/2.f, 255);
+	CP_Image_Draw(background, halfX, halfY, (float)CP_Image_GetWidth(background), (float)CP_Image_GetHeight(background), 20);
+	CP_Image_Draw(cross, halfX + 400, halfY - 500, (float)CP_Image_GetWidth(cross), (float)CP_Image_GetHeight(cross), 255);
+	CP_Image_Draw(Play, halfX, halfY - 50, (float)CP_Image_GetWidth(Play), (float)CP_Image_GetHeight(Play), 20);
+	CP_Image_Draw(HowToPlay, halfX, halfY + 100, (float)CP_Image_GetWidth(HowToPlay), (float)CP_Image_GetHeight(HowToPlay), 20);
+	CP_Image_Draw(Credits, halfX, halfY + 250, (float)CP_Image_GetWidth(Credits), (float)CP_Image_GetHeight(Credits), 20);
+	CP_Image_Draw(cross, halfX + 400, halfY - 500, (float)CP_Image_GetWidth(cross), (float)CP_Image_GetHeight(cross), 255);
 	if (CP_Input_MouseClicked()) {
-		if (boxClick = IsAreaClicked(halfX + 400, halfY + 250, CP_Image_GetWidth(mainmenu) / 2, CP_Image_GetHeight(mainmenu) / 2, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (boxClick = IsAreaClicked(halfX + 400, halfY + 250, (float)CP_Image_GetWidth(mainmenu) / 2.f, (float)CP_Image_GetHeight(mainmenu) / 2.f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			mainmenustate = 1;
 		}
 	}
@@ -69,8 +69,8 @@ void drawIntro() {
 }
 
 void drawCred() {
-	float halfX = CP_System_GetWindowWidth() / 2;
-	float halfY = CP_System_GetWindowHeight() / 2;
+	float halfX = (float)CP_System_GetWindowWidth() / 2;
+	float halfY = (float)CP_System_GetWindowHeight() / 2;
 	if (CP_Input_MouseClicked())
 	{
 		if (IsAreaClicked(1225, 475, 50, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
@@ -154,8 +154,8 @@ void Main_Menu_Init()
 void Main_Menu_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(255, 255, 255, 255));
-	float halfX = CP_System_GetWindowWidth() / 2;
-	float halfY = CP_System_GetWindowHeight() / 2;
+	float halfX = (float)CP_System_GetWindowWidth() / 2;
+	float halfY = (float)CP_System_GetWindowHeight() / 2;
 
 	//Play Button
 	if (CP_Input_MouseClicked()) {

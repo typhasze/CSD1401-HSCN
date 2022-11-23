@@ -53,8 +53,8 @@ void Level_Select_Init()
 void Level_Select_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	float halfX = CP_System_GetWindowWidth() / 2;
-	float halfY = CP_System_GetWindowHeight() / 2;
+	float halfX = (float)CP_System_GetWindowWidth() / 2;
+	float halfY = (float)CP_System_GetWindowHeight() / 2;
 	//int static boxClick = 0;
 
 	//if (boxClick == 0);
@@ -62,7 +62,7 @@ void Level_Select_Update()
 	//Level 1 Button
 	if (CP_Input_MouseClicked()) {
 		//Checks for Play button clicked to run the carlevel state
-		if (IsAreaClicked(halfX - 400, halfY-150, CP_Image_GetWidth(Level1) / 1.5, CP_Image_GetHeight(Level1) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(halfX - 400, halfY-150, (float)CP_Image_GetWidth(Level1) / 1.5f, (float)CP_Image_GetHeight(Level1) / 1.5f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 1;
 			printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);
@@ -72,7 +72,7 @@ void Level_Select_Update()
 
 	//Level 2 Button
 	if (CP_Input_MouseClicked()) {
-		if (IsAreaClicked(halfX, halfY-150, CP_Image_GetWidth(Level2) / 1.5, CP_Image_GetHeight(Level2) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(halfX, halfY-150, (float)CP_Image_GetWidth(Level2) / 1.5f, (float)CP_Image_GetHeight(Level2) / 1.5f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 2;
 			printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
@@ -83,7 +83,7 @@ void Level_Select_Update()
 	//Level 3 Button
 	if (CP_Input_MouseClicked()) {
 		//if (boxClick = IsAreaClicked(halfX + 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
-		if (IsAreaClicked(halfX + 400, halfY- 150, CP_Image_GetWidth(Level3) / 1.5, CP_Image_GetHeight(Level3) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (IsAreaClicked(halfX + 400, halfY- 150, (float)CP_Image_GetWidth(Level3) / 1.5f, (float)CP_Image_GetHeight(Level3) / 1.5f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 3;
 		//printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
@@ -99,7 +99,7 @@ void Level_Select_Update()
 
 	//Draws the graphics for the menu screen.
 
-	CP_Image_Draw(bg, halfX, halfY, CP_Image_GetWidth(bg), CP_Image_GetHeight(bg), 255);
+	CP_Image_Draw(bg, halfX, halfY, (float)CP_Image_GetWidth(bg), (float)CP_Image_GetHeight(bg), 255);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_TextSize(30);
 	CP_Font_DrawText("Press 'A' & 'D' to move left and right", halfX-200, halfY + 150);
@@ -109,31 +109,32 @@ void Level_Select_Update()
 	//GlowingBob(halfX, halfY + 250, CP_Image_GetWidth(IBobR) + 25, CP_Image_GetWidth(IBobR) + 25);
 	
 
-	levelBoxesGlow(halfX - 400, halfY-150, CP_Image_GetWidth(Level1)/1.5, CP_Image_GetHeight(Level1)/1.5);
-	CP_Image_Draw(Level1, halfX - 400, halfY-150, CP_Image_GetWidth(Level1)/1.5, CP_Image_GetHeight(Level1)/1.5, 255);
+	levelBoxesGlow(halfX - 400, halfY-150, (float)CP_Image_GetWidth(Level1)/1.5f, (float)CP_Image_GetHeight(Level1)/1.5f);
+	CP_Image_Draw(Level1, halfX - 400, halfY-150, (float)CP_Image_GetWidth(Level1)/1.5f, (float)CP_Image_GetHeight(Level1)/1.5f, 255);
 
-	levelBoxesGlow(halfX, halfY-150, CP_Image_GetWidth(Level2)/1.5, CP_Image_GetHeight(Level2)/1.5);
-	CP_Image_Draw(Level2, halfX, halfY-150, CP_Image_GetWidth(Level2)/1.5, CP_Image_GetHeight(Level2)/1.5, 255);
+	levelBoxesGlow(halfX, halfY-150, (float)CP_Image_GetWidth(Level2)/1.5f, (float)CP_Image_GetHeight(Level2)/1.5f);
+	CP_Image_Draw(Level2, halfX, halfY-150, (float)CP_Image_GetWidth(Level2)/1.5f, (float)CP_Image_GetHeight(Level2)/1.5f, 255);
 
-	levelBoxesGlow(halfX+400, halfY-150, CP_Image_GetWidth(Level2)/1.5, CP_Image_GetHeight(Level2)/1.5);
-	CP_Image_Draw(Level3, halfX + 400, halfY-150, CP_Image_GetWidth(Level3)/1.5, CP_Image_GetHeight(Level3)/1.5, 255);
+	levelBoxesGlow(halfX+400, halfY-150, (float)CP_Image_GetWidth(Level2)/1.5f, (float)CP_Image_GetHeight(Level2)/1.5f);
+	CP_Image_Draw(Level3, halfX + 400, halfY-150, (float)CP_Image_GetWidth(Level3)/1.5f, (float)CP_Image_GetHeight(Level3)/1.5f, 255);
 
 	
 	CP_Image_Draw(MainMenu, halfX + 500, halfY +250, 150, 60.0f, 255);
 
 	//CP_Graphics_DrawRect(halfX, 720, 1280, 120, 255);
-	CP_Image_Draw(steps,halfX, 690, CP_Image_GetWidth(steps), CP_Image_GetHeight(steps) + 20, 255);
+	CP_Image_Draw(steps,halfX, 690, (float)CP_Image_GetWidth(steps), (float)CP_Image_GetHeight(steps) + 20, 255);
 
 
 	float velocity = CP_System_GetDt() * 400;
 	float gravity = CP_System_GetDt() * 400;
-	static int jumpCounter = 1, maxJump;
+	static int jumpCounter = 1;
+	static float maxJump;
 	float jump = CP_System_GetDt() * 1400;
 
 	if (BobDirection == FALSE) {
-		CP_Image_Draw(IBobR, Bobx, Boby, CP_Image_GetWidth(IBobR), CP_Image_GetHeight(IBobR), 255);
+		CP_Image_Draw(IBobR, (float)Bobx, (float)Boby, (float)CP_Image_GetWidth(IBobR), (float)CP_Image_GetHeight(IBobR), 255);
 	}
-	else { CP_Image_Draw(IBobL, Bobx, Boby, CP_Image_GetWidth(IBobL), CP_Image_GetHeight(IBobL), 255); }
+	else { CP_Image_Draw(IBobL, (float)Bobx, (float)Boby, (float)CP_Image_GetWidth(IBobL), (float)CP_Image_GetHeight(IBobL), 255); }
 
 	if (CP_Input_KeyDown(KEY_A)) {
 		Bobx -= velocity;

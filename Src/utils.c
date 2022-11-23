@@ -1,5 +1,7 @@
 #include "cprocessing.h"
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 {
 	if (click_x >= (area_center_x - area_width / 2) && click_x <= (area_center_x + area_width / 2)
@@ -41,8 +43,8 @@ CP_Vector AngleToVector(float radian_angle)
 {
 	// cos A = x
 	// sin A = y
-	float x = cos(radian_angle);
-	float y = sin(radian_angle);
+	float x = (float)cos(radian_angle);
+	float y = (float)sin(radian_angle);
 	CP_Vector ret = CP_Vector_Set(x, y);
 	ret = CP_Vector_Normalize(ret);
 	return ret;

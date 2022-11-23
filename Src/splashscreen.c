@@ -24,18 +24,18 @@ void splash_screen_update(void)
 	Takes 2 Seconds(system runtime) to reach from 0 to 255
 	Need a multiplier to reach 255 with system runtime = 255/2.00s = 127.5
 	*/
-	double logoW = CP_Image_GetWidth(logo) * windowSizeX / 1920
-		, logoH = CP_Image_GetHeight(logo) * windowSizeY / 1080;
-	float currentElapsedTime = CP_System_GetDt() * 127.5;
+	double logoW = CP_Image_GetWidth(logo) * windowSizeX / 1920.f
+		, logoH = CP_Image_GetHeight(logo) * windowSizeY / 1080.f;
+	float currentElapsedTime = CP_System_GetDt() * 127.5f;
 	static float totalElapsedTime = 0;
 	totalElapsedTime += currentElapsedTime;
 	//totalElapsedTime = (int) totalElapsedTime % 255;
 	//Display Image
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Image_Draw(logo, windowSizeX / 2, windowSizeY / 2, logoW, logoH, totalElapsedTime);
+	CP_Image_Draw(logo, (float)windowSizeX / 2, (float)windowSizeY / 2, (float)logoW, (float)logoH, (int)totalElapsedTime);
 
-	CP_Input_KeyDown(KEY_1) ? splash_screen_init(), windowSizeX = 1280, windowSizeY = 720 : NULL;
-	CP_Input_KeyDown(KEY_2) ? splash_screen_init(), windowSizeX = 1920, windowSizeY = 1080 : NULL;
+	CP_Input_KeyDown(KEY_1) ? splash_screen_init(), windowSizeX = 1280, windowSizeY = 720 : 0;
+	CP_Input_KeyDown(KEY_2) ? splash_screen_init(), windowSizeX = 1920, windowSizeY = 1080 : 0;
 
 	red = CP_Color_Create(255, 0, 0, 255);
 
