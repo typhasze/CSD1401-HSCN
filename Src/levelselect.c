@@ -85,7 +85,7 @@ void Level_Select_Update()
 		//if (boxClick = IsAreaClicked(halfX + 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 		if (IsAreaClicked(halfX + 400, halfY- 150, CP_Image_GetWidth(Level3) / 1.5, CP_Image_GetHeight(Level3) / 1.5, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 3;
-		printf("%d", level_selector);
+		//printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
 		}
 	}

@@ -8,3 +8,5 @@ void blastRadius(float x, float y);
 void lostHealth(int , int*);
 void levelBoxesGlow(float x, float y, float w, float h);
 void GlowingBob(float x, float y, float w, float h);
+void pointsToReach(int);
+void starRatings(int points);
