@@ -1,5 +1,6 @@
 #include "animations.h"
-
+#include <string.h>
+#include <stdlib.h>
 
 CP_Image glowdefault, LevelBoxesGlow;
 CP_Image Bob, BobL;
@@ -99,3 +100,30 @@ void GlowingBob(float x, float y, float w, float h) {
 	CP_Image_Draw(glowdefault, x, y, w, h, alpha);
 }
 
+void pointsToReach(int points) {
+	static int checkPoints[] = { 750, 1200, 1600 };
+	static int i = 0;
+	i = (points < 750) ? 0 : i;
+	i = (points < 1200 && points >= 750) ? 1 : i;
+	i = (points < 1600 && points >= 1200) ? 2 : i;
+	char PointsToReach[15] = { 0 };
+	sprintf_s(PointsToReach, _countof(PointsToReach), "%i / %i", points, checkPoints[i]);
+	CP_Font_DrawText(PointsToReach, 5, 50);
+	starRatings(points);
+
+}
+
+void starRatings(int points) {
+	CP_Image stars = CP_Image_Load("Assets/IBob.png");
+	static int i;
+	int star = 0;
+	//750, 1200, 1600
+	star = (points >= 750) ? 1 : star;
+	star = (points >= 1200) ? 2 : star;
+	star = (points >= 1600) ? 3 : star;
+	for (int x = 5, i = 1; i <= star; i++, x += 50) {
+		CP_Settings_ImageMode(CP_POSITION_CORNER);
+		CP_Image_Draw(stars, x, 75, 40, 40, 255);
+		GlowingBob(x - 5, 75 - 5, 50, 50);
+	}
+}

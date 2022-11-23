@@ -266,7 +266,8 @@ void HUD() {
 	//Timer and Points Display
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_LEFT, 0);
 	CP_Font_DrawText(Timer, 5, 25);
-	CP_Font_DrawText(Points, 5, 50);
+	//CP_Font_DrawText(Points, 5, 50);
+	pointsToReach(points);
 
 	//Multiplier Display
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_RIGHT, 0);
@@ -283,7 +284,7 @@ void HUD() {
 	x = multiplierTimer * 100;
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Settings_Fill(CP_Color_Create(145, 224, 255, 255));
-	CP_Graphics_DrawRectAdvanced(1280 / 2, 35, x, 35, 0, 15);
+	CP_Graphics_DrawRectAdvanced(1280 / 2, 20, x, 20, 0, 15);
 }
 
 int playerPlatformCollision(void) {
@@ -646,24 +647,23 @@ void orbOnFloor() {
 //Orbs + Bombs
 //Collecting Orbs Give Points
 void orbsCollected(void) {
-	int x;
-	char Points[50] = { 0 };
+	char Multiplier[3] = {0};
 	for (int i = 0; i < no_of_orbs; i++) {
 		//for purple
 		if (circleCollision(pOrbs[i].x, pOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
-			x = pointsCollected(5);
+			pointsCollected(5);
 			CP_Sound_Play(orb);
-			sprintf_s(Points, _countof(Points), "+ %i", x);
-			setText(Points);
+			sprintf_s(Multiplier, _countof(Multiplier), "%ix", multiplier);
+			setText(Multiplier);
 			//Reinitialize when collected
 			resetpOrb(i);
 		}
 		//for yellow
 		if (circleCollision(yOrbs[i].x, yOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
-			x = pointsCollected(10);
+			pointsCollected(10);
 			CP_Sound_Play(orb);
-			sprintf_s(Points, _countof(Points), "+ %i", x);
-			setText(Points);
+			sprintf_s(Multiplier, _countof(Multiplier), "%ix", multiplier);
+			setText(Multiplier);
 			//Reinitialize when collected
 			resetyOrb(i);
 		}
