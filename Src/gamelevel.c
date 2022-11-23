@@ -59,29 +59,29 @@ void initializePlatform(int level) {
 	memset(platformWidth, 0, sizeof(platformWidth));
 	if (level == 1) {
 		no_of_platforms = 4 + 1;
-		platformX[0] = 400, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 900;
-		platformX[1] = 950, platformY[1] = CP_System_GetWindowHeight() - 50.0f, platformWidth[1] = CP_System_GetWindowWidth() - 1000;
-		platformX[2] = 0, platformY[2] = CP_System_GetWindowHeight() - 50.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1000;
-		platformX[3] = 300, platformY[3] = CP_System_GetWindowHeight() - 225.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1000;
-		platformX[4] = 700, platformY[4] = CP_System_GetWindowHeight() - 400.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1000;
+		platformX[0] = 400, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 900.f;
+		platformX[1] = 950, platformY[1] = CP_System_GetWindowHeight() - 50.0f, platformWidth[1] = CP_System_GetWindowWidth() - 1000.f;
+		platformX[2] = 0, platformY[2] = CP_System_GetWindowHeight() - 50.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1000.f;
+		platformX[3] = 300, platformY[3] = CP_System_GetWindowHeight() - 225.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1000.f;
+		platformX[4] = 700, platformY[4] = CP_System_GetWindowHeight() - 400.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1000.f;
 	}
 	else if (level == 2) {
 		no_of_platforms = 5 + 1;
 		//Add More For More Levels
-		platformX[0] = 400, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 780;
-		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 780;
-		platformX[2] = 950, platformY[2] = CP_System_GetWindowHeight() - 200.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1030;
-		platformX[3] = 750, platformY[3] = CP_System_GetWindowHeight() - 100.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1030;
-		platformX[4] = 850, platformY[4] = CP_System_GetWindowHeight() - 150.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1030;
-		platformX[5] = 400, platformY[5] = CP_System_GetWindowHeight() - 350.0f, platformWidth[5] = CP_System_GetWindowWidth() - 780;
+		platformX[0] = 400, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 780.f;
+		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 780.f;
+		platformX[2] = 950, platformY[2] = CP_System_GetWindowHeight() - 200.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1030.f;
+		platformX[3] = 750, platformY[3] = CP_System_GetWindowHeight() - 100.0f, platformWidth[3] = CP_System_GetWindowWidth() - 1030.f;
+		platformX[4] = 850, platformY[4] = CP_System_GetWindowHeight() - 150.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1030.f;
+		platformX[5] = 400, platformY[5] = CP_System_GetWindowHeight() - 350.0f, platformWidth[5] = CP_System_GetWindowWidth() - 780.f;
 	}
 	else if (level == 3) {
 		no_of_platforms = 4 + 1;
-		platformX[0] = 480, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 1020;
-		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 1000;
-		platformX[2] = 820, platformY[2] = CP_System_GetWindowHeight() - 50.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1060;
-		platformX[3] = 0, platformY[3] = CP_System_GetWindowHeight() - 350.0f, platformWidth[3] = CP_System_GetWindowWidth() - 980;
-		platformX[4] = 1120, platformY[4] = CP_System_GetWindowHeight() - 350.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1040;
+		platformX[0] = 480, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 1020.f;
+		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 1000.f;
+		platformX[2] = 820, platformY[2] = CP_System_GetWindowHeight() - 50.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1060.f;
+		platformX[3] = 0, platformY[3] = CP_System_GetWindowHeight() - 350.0f, platformWidth[3] = CP_System_GetWindowWidth() - 980.f;
+		platformX[4] = 1120, platformY[4] = CP_System_GetWindowHeight() - 350.0f, platformWidth[4] = CP_System_GetWindowWidth() - 1040.f;
 	}
 }
 
@@ -119,8 +119,8 @@ void Game_Level_Init() {
 	stars = CP_Image_Load("Assets/Level3bg.png");
 	picPlatform = CP_Image_Load("Assets/steps.png");//platform picture
 	//Resets Timer/Health/Points/Multiplier/Bob Position/Unpause Game
-	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0; update_hp = 3; Bobx = 1280 / 2, Boby = 720 / 2; starting_timer = 3;
-	textAbovePlayer(Bobx, Boby, "");
+	gameTimer = 60.0, health = 3, points = 0, multiplier = 1, multiplierTimer = 5, multiplierCombo = 0; update_hp = 3; Bobx = 1280.f / 2, Boby = 720.f / 2; starting_timer = 3;
+	textAbovePlayer((float)Bobx, (float)Boby, "");
 	//Power Up Modifiers Reset
 	speedMultiplier = 1, maxJumpHeight = 175, BobImmune = FALSE;
 	gIsPaused = FALSE, BobDirection = FALSE;
@@ -150,7 +150,7 @@ void Game_Level_Update() {
 		{
 			drawTreasureChest();
 			CP_Settings_ImageMode(CP_POSITION_CORNER);
-			CP_Image_Draw(chest, chestX, chestY, CP_Image_GetWidth(chest), CP_Image_GetHeight(chest), 255);
+			CP_Image_Draw(chest, (float)chestX, (float)chestY, (float)CP_Image_GetWidth(chest), (float)CP_Image_GetHeight(chest), 255);
 			ChestCollision();
 		}
 
@@ -168,9 +168,9 @@ void Game_Level_Update() {
 		//Actual Game Code Flow
 		
 		HUD();	//Display HUD
-		drawBob(Bobx, Boby, BobDirection, BobImmune); //Display Bob.
+		drawBob((float)Bobx, (float)Boby, BobDirection, BobImmune); //Display Bob.
 		lostHealth(health, hp);
-		textAbovePlayer(Bobx, Boby, textToShow);
+		textAbovePlayer((float)Bobx, (float)Boby, textToShow);
 		drawPlatform();
 		switch (gIsPaused) {
 		case TRUE: //Game is paused
@@ -192,9 +192,9 @@ void Game_Level_Update() {
 
 void Game_Level_Exit() {
 	CP_Image_Free(&heart);
-	CP_Sound_Free(gameover);
-	CP_Sound_Free(explosion);
-	CP_Sound_Free(chestopen);
+	CP_Sound_Free(&gameover);
+	CP_Sound_Free(&explosion);
+	CP_Sound_Free(&chestopen);
 }
 
 //rendering createPlatformXY();
@@ -238,7 +238,7 @@ void drawPlatform() {
 		}
 		if (level_selector == 3) {
 		//Set Fade In and Out for Platform 2 & 3
-			if (i == 2 || i == 3) CP_Image_Draw(picPlatform, platformX[i], platformY[i], platformWidth[i], platformHeight, alpha);
+			if (i == 2 || i == 3) CP_Image_Draw(picPlatform, platformX[i], platformY[i], platformWidth[i], platformHeight, (int)alpha);
 			else CP_Image_Draw(picPlatform, platformX[i], platformY[i], platformWidth[i], platformHeight, 255);
 		}
 	}
@@ -250,7 +250,7 @@ void HUD() {
 	//Backplate For HUD
 	CP_Settings_Fill(CP_Color_Create(153, 217, 234, 150));
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
-	CP_Image_Draw(hudbackplate, 0, 0, CP_Image_GetWidth(hudbackplate), CP_Image_GetHeight(hudbackplate), 255);
+	CP_Image_Draw(hudbackplate, 0, 0, (float)CP_Image_GetWidth(hudbackplate), (float)CP_Image_GetHeight(hudbackplate), 255);
 	//CP_Settings_Stroke(CP_Color_Create(0, 0, 0, 0));
 	//CP_Graphics_DrawRect(0, 0, 150, 60);	//LEFT
 	//CP_Graphics_DrawRect(1280 - 170, 0, 170, 70);//RIGHT
@@ -277,15 +277,15 @@ void HUD() {
 	//Health (1 to 3 Heart Icons)
 	for (int x = 1240, i = 0; i < health; i++, x -= 45) {
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(heart, x, 35, 30, 30, 255);
+		CP_Image_Draw(heart, (float)x, 35, 30, 30, 255);
 	}
 
 	//Multiplier Timer Bar
 	static float x;
-	x = multiplierTimer * 100;
+	x = (float)multiplierTimer * 100;
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Settings_Fill(CP_Color_Create(145, 224, 255, 255));
-	CP_Graphics_DrawRectAdvanced(1280 / 2, 20, x, 20, 0, 15);
+	CP_Graphics_DrawRectAdvanced(1280.f / 2, 20, x, 20, 0, 15);
 }
 
 int playerPlatformCollision(void) {
@@ -505,9 +505,9 @@ void Clear_Fail_Pause(void) {
 	//Clear Condition
 	if (gameTimer <= 0.10 || (points >= 750 && health <= 0)) {
 		//TODO: SHOW MENU FOR CLEAR - CLEAR! => POINTS EARNED, HEALTH REMAINING, RETRY STAGE / GOTO NEXT STAGE
-		CP_Image_Draw(clear_screen, 0, 0, CP_Image_GetWidth(clear_screen), CP_Image_GetHeight(clear_screen), 255);
+		CP_Image_Draw(clear_screen, 0, 0, (float)CP_Image_GetWidth(clear_screen), (float)CP_Image_GetHeight(clear_screen), 255);
 		(level_selector == 3) ? CP_Image_Draw(mainMenu, 550-5, 360-5, 185+5, 85+5, 255) : 0;	//for fiinal level
-		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 65, CP_System_GetWindowHeight() / 2 - 105);
+		CP_Font_DrawText(Points, (float)(CP_System_GetWindowWidth() / 2 + 65), (float)(CP_System_GetWindowHeight() / 2 - 105));
 		addStarsRating();
 		if (CP_Input_MouseClicked()) {
 			if (isRectangleClicked(550, 360, 180, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
@@ -539,8 +539,8 @@ void Clear_Fail_Pause(void) {
 		if(health == 0)
 		CP_Sound_Play(gameover);
 		health = -1;
-		CP_Image_Draw(fail_screen, 0, 0, CP_Image_GetWidth(fail_screen), CP_Image_GetHeight(fail_screen), 255);
-		CP_Font_DrawText(Points, CP_System_GetWindowWidth() / 2 + 65, CP_System_GetWindowHeight() / 2 - 105);
+		CP_Image_Draw(fail_screen, 0, 0, (float)CP_Image_GetWidth(fail_screen), (float)CP_Image_GetHeight(fail_screen), 255);
+		CP_Font_DrawText(Points, (float)(CP_System_GetWindowWidth() / 2 + 65), (float)(CP_System_GetWindowHeight() / 2 - 105));
 		addStarsRating();
 		if (CP_Input_MouseClicked()) {
 			//Btn to Return Home
@@ -557,7 +557,7 @@ void Clear_Fail_Pause(void) {
 	}
 	//Game Pause
 	else {
-		CP_Image_Draw(pause_menu, 0, 0, CP_Image_GetWidth(pause_menu), CP_Image_GetHeight(pause_menu), 255);
+		CP_Image_Draw(pause_menu, 0, 0, (float)CP_Image_GetWidth(pause_menu), (float)CP_Image_GetHeight(pause_menu), 255);
 		if (CP_Input_MouseClicked()) {
 			//Retry
 			if (IsCircleClicked(575, 330, 75, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
@@ -576,7 +576,7 @@ void Clear_Fail_Pause(void) {
 }
 //Orbs Variable to Change(game feel)
 int no_of_orbs = 5, start_pos_x = 1280 - 25, start_pos_y = -35, respawn_timer = 10;
-float yDespawn = 2, pDespawn = 3.5, bDespawn = 0.1, pDropSpeed, yDropSpeed, bDropSpeed;
+float yDespawn = 2, pDespawn = 3.5, bDespawn = 0.1f, pDropSpeed, yDropSpeed, bDropSpeed;
 
 //To Initialize Orbs at start of level
 void initializeOrbs() {
@@ -603,9 +603,9 @@ void drawOrbs() {
 	orbOnFloor();
 	orbsCollected();
 	for (int i = 0; i < no_of_orbs; i++) {
-		CP_Image_Draw(purple_orb, pOrbs[i].x - 25 , pOrbs[i].y - 25, 50, 50, pOrbs[i].timer_on_floor * (255 / pDespawn));
-		CP_Image_Draw(yellow_orb, yOrbs[i].x - 25, yOrbs[i].y - 25, 50, 50, yOrbs[i].timer_on_floor * (255 / pDespawn));
-		CP_Image_Draw(bombPic, bOrbs[i].x - 25, bOrbs[i].y - 25, 50, 50, 255);
+		CP_Image_Draw(purple_orb, (float)(pOrbs[i].x - 25) , (float)(pOrbs[i].y - 25), 50.f, 50.f, (int)(pOrbs[i].timer_on_floor * (255 / pDespawn)));
+		CP_Image_Draw(yellow_orb, (float)(yOrbs[i].x - 25), (float)(yOrbs[i].y - 25), 50.f, 50.f, (int)(yOrbs[i].timer_on_floor * (255 / pDespawn)));
+		CP_Image_Draw(bombPic, (float)(bOrbs[i].x - 25), (float)(bOrbs[i].y - 25), 50.f, 50.f, 255);
 	}
 }
 
@@ -614,15 +614,15 @@ void drawOrbs() {
 void makeOrbsFall() {
 	for (int i = 0; i < no_of_orbs; i++) {
 		if (pOrbs[i].timer_to_drop < 0) {
-			pOrbs[i].y += pOrbs[i].dropSpeed;
+			pOrbs[i].y += (int)pOrbs[i].dropSpeed;
 		}
 		else pOrbs[i].timer_to_drop -= CP_System_GetDt();
 		if (yOrbs[i].timer_to_drop < 0) {
-			yOrbs[i].y += yOrbs[i].dropSpeed;
+			yOrbs[i].y += (int)yOrbs[i].dropSpeed;
 		}
 		else yOrbs[i].timer_to_drop -= CP_System_GetDt();
 		if (bOrbs[i].timer_to_drop < 0) {
-			bOrbs[i].y += bOrbs[i].dropSpeed;
+			bOrbs[i].y += (int)bOrbs[i].dropSpeed;
 		}
 		else bOrbs[i].timer_to_drop -= CP_System_GetDt();
 
@@ -636,7 +636,7 @@ void makeOrbsFall() {
 
 		if (bOrbs[i].y > 720 || bOrbs[i].timer_on_floor < 0)
 		{
-			if (circleCollision(bOrbs[i].x, bOrbs[i].y, 200, Bobx, Boby, BobWidth, BobHeight) == 1)
+			if (circleCollision((float)bOrbs[i].x, (float)bOrbs[i].y, 200.f, (float)Bobx, (float)Boby, (float)BobWidth, (float)BobHeight) == 1)
 			{
 				if (BobImmune != 1)
 				{
@@ -644,7 +644,7 @@ void makeOrbsFall() {
 				}
 					//blastRadius(bOrbs[i].x, bOrbs[i].y);
 					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-					CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
+					CP_Graphics_DrawCircle((float)bOrbs[i].x, (float)bOrbs[i].y, 200.f);
 					resetBomb(i);
 					soundCheck = 0;
 			}
@@ -652,7 +652,7 @@ void makeOrbsFall() {
 			{
 				//blastRadius(bOrbs[i].x, bOrbs[i].y);
 				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-				CP_Graphics_DrawCircle(bOrbs[i].x, bOrbs[i].y, 200);
+				CP_Graphics_DrawCircle((float)bOrbs[i].x, (float)bOrbs[i].y, 200.f);
 				resetBomb(i);
 				soundCheck = 0;
 			}
@@ -676,19 +676,19 @@ void orbOnFloor() {
 		bOrbs[i].dropSpeed = bDropSpeed;
 		for (int x = 0; x < no_of_platforms; x++) {
 			//for purple
-			if (circleToPlatform(pOrbs[i].x, pOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+			if (circleToPlatform((float)pOrbs[i].x, (float)pOrbs[i].y, 50.f, (float)platformX[x], (float)platformY[x], (float)platformWidth[x], (float)platformHeight) == 1) {
 				pOrbs[i].timer_on_floor -= CP_System_GetDt();
-				pOrbs[i].y = platformY[x] - 25;
+				pOrbs[i].y = (int)platformY[x] - 25;
 				pOrbs[i].dropSpeed = 0;
 			}
 			//for yellow
-			if (circleToPlatform(yOrbs[i].x, yOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+			if (circleToPlatform((float)yOrbs[i].x, (float)yOrbs[i].y, 50.f, (float)platformX[x], (float)platformY[x], (float)platformWidth[x], (float)platformHeight) == 1) {
 				yOrbs[i].timer_on_floor -= CP_System_GetDt();
-				yOrbs[i].y = platformY[x] - 25;
+				yOrbs[i].y = (int)platformY[x] - 25;
 				yOrbs[i].dropSpeed = 0;
 			}
 			//for bomb
-			if (circleToPlatform(bOrbs[i].x, bOrbs[i].y, 50, platformX[x], platformY[x], platformWidth[x], platformHeight) == 1) {
+			if (circleToPlatform((float)bOrbs[i].x, (float)bOrbs[i].y, 50.f, (float)platformX[x], (float)platformY[x], (float)platformWidth[x], (float)platformHeight) == 1) {
 				if (soundCheck == 0)
 				{
 					CP_Sound_PlayAdvanced(explosion, 0.3f, 1.0f, FALSE, CP_SOUND_GROUP_2);
@@ -708,7 +708,7 @@ void orbsCollected(void) {
 	char Multiplier[3] = {0};
 	for (int i = 0; i < no_of_orbs; i++) {
 		//for purple
-		if (circleCollision(pOrbs[i].x, pOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
+		if (circleCollision((float)pOrbs[i].x, (float)pOrbs[i].y, 50.f, (float)Bobx, (float)Boby, (float)BobWidth, (float)BobHeight) == 1) {
 			pointsCollected(5);
 			CP_Sound_Play(orb);
 			sprintf_s(Multiplier, _countof(Multiplier), "%ix", multiplier);
@@ -717,7 +717,7 @@ void orbsCollected(void) {
 			resetpOrb(i);
 		}
 		//for yellow
-		if (circleCollision(yOrbs[i].x, yOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
+		if (circleCollision((float)yOrbs[i].x, (float)yOrbs[i].y, 50.f, (float)Bobx, (float)Boby, (float)BobWidth, (float)BobHeight) == 1) {
 			pointsCollected(10);
 			CP_Sound_Play(orb);
 			sprintf_s(Multiplier, _countof(Multiplier), "%ix", multiplier);
@@ -726,7 +726,7 @@ void orbsCollected(void) {
 			resetyOrb(i);
 		}
 		//for Bombs
-		if (circleCollision(bOrbs[i].x, bOrbs[i].y, 50, Bobx, Boby, BobWidth, BobHeight) == 1) {
+		if (circleCollision((float)bOrbs[i].x, (float)bOrbs[i].y, 50.f, (float)Bobx, (float)Boby, (float)BobWidth, (float)BobHeight) == 1) {
 			if (BobImmune != 1) {
 				//setText("Dodge plssssss");
 				health--;
@@ -747,27 +747,27 @@ void drawTreasureChest()
 			chestX = 800;
 			chestY = 260;
 			CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
-			CP_Graphics_DrawRect(chestX, chestY, 70, 60);
+			CP_Graphics_DrawRect((float)chestX, (float)chestY, 70.f, 60.f);
 		}
 		if (level_selector == 2)
 		{
 			chestX = 500;
 			chestY = 610;
 			CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
-			CP_Graphics_DrawRect(chestX, chestY, 70, 60);
+			CP_Graphics_DrawRect((float)chestX, (float)chestY, 70.f, 60.f);
 		}
 		if (level_selector == 3)
 		{
 			chestX = 100;
 			chestY = 460;
 			CP_Settings_Fill(CP_Color_Create(255, 255, 0, 255));
-			CP_Graphics_DrawRect(chestX, chestY, 70, 60);
+			CP_Graphics_DrawRect((float)chestX, (float)chestY, 70.f, 60.f);
 		}
 	}
 	if (cheststate == 0)
 	{
 		chestX = 2000, chestY = 2000;
-		CP_Graphics_DrawRect(chestX, chestY, 0, 0);
+		CP_Graphics_DrawRect((float)chestX, (float)chestY, 0.f, 0.f);
 	}
 }
 
@@ -831,7 +831,7 @@ void immunity(void)
 
 void add_health(void)
 {
-	(health < 3) ? ++health : NULL;
+	(health < 3) ? ++health : 0;
 }
 
 void jump_high(void)
@@ -871,20 +871,20 @@ void setText(char* text) {
 
 //All for Balancing
 void resetBomb(int i) {
-	bOrbs[i].timer_to_drop = random_int(3, 5),
+	bOrbs[i].timer_to_drop = (float)random_int(3, 5),
 		bOrbs[i].y = start_pos_y,
 		bOrbs[i].x = random_int(25, 1280 - 25),
 		bOrbs[i].timer_on_floor = bDespawn;
 }
 
 void resetyOrb(int i) {
-	yOrbs[i].timer_to_drop = random_int(3 , 5),
+	yOrbs[i].timer_to_drop = (float)random_int(3 , 5),
 		yOrbs[i].y = start_pos_y, 
 		yOrbs[i].x = random_int(25, 1280 - 25),
 		yOrbs[i].timer_on_floor = yDespawn;
 }
 void resetpOrb(int i) {
-	pOrbs[i].timer_to_drop = random_int(0, 3),
+	pOrbs[i].timer_to_drop = (float)random_int(0, 3),
 		pOrbs[i].y = start_pos_y,
 		pOrbs[i].x = random_int(25 , 1280-25),
 		pOrbs[i].timer_on_floor = pDespawn;
@@ -897,7 +897,7 @@ void start_timer(void) {
 	CP_Settings_TextSize(100);
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_BASELINE);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText(showtime, 1280 / 2, 720 / 2 + 50);
+	CP_Font_DrawText(showtime, 1280.f / 2, 720 / 2 + 50);
 	starting_timer -= CP_System_GetDt();
 }
 
@@ -911,8 +911,8 @@ void addStarsRating(void) {
 	star = (points >= 1600) ? 3 : star;
 	for (int x = 1280 / 2 - 100, i = 1; i <= star; i++, x += 75) {
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(stars, x, 720 / 2 - 65, 50, 50, 255);
-		GlowingBob(x-7.5, 720 / 2 - 72.5, 65, 65);
+		CP_Image_Draw(stars, (float)x, 720 / 2 - 65, 50, 50, 255);
+		GlowingBob((float)(x-7.5), 720 / 2 - 72.5, 65, 65);
 	}
 }
 

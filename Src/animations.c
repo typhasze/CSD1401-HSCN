@@ -1,6 +1,7 @@
 #include "animations.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 CP_Image glowdefault, LevelBoxesGlow;
 CP_Image Bob, BobL;
@@ -17,7 +18,7 @@ void glowingBob(float x, float y, bool BobImmune) {
 		flip = (alpha >= 255 ) ? FALSE : flip;
 	}
 	glowdefault = (!BobImmune) ? CP_Image_Load("Assets/glowdefault.png") : CP_Image_Load("Assets/iglowdefault.png");
-	CP_Image_Draw(glowdefault, x-10, y-10, 100, 100, alpha);
+	CP_Image_Draw(glowdefault, x-10, y-10, 100, 100, (int)alpha);
 
 }
 
@@ -31,8 +32,8 @@ void drawBob(float x, float y, bool BobDirection, bool BobImmune) {
 		BobL = CP_Image_Load("Assets/BobL.png");
 	}
 	glowingBob(x, y, BobImmune);
-	(BobDirection == FALSE) ? CP_Image_Draw(Bob, x, y, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255)
-		: CP_Image_Draw(BobL, x, y, CP_Image_GetWidth(Bob), CP_Image_GetHeight(Bob), 255);
+	(BobDirection == FALSE) ? CP_Image_Draw(Bob, x, y, (float)CP_Image_GetWidth(Bob), (float)CP_Image_GetHeight(Bob), 255)
+		: CP_Image_Draw(BobL, x, y, (float)CP_Image_GetWidth(Bob), (float)CP_Image_GetHeight(Bob), 255);
 	
 }
 
@@ -62,7 +63,7 @@ void lostHealth(int hp, int *p) {
 	}
 	if (flip) {
 		CP_Settings_RectMode(CP_POSITION_CORNER);
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, alpha));
+		CP_Settings_Fill(CP_Color_Create(255, 0, 0, (int)alpha));
 		CP_Graphics_DrawRect(0, 0, 1280, 720);
 		alpha -= 85 * CP_System_GetDt();
 		flip = (alpha <= 0) ? FALSE : flip;
@@ -73,7 +74,7 @@ void levelBoxesGlow(float x, float y, float w, float h) {
 	float static alpha = 255;
 	static bool toggle = FALSE;
 	LevelBoxesGlow = CP_Image_Load("Assets/LevelBoxesGlow.png");
-	CP_Image_Draw(LevelBoxesGlow, x, y, w, h, alpha);
+	CP_Image_Draw(LevelBoxesGlow, x, y, w, h, (int)alpha);
 	//wrapAlphaValue(&alpha, &toggle, 125);
 	if (toggle == FALSE) {
 		alpha -= 40 * CP_System_GetDt();
@@ -89,15 +90,15 @@ void GlowingBob(float x, float y, float w, float h) {
 	static float alpha = 255;
 	static bool flip = FALSE;
 	if (flip == FALSE) {
-		alpha -= 127.5 * CP_System_GetDt();
+		alpha -= 127.5f * CP_System_GetDt();
 		flip = (alpha <= 0) ? TRUE : flip;
 	}
 	else {
-		alpha += 127.5 * CP_System_GetDt();
+		alpha += 127.5f * CP_System_GetDt();
 		flip = (alpha >= 255) ? FALSE : flip;
 	}
 	glowdefault = CP_Image_Load("Assets/iglowdefault.png");
-	CP_Image_Draw(glowdefault, x, y, w, h, alpha);
+	CP_Image_Draw(glowdefault, x, y, w, h, (int)alpha);
 }
 
 void pointsToReach(int points) {
@@ -123,7 +124,7 @@ void starRatings(int points) {
 	star = (points >= 1600) ? 3 : star;
 	for (int x = 5, i = 1; i <= star; i++, x += 50) {
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(stars, x, 75, 40, 40, 255);
-		GlowingBob(x - 5, 75 - 5, 50, 50);
+		CP_Image_Draw(stars, (float)x, 75, 40, 40, 255);
+		GlowingBob((float)x - 5, 75 - 5, 50, 50);
 	}
 }
