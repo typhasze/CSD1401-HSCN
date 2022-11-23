@@ -10,7 +10,7 @@ CP_Color grey;
 CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 int level_selector;
-CP_Image Bob, Title, Play, HowToPlay, Credits, background, intro, cross, credits1, credits2, credits3;
+CP_Image Bob, Title, Play, HowToPlay, Credits, background, intro, mainmenu, cross, credits1, credits2, credits3;
 CP_Sound mainmenusound;
 static int alpha = 255;
 static int mainmenustate = 0;
@@ -31,9 +31,9 @@ void drawMenu() {
 	CP_Graphics_DrawRect(halfX + 500, halfY + 250, 150.0f, 60.0f);// Exit button
 
 	//Text shown over Rectangle Play/Exit - Black
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_TextAlignment(horizontal, vertical);
-	CP_Font_DrawText("Exit", halfX + 500, halfY + 250);
+	//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	//CP_Settings_TextAlignment(horizontal, vertical);
+	//CP_Font_DrawText("Exit", halfX + 500, halfY + 250);
 
 	//Draws the graphics for the menu screen.
 	CP_Image_Draw(background, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), alpha);
@@ -50,13 +50,15 @@ void drawIntro() {
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
 	CP_Graphics_DrawRect(1200, 60, 40, 40);
 	CP_Image_Draw(intro, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), 255);
-	CP_Image_Draw(cross, 1200, 60, 40, 40, 255);
+	CP_Image_Draw(mainmenu, halfX + 400, halfY + 250, CP_Image_GetWidth(mainmenu)/2, CP_Image_GetHeight(mainmenu)/2, 255);
 	CP_Image_Draw(background, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), 20);
+	CP_Image_Draw(cross, halfX + 400, halfY - 500, CP_Image_GetWidth(cross), CP_Image_GetHeight(cross), 255);
 	CP_Image_Draw(Play, halfX, halfY - 50, CP_Image_GetWidth(Play), CP_Image_GetHeight(Play), 20);
 	CP_Image_Draw(HowToPlay, halfX, halfY + 100, CP_Image_GetWidth(HowToPlay), CP_Image_GetHeight(HowToPlay), 20);
 	CP_Image_Draw(Credits, halfX, halfY + 250, CP_Image_GetWidth(Credits), CP_Image_GetHeight(Credits), 20);
+	CP_Image_Draw(cross, halfX + 400, halfY - 500, CP_Image_GetWidth(cross), CP_Image_GetHeight(cross), 255);
 	if (CP_Input_MouseClicked()) {
-		if (boxClick = IsAreaClicked(1200, 60, 40, 40, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
+		if (boxClick = IsAreaClicked(halfX + 400, halfY + 250, CP_Image_GetWidth(mainmenu) / 2, CP_Image_GetHeight(mainmenu) / 2, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			mainmenustate = 1;
 		}
 	}
@@ -138,8 +140,9 @@ void Main_Menu_Init()
 	HowToPlay = CP_Image_Load("Assets/HowToPlay.png");
 	Credits = CP_Image_Load("Assets/Credits.png");
 	background = CP_Image_Load("Assets/mainbackground.png");
-	intro = CP_Image_Load("Assets/intro.png");
-	cross = CP_Image_Load("Assets/cross.png");
+	intro = CP_Image_Load("Assets/Tutorial.jpg");
+	mainmenu = CP_Image_Load("Assets/MainMenu.png");
+	cross = CP_Image_Load("Assets/Cross.png");
 	credits1 = CP_Image_Load("Assets/Credits1.png");
 	credits2 = CP_Image_Load("Assets/Credits2.png");
 	credits3 = CP_Image_Load("Assets/Credits3.png");
@@ -184,10 +187,11 @@ void Main_Menu_Update()
 	}
 
 	//Exit Button
-	if (CP_Input_MouseClicked()) {
+	if(CP_Input_KeyTriggered(KEY_Q)) {
+	//if (CP_Input_MouseClicked()) {
 		//Checks if Exit button clicked to shut down the program.
-		if (boxClick = IsAreaClicked(halfX + 500, halfY + 250, 150.0f, 60.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-			CP_Engine_Terminate();
+		//if (boxClick = IsAreaClicked(halfX + 500, halfY + 250, 150.0f, 60.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
+		CP_Engine_Terminate();
 	}
 
 	if (mainmenustate == 1) {

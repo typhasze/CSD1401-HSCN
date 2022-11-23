@@ -1,15 +1,35 @@
 ﻿  levelselect.c
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(86,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(86,69): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(87,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(87,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(88,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(88,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(89,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(89,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(49,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(50,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(63,71): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(63,105): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(73,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(73,99): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(84,72): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(84,106): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(109,66): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(109,98): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(110,73): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(110,105): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(112,60): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(112,92): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(113,67): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(113,99): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(115,64): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(115,96): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(116,73): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(116,105): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(122,46): warning C4020: 'CP_Graphics_DrawRect': too many actual parameters
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(130,24): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(130,30): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(130,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(130,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(132,30): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(132,36): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(132,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(132,68): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(164,14): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(54,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\CSD1401-HSCN\Src\levelselect.c(55,44): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   CProject.vcxproj -> C:\Users\User\Desktop\CSD1401-HSCN\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
-  54 File(s) copied
+  57 File(s) copied
