@@ -307,14 +307,14 @@ void platformMovement() {
 	if (level_selector == 2) {
 		if (toggle == 0) {
 			platformX[5] -= speed;
-			if (Boby <= platformY[5] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
+			if (Boby >= platformY[5] - BobHeight - 1 && Boby <= platformY[5] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
 				Bobx -= speed;
 			}
-			if (Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
+			if (Boby >= platformY[5] - BobHeight - 1 && Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
 				Bobx -= (position - speed);
 				BobDirection = TRUE;
 			}
-			if (Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_D) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
+			if (Boby >= platformY[5] - BobHeight - 1 && Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_D) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
 				Bobx += (position + speed);
 				BobDirection = FALSE;
 			}
@@ -324,14 +324,14 @@ void platformMovement() {
 		}
 		if (toggle == 1) {
 			platformX[5] += speed;
-			if (Boby <= platformY[5] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
+			if (Boby >= platformY[5] - BobHeight - 1 && Boby <= platformY[5] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
 				Bobx += speed;
 			}
-			if (Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
+			if (Boby >= platformY[5] - BobHeight - 1 && Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
 				Bobx -= (position + speed);
 				BobDirection = TRUE;
 			}
-			if (Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_D) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
+			if (Boby >= platformY[5] - BobHeight - 1 && Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_D) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
 				Bobx += (position - speed);
 				BobDirection = FALSE;
 			}
@@ -358,14 +358,14 @@ void platformMovement() {
 		//To move platform left and right
 		if (toggle2 == 0) {
 			platformX[3] -= speed2;
-			if (Boby <= platformY[3] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
+			if (Boby >= platformY[3] - BobHeight - 1 && Boby <= platformY[3] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
 				Bobx -= speed2;
 			}
-			if (Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
+			if (Boby >= platformY[3] - BobHeight - 1 && Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
 				Bobx -= (position - speed2);
 				BobDirection = TRUE;
 			}
-			if (Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_D) && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
+			if (Boby >= platformY[3] - BobHeight - 1 && Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_D) && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
 				Bobx += (position + speed2);
 				BobDirection = FALSE;
 			}
@@ -376,14 +376,14 @@ void platformMovement() {
 		}
 		if (toggle2 == 1) {
 			platformX[3] += speed2;
-			if (Boby <= platformY[3] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
+			if (Boby >= platformY[3] - BobHeight - 1 && Boby <= platformY[3] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
 				Bobx += speed2;
 			}
-			if (Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
+			if (Boby >= platformY[3] - BobHeight - 1 && Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
 				Bobx -= (position + speed2);
 				BobDirection = TRUE;
 			}
-			if (Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_D) && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
+			if (Boby >= platformY[3] - BobHeight - 1 && Boby <= platformY[3] - BobHeight - 1 && CP_Input_KeyDown(KEY_D) && (Bobx + BobWidth) >= platformX[3] && Bobx <= (platformX[3] + platformWidth[3])) {
 				Bobx += (position - speed2);
 				BobDirection = FALSE;
 			}
