@@ -636,15 +636,15 @@ void makeOrbsFall() {
 
 		if (bOrbs[i].y > 720 || bOrbs[i].timer_on_floor < 0)
 		{
-			if (circleCollision((float)bOrbs[i].x, (float)bOrbs[i].y, 200.f, (float)Bobx, (float)Boby, (float)BobWidth, (float)BobHeight) == 1)
+			if (circleCollision((float)bOrbs[i].x, (float)bOrbs[i].y, 150.f, (float)Bobx, (float)Boby, (float)BobWidth, (float)BobHeight) == 1)
 			{
 				if (BobImmune != 1)
 				{
 					health--;
 				}
 					//blastRadius(bOrbs[i].x, bOrbs[i].y);
-					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-					CP_Graphics_DrawCircle((float)bOrbs[i].x, (float)bOrbs[i].y, 200.f);
+					CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255)); //red circle
+					CP_Graphics_DrawCircle((float)bOrbs[i].x, (float)bOrbs[i].y, 150.f);
 					resetBomb(i);
 					soundCheck = 0;
 			}
@@ -652,7 +652,7 @@ void makeOrbsFall() {
 			{
 				//blastRadius(bOrbs[i].x, bOrbs[i].y);
 				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-				CP_Graphics_DrawCircle((float)bOrbs[i].x, (float)bOrbs[i].y, 200.f);
+				CP_Graphics_DrawCircle((float)bOrbs[i].x, (float)bOrbs[i].y, 150.f);
 				resetBomb(i);
 				soundCheck = 0;
 			}
