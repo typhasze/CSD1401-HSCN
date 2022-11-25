@@ -10,7 +10,7 @@ CP_Color grey;
 CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 int level_selector;
-CP_Image Bob, Title, Play, HowToPlay, Credits, background, intro, mainmenu, cross, credits1, credits2, credits3;
+CP_Image Bob,BobL,glow, Title, Play, HowToPlay, Credits, background, intro, mainmenu, cross, credits1, credits2, credits3;
 CP_Sound mainmenusound;
 static int alpha = 255;
 static int mainmenustate = 0;
@@ -37,6 +37,10 @@ void drawMenu() {
 
 	//Draws the graphics for the menu screen.
 	CP_Image_Draw(background, halfX, halfY, (float)CP_Image_GetWidth(background), (float)CP_Image_GetHeight(background), alpha);
+	CP_Image_Draw(BobL, halfX - 450, halfY - 250, (float)CP_Image_GetWidth(BobL), (float)CP_Image_GetHeight(BobL), 255);
+	CP_Image_Draw(glow, halfX - 450, halfY - 250, (float)CP_Image_GetWidth(glow), (float)CP_Image_GetHeight(glow), 255);
+	CP_Image_Draw(Bob, halfX + 500, halfY - 250, (float)CP_Image_GetWidth(Bob), (float)CP_Image_GetHeight(Bob), 255);
+	CP_Image_Draw(glow, halfX + 500, halfY - 250, (float)CP_Image_GetWidth(glow), (float)CP_Image_GetHeight(glow), 255);
 	CP_Image_Draw(Play, halfX, halfY - 50, (float)CP_Image_GetWidth(Play), (float)CP_Image_GetHeight(Play), alpha);
 	CP_Image_Draw(HowToPlay, halfX, halfY + 100, (float)CP_Image_GetWidth(HowToPlay), (float)CP_Image_GetHeight(HowToPlay), alpha);
 	CP_Image_Draw(Credits, halfX, halfY + 250, (float)CP_Image_GetWidth(Credits), (float)CP_Image_GetHeight(Credits), alpha);
@@ -134,12 +138,14 @@ void Main_Menu_Init()
 	CP_System_SetFrameRate(60);
 	CP_System_SetWindowSize(1280, 720);
 	CP_Settings_TextSize(50.0f);
+	glow = CP_Image_Load("Assets/glowdefault.png");
 	Bob = CP_Image_Load("Assets/Bob.png");
+	BobL = CP_Image_Load("Assets/BobL.png");
 	Title = CP_Image_Load("Assets/thoseorbsarefine.png");
 	Play = CP_Image_Load("Assets/Play.png");
 	HowToPlay = CP_Image_Load("Assets/HowToPlay.png");
 	Credits = CP_Image_Load("Assets/Credits.png");
-	background = CP_Image_Load("Assets/mainbackground.png");
+	background = CP_Image_Load("Assets/mainbackground.jpg");
 	intro = CP_Image_Load("Assets/Tutorial.jpg");
 	mainmenu = CP_Image_Load("Assets/MainMenu.png");
 	cross = CP_Image_Load("Assets/Cross.png");
