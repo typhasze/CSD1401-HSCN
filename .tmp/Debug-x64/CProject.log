@@ -1,5 +1,10 @@
-﻿  mainmenu.c
+﻿  gamelevel.c
+  levelselect.c
+  main.c
+  mainmenu.c
+  splashscreen.c
+  Generating Code...
   CProject.vcxproj -> C:\Users\stron\Documents\GitHub\CSD1401-HSCN\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
-  59 File(s) copied
+  45 File(s) copied

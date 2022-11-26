@@ -66,7 +66,7 @@ void drawIntro() {
 	}
 
 }
-
+//Code for Credit pages
 void drawCred() {
 	float halfX = (float)CP_System_GetWindowWidth() / 2;
 	float halfY = (float)CP_System_GetWindowHeight() / 2;
@@ -77,7 +77,7 @@ void drawCred() {
 			credPage++;
 		}
 	}
-	if (credPage == 1)
+	if (credPage == 1)//code for drawing credit page 1
 	{
 		CP_Image_Draw(credits1, halfX, halfY, 1280, 720, 255);
 		CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -87,7 +87,7 @@ void drawCred() {
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawTriangle(1200, 500, 1200, 450, 1250, 475);
 	}
-	if (credPage == 2)
+	if (credPage == 2)//code for drawing credit page 2
 	{
 		CP_Image_Draw(credits2, halfX, halfY, 1280, 720, 255);
 		CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -97,7 +97,7 @@ void drawCred() {
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawTriangle(1200, 500, 1200, 450, 1250, 475);
 	}
-	if (credPage == 3)
+	if (credPage == 3)//code for drawing credit page 3
 	{
 		CP_Image_Draw(credits3, halfX, halfY, 1280, 720, 255);
 		CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -107,16 +107,16 @@ void drawCred() {
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawTriangle(1200, 500, 1200, 450, 1250, 475);
 	}
-	if (credPage > 3)
+	if (credPage > 3)//code to loop back to page 1 of credits
 	{
 		credPage = 1;
 	}
-	if (CP_Input_MouseClicked()) {
+	if (CP_Input_MouseClicked()) {//exit credits screen and go back to main menu when "X" icon is clicked
 		if (boxClick = IsAreaClicked(1200, 60, 40, 40, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			mainmenustate = 1;
 		}
 	}
-	if (CP_Input_KeyTriggered(KEY_ESCAPE)) {
+	if (CP_Input_KeyTriggered(KEY_ESCAPE)) {//exit credits screen and go back to main menu when espace key is pressed
 		mainmenustate = 1;
 	}
 

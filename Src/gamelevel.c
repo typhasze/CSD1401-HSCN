@@ -40,6 +40,7 @@ int power = 0;
 float textTimer = 0;
 char textToShow[50] = {"test"};
 
+//For Health
 int update_hp;
 int* hp = &update_hp;
 float starting_timer;
@@ -597,7 +598,7 @@ void makeOrbsFall() {
 		{
 			if (circleCollision((float)bOrbs[i].x, (float)bOrbs[i].y, 150.f, (float)Bobx, (float)Boby, (float)BobWidth, (float)BobHeight) == 1)
 			{
-				if (BobImmune != 1)
+				if (BobImmune != 1) //check if bob is immune
 				{
 					health--;
 				}
