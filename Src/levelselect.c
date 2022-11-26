@@ -13,28 +13,6 @@ int level_selector;
 bool BobDirection;
 double Bobx = 1280/2, Boby = 620;
 
-/*
-void drawScreen() {
-	CP_Settings_RectMode(CP_POSITION_CENTER);
-	float halfX = CP_System_GetWindowWidth() / 2;
-	float halfY = CP_System_GetWindowHeight() / 2;
-	grey = CP_Color_Create(255, 255, 255, 0);
-	//Draw Rectangle - Grey
-	CP_Settings_Fill(grey);
-	CP_Graphics_DrawRect(halfX - 400, halfY, 300.0f, 300.0f);// Level 1 Button
-	CP_Graphics_DrawRect(halfX, halfY, 300.0f, 300.0f);// Level 2 Button
-	CP_Graphics_DrawRect(halfX + 400, halfY, 300.0f, 300.0f);// Level 3 Button
-	CP_Graphics_DrawRect(halfX + 500, halfY - 250, 150.0f, 60.0f);// Main Menu button
-
-	//Text shown over Rectangle Play/Exit - Black
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_TextAlignment(1280, 720);
-	//CP_Font_DrawText("1", halfX - 400, halfY);
-	//CP_Font_DrawText("2", halfX, halfY);
-	//CP_Font_DrawText("3", halfX + 400, halfY);
-	//CP_Font_DrawText("Main Menu", halfX + 400, halfY - 250);
-}*/
-
 void Level_Select_Init()
 {
 	CP_System_SetFrameRate(60);
@@ -55,9 +33,6 @@ void Level_Select_Update()
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	float halfX = (float)CP_System_GetWindowWidth() / 2;
 	float halfY = (float)CP_System_GetWindowHeight() / 2;
-	//int static boxClick = 0;
-
-	//if (boxClick == 0);
 
 	//Level 1 Button
 	if (CP_Input_MouseClicked()) {
@@ -98,16 +73,11 @@ void Level_Select_Update()
 	}
 
 	//Draws the graphics for the menu screen.
-
 	CP_Image_Draw(bg, halfX, halfY, (float)CP_Image_GetWidth(bg), (float)CP_Image_GetHeight(bg), 255);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_TextSize(30);
 	CP_Font_DrawText("Press 'A' & 'D' to move left and right", halfX-200, halfY + 150);
 	CP_Font_DrawText("SPACEBAR to jump", halfX- 100, halfY + 180);
-
-
-	//GlowingBob(halfX, halfY + 250, CP_Image_GetWidth(IBobR) + 25, CP_Image_GetWidth(IBobR) + 25);
-	
 
 	levelBoxesGlow(halfX - 400, halfY-150, (float)CP_Image_GetWidth(Level1)/1.5f, (float)CP_Image_GetHeight(Level1)/1.5f);
 	CP_Image_Draw(Level1, halfX - 400, halfY-150, (float)CP_Image_GetWidth(Level1)/1.5f, (float)CP_Image_GetHeight(Level1)/1.5f, 255);
@@ -151,17 +121,13 @@ void Level_Select_Update()
 		Boby += gravity;
 	}
 	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCounter != 0) {
-		//particleEffect(Bobx, Boby, "Jump!");
 		--jumpCounter;
-		//Boby -= jump;
 		maxJump = 175;
 
 	}
 	if (Boby >= 620) {
 		jumpCounter = 1;
 	}
-	//Jump CD Decrement every deltaTime
-	//jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
 	maxJump = (Boby <= 10) ? 0 : maxJump;	 //To stop at ceiling
 	if (maxJump > 0) {
 

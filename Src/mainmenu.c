@@ -30,11 +30,6 @@ void drawMenu() {
 	CP_Graphics_DrawRect(halfX, halfY + 250, 300.0f, 100.0f);// Credits Button
 	CP_Graphics_DrawRect(halfX + 500, halfY + 250, 150.0f, 60.0f);// Exit button
 
-	//Text shown over Rectangle Play/Exit - Black
-	//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	//CP_Settings_TextAlignment(horizontal, vertical);
-	//CP_Font_DrawText("Exit", halfX + 500, halfY + 250);
-
 	//Draws the graphics for the menu screen.
 	CP_Image_Draw(background, halfX, halfY, (float)CP_Image_GetWidth(background), (float)CP_Image_GetHeight(background), alpha);
 	CP_Image_Draw(BobL, halfX - 450, halfY - 250, (float)CP_Image_GetWidth(BobL), (float)CP_Image_GetHeight(BobL), 255);
@@ -80,7 +75,6 @@ void drawCred() {
 		if (IsAreaClicked(1225, 475, 50, 50, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		{
 			credPage++;
-
 		}
 	}
 	if (credPage == 1)
@@ -117,10 +111,6 @@ void drawCred() {
 	{
 		credPage = 1;
 	}
-	//CP_Image_Draw(background, halfX, halfY, CP_Image_GetWidth(background), CP_Image_GetHeight(background), 20);
-	//CP_Image_Draw(Play, halfX, halfY - 50, CP_Image_GetWidth(Play), CP_Image_GetHeight(Play), 20);
-	//CP_Image_Draw(HowToPlay, halfX, halfY + 100, CP_Image_GetWidth(HowToPlay), CP_Image_GetHeight(HowToPlay), 20);
-	//CP_Image_Draw(Credits, halfX, halfY + 250, CP_Image_GetWidth(Credits), CP_Image_GetHeight(Credits), 20);
 	if (CP_Input_MouseClicked()) {
 		if (boxClick = IsAreaClicked(1200, 60, 40, 40, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			mainmenustate = 1;
@@ -174,29 +164,22 @@ void Main_Menu_Update()
 			CP_Engine_SetNextGameState(Level_Select_Init, Level_Select_Update, Level_Select_Exit);
 	}
 
-	//Instructions Button (SCOTT TODO)
+	//Instructions Button
 	if (CP_Input_MouseClicked()) {
 		if (boxClick = IsAreaClicked(halfX, halfY + 100, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			mainmenustate = 2;
-
-
-
-		}// PLS CHANGE
+		}
 
 	}
 
 	// Credits Button
 	if (CP_Input_MouseClicked()) {
 		if (boxClick = IsAreaClicked(halfX, halfY + 250, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
-			//CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// TODO
 			mainmenustate = 3;
 	}
 
 	//Exit Button
 	if(CP_Input_KeyTriggered(KEY_Q)) {
-	//if (CP_Input_MouseClicked()) {
-		//Checks if Exit button clicked to shut down the program.
-		//if (boxClick = IsAreaClicked(halfX + 500, halfY + 250, 150.0f, 60.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY()))
 		CP_Engine_Terminate();
 	}
 
