@@ -9,8 +9,9 @@
 // -Everything
 // 
 // Clement: 
-// -Power ups 
-// -Sound Logic
+// -Power ups and chest collision
+// -Sound Design
+// -Level Design
 // 
 // Scott Sia:
 // -Platform Placement 
@@ -55,7 +56,7 @@ static char playeronground = 0;
 float maxJumpHeight = 175, speedMultiplier = 1;
 
 // Variables for Platform Creation
-//int level_selector;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
+int level_selector;	//TODO: REMOVE = 1 WHEN MAIN MENU DONE
 float platformX[100], platformY[100], platformWidth[100], platformHeight = 50.0f;
 int no_of_platforms = 6;
 

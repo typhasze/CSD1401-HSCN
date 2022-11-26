@@ -9,8 +9,13 @@
 // -Everything
 // 
 // Clement: 
+// Buttons
+// Background
+// Tutorial
 // 
 // Scott Sia:
+// Background
+// Tutorial
 //
 // Nicholas:
 // Credits

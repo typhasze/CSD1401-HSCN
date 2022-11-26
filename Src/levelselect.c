@@ -3,7 +3,7 @@
 // Code for level select screen of the game
 //
 // authors:		 Hafiz
-// contributors: 
+// contributors: Clement Chua
 //
 // 
 //---------------------------------------------------------
@@ -50,7 +50,6 @@ void Level_Select_Update()
 		//Checks for Play button clicked to run the carlevel state
 		if (IsAreaClicked(halfX - 400, halfY-150, (float)CP_Image_GetWidth(Level1) / 1.5f, (float)CP_Image_GetHeight(Level1) / 1.5f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 1;
-			printf("%d", level_selector);
 			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);
 		}
 
@@ -60,8 +59,7 @@ void Level_Select_Update()
 	if (CP_Input_MouseClicked()) {
 		if (IsAreaClicked(halfX, halfY-150, (float)CP_Image_GetWidth(Level2) / 1.5f, (float)CP_Image_GetHeight(Level2) / 1.5f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 2;
-			printf("%d", level_selector);
-			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
+			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);
 		}
 
 	}
@@ -71,8 +69,7 @@ void Level_Select_Update()
 		//if (boxClick = IsAreaClicked(halfX + 400, halfY, 300.0f, 100.0f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 		if (IsAreaClicked(halfX + 400, halfY- 150, (float)CP_Image_GetWidth(Level3) / 1.5f, (float)CP_Image_GetHeight(Level3) / 1.5f, CP_Input_GetMouseX(), CP_Input_GetMouseY())) {
 			level_selector = 3;
-		//printf("%d", level_selector);
-			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);// PLS CHANGE
+			CP_Engine_SetNextGameState(Game_Level_Init, Game_Level_Update, Game_Level_Exit);
 		}
 	}
 
