@@ -1,3 +1,23 @@
+//---------------------------------------------------------
+// mainmenu.c
+// Code for the main menu of the game
+//
+// authors:		 Hafiz
+// contributors: Clement Chua, Scott Sia, Nicholas Theong
+//
+// Hafiz:
+// -Everything
+// 
+// Clement: 
+// 
+// Scott Sia:
+//
+// Nicholas:
+// Credits
+// 
+//---------------------------------------------------------
+// 
+// Copyright(c) 2022 DigiPen Institute of Technology
 #include "cprocessing.h"
 #include "mainmenu.h"
 #include "splashscreen.h"

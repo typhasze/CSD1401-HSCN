@@ -1,3 +1,14 @@
+//---------------------------------------------------------
+// animations.c
+// Code for animations in the game
+//
+// authors:		 Hafiz
+// contributors: 
+//
+// 
+//---------------------------------------------------------
+// 
+// Copyright(c) 2022 DigiPen Institute of Technology
 #include "animations.h"
 #include <string.h>
 #include <stdlib.h>

@@ -1,3 +1,13 @@
+//---------------------------------------------------------
+// splashscreen.c
+// Code for the splashscreen of the game
+//
+// authors:		 Hafiz
+// contributors: 
+// 
+//---------------------------------------------------------
+// 
+// Copyright(c) 2022 DigiPen Institute of Technology
 #include "cprocessing.h"
 #include "splashscreen.h"
 #include "mainmenu.h"

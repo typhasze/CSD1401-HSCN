@@ -1,3 +1,35 @@
+//---------------------------------------------------------
+// gamelevel.c
+// Code for all levels of the game
+//
+// authors:		 Hafiz
+// contributors: Clement Chua, Scott Sia, Nicholas Theong
+//
+// Hafiz:
+// -Everything
+// 
+// Clement: 
+// -Power ups 
+// -Sound Logic
+// 
+// Scott Sia:
+// -Platform Placement 
+// -Player Movement
+// -Player Collision
+// -Level Design
+//
+// Nicholas:
+// -Spawning and Despawning of Orbs and Bombs
+// -Collision for Orbs and Bombs (collision with player and platform)
+// and what happens after collision
+// -Level Design
+// -Bombs Exploding
+// -Platform Placement
+// 
+//---------------------------------------------------------
+// 
+// Copyright(c) 2022 DigiPen Institute of Technology
+
 #include "cprocessing.h"
 #include "gamelevel.h"
 #include "splashscreen.h"
