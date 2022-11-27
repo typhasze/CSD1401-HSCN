@@ -5,6 +5,9 @@
 // authors:		 Hafiz
 // contributors: 
 // 
+//  Hafiz:
+//	Splashscreen
+// 
 //---------------------------------------------------------
 // 
 // Copyright(c) 2022 DigiPen Institute of Technology

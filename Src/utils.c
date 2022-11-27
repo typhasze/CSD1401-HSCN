@@ -10,6 +10,11 @@
 // -Circle collision with player
 // -Circle collision with platform 
 // 
+// Hafiz:
+// - Collision between player and platform.
+// - Mouse Click with Specified Area(Rectangle)
+// - Random Int Generation.
+// 
 //---------------------------------------------------------
 //
 // Copyright(c) 2022 DigiPen Institute of Technology
