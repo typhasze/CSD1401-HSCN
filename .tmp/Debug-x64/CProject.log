@@ -1,12 +1,9 @@
-﻿  animations.c
-  gamelevel.c
+﻿  gamelevel.c
   levelselect.c
-  main.c
   mainmenu.c
-  splashscreen.c
   utils.c
   Generating Code...
-  CProject.vcxproj -> C:\Users\stron\Documents\GitHub\CSD1401-HSCN\bin\Debug-x64\CProject.exe
+  CProject.vcxproj -> C:\Users\Scottsia\Documents\GitHub\CSD1401-HSCN\bin\Debug-x64\CProject.exe
   1 File(s) copied
   1 File(s) copied
   45 File(s) copied

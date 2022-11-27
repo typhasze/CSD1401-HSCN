@@ -3,7 +3,15 @@
 // Code for level select screen of the game
 //
 // authors:		 Hafiz
-// contributors: Clement Chua
+// contributors: Clement Chua, Scott Sia
+// 
+// 
+//  Scott Sia:
+// -Character creation
+// -Player Movement and Control
+// 
+// 
+// 
 //
 // 
 //---------------------------------------------------------
@@ -102,18 +110,20 @@ void Level_Select_Update()
 	//CP_Graphics_DrawRect(halfX, 720, 1280, 120, 255);
 	CP_Image_Draw(steps,halfX, 690, (float)CP_Image_GetWidth(steps), (float)CP_Image_GetHeight(steps) + 20, 255);
 
-
+	//player movement
 	float velocity = CP_System_GetDt() * 400;
 	float gravity = CP_System_GetDt() * 400;
 	static int jumpCounter = 1;
 	static float maxJump;
 	float jump = CP_System_GetDt() * 1400;
 
+	//Draw Character
 	if (BobDirection == FALSE) {
 		CP_Image_Draw(IBobR, (float)Bobx, (float)Boby, (float)CP_Image_GetWidth(IBobR), (float)CP_Image_GetHeight(IBobR), 255);
 	}
 	else { CP_Image_Draw(IBobL, (float)Bobx, (float)Boby, (float)CP_Image_GetWidth(IBobL), (float)CP_Image_GetHeight(IBobL), 255); }
 
+	//Move Left and Right
 	if (CP_Input_KeyDown(KEY_A)) {
 		Bobx -= velocity;
 		BobDirection = TRUE;
@@ -128,6 +138,7 @@ void Level_Select_Update()
 	if (Boby <= 620) {
 		Boby += gravity;
 	}
+	//Jumping
 	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCounter != 0) {
 		--jumpCounter;
 		maxJump = 175;

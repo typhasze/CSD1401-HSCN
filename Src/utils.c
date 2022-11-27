@@ -3,12 +3,15 @@
 // Code related to calculations, vectors and collisions
 //
 // authors:		 Hafiz
-// contributors: Clement Chua, Scott Sia, Nicholas Theong
+// contributors: Clement Chua,Nicholas Theong
 //
 //
 // Nicholas:
 // -Circle collision with player
 // -Circle collision with platform 
+// 
+//---------------------------------------------------------
+//
 // Copyright(c) 2022 DigiPen Institute of Technology
 #include "cprocessing.h"
 #include <math.h>

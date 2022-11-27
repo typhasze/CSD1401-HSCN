@@ -18,6 +18,7 @@
 // -Player Movement
 // -Player Collision
 // -Level Design
+// -Platform Movement
 //
 // Nicholas:
 // -Spawning and Despawning of Orbs and Bombs
@@ -101,7 +102,6 @@ void initializePlatform(int level) {
 	}
 	else if (level == 2) {
 		no_of_platforms = 5 + 1;
-		//Add More For More Levels
 		platformX[0] = 400, platformY[0] = CP_System_GetWindowHeight() - 50.0f, platformWidth[0] = CP_System_GetWindowWidth() - 780.f;
 		platformX[1] = 0, platformY[1] = CP_System_GetWindowHeight() - 200.0f, platformWidth[1] = CP_System_GetWindowWidth() - 780.f;
 		platformX[2] = 950, platformY[2] = CP_System_GetWindowHeight() - 200.0f, platformWidth[2] = CP_System_GetWindowWidth() - 1030.f;
@@ -231,7 +231,7 @@ void Game_Level_Exit() {
 
 //rendering createPlatformXY();
 void drawPlatform() {
-	//Test Platform Appearing/Dissapearing
+	//Platform Appearing/Dissapearing
 	static float alpha = 255, toggle = 0;
 
 	if (toggle == 0) {
@@ -299,6 +299,7 @@ void HUD() {
 	CP_Graphics_DrawRectAdvanced(1280.f / 2, 20, x, 20, 0, 15);
 }
 
+//player collision logic with platform
 int playerPlatformCollision(void) {
 	for (int i = 0; i < no_of_platforms; i++) {
 		if (Boby + BobHeight > platformY[i] && Bobx + BobWidth > platformX[i] && Bobx < platformX[i] + platformWidth[i] && Boby < platformY[i] + platformHeight) {
@@ -317,12 +318,15 @@ void platformMovement() {
 	speed = CP_System_GetDt() * 200;
 	speed2 = CP_System_GetDt() * 300;
 	if (level_selector == 2) {
+		//move platform left and right with a fix limit
 		if (toggle == 0) {
 			platformX[5] -= speed;
+			// allow player to move along with platform when on platform
 			if (Boby >= platformY[5] - BobHeight - 1 && Boby <= platformY[5] - BobHeight - 1 && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
 				Bobx -= speed;
 			}
 			if (Boby >= platformY[5] - BobHeight - 1 && Boby <= platformY[5] - BobHeight - 1 && CP_Input_KeyDown(KEY_A) && (Bobx + BobWidth) >= platformX[5] && Bobx <= (platformX[5] + platformWidth[5])) {
+				// counter the speed of the platform with player
 				Bobx -= (position - speed);
 				BobDirection = TRUE;
 			}
@@ -444,9 +448,9 @@ void playerMovement() {
 
 	//For Player if not jumping and in air
 	int collidedPlatform = -1;
+	//continuous velocity downwards
 	Boby += gravity;
 	collidedPlatform = playerPlatformCollision();
-	//printf("collision is %d", collidedPlatform);
 	if (collidedPlatform >= 0) {
 		Boby = platformY[collidedPlatform] - BobHeight - 1;
 		playeronground = 1;
@@ -454,10 +458,12 @@ void playerMovement() {
 	else { playeronground = 0;}
 	collidedPlatform = -1;
 
+	//player move left
 	if (CP_Input_KeyDown(KEY_A)) {
 		Bobx -= position;
 		BobDirection = TRUE;
-
+		
+		//check for collision 
 		collidedPlatform = playerPlatformCollision();
 		if (collidedPlatform >= 0) {
 			Bobx = platformX[collidedPlatform] + platformWidth[collidedPlatform] + 1;
@@ -465,6 +471,7 @@ void playerMovement() {
 		collidedPlatform = -1;
 	}
 
+	//player move right
 	if (CP_Input_KeyDown(KEY_D)) {
 		Bobx += position;
 		BobDirection = FALSE;
@@ -478,7 +485,7 @@ void playerMovement() {
 
 	//Jumping
 	if (CP_Input_KeyTriggered(KEY_SPACE) && jumpCounter != 0) {
-		//particleEffect(Bobx, Boby, "Jump!");
+		//set a jump counter such that player can only jump twice
 		--jumpCounter;
 		//Boby -= jump;
 		maxJump = maxJumpHeight;
@@ -487,8 +494,6 @@ void playerMovement() {
 	if (playeronground) {
 		jumpCounter = 1;
 	}
-	//Jump CD Decrement every deltaTime
-	//jumpCD -= (jumpCD >= 0) ? CP_System_GetDt() : jumpCD;
 	maxJump = (Boby <= 10) ? 0 : maxJump;	 //To stop at ceiling
 	if (maxJump > 0) {
 		if (playerPlatformCollision() == 1) {
@@ -496,6 +501,7 @@ void playerMovement() {
 		}
 		else {
 			Boby -= jump;
+			//Detect collision with platform when jumping
 			collidedPlatform = playerPlatformCollision();
 			if (collidedPlatform >= 0) {
 				Boby = platformY[collidedPlatform] + platformHeight + 1;
