@@ -6,7 +6,12 @@
 // contributors: Clement Chua, Scott Sia, Nicholas Theong
 //
 // Hafiz:
-// -Everything
+// -Score/Bonus Multiplier
+// -User Interface
+// -Visual Indications (Game timer start, powerups indicators)
+// -Level Ratings
+// -Clear/Fail/Pause Menu
+// -Everything (helping with Integration)
 // 
 // Clement: 
 // -Chest Placement

@@ -3,7 +3,7 @@
 // Code for level select screen of the game
 //
 // authors:		Clement Chua
-// contributors: Scott Sia, Hafiz
+// contributors: Scott Sia
 // 
 // 
 //  Scott Sia:
@@ -13,8 +13,6 @@
 //	Clement Chua:
 // -Buttons
 // -Background
-// 
-//
 // 
 //---------------------------------------------------------
 // 

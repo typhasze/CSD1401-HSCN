@@ -5,6 +5,9 @@
 // authors:		 Hafiz
 // contributors: 
 //
+//	Hafiz:
+// - Animations
+// - Effects (Glowing Characters) / Lose HP Effect
 // 
 //---------------------------------------------------------
 // 
@@ -46,19 +49,6 @@ void drawBob(float x, float y, bool BobDirection, bool BobImmune) {
 	(BobDirection == FALSE) ? CP_Image_Draw(Bob, x, y, (float)CP_Image_GetWidth(Bob), (float)CP_Image_GetHeight(Bob), 255)
 		: CP_Image_Draw(BobL, x, y, (float)CP_Image_GetWidth(Bob), (float)CP_Image_GetHeight(Bob), 255);
 	
-}
-
-
-void blastRadius(float x, float y) {
-	static float old_x, old_y;
-	if (y > 0) {
-		old_y = y;
-		old_x = x;
-	}
-	static float radius = 255;
-	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Graphics_DrawCircle(old_x, old_y, radius);
-
 }
 
 void lostHealth(int hp, int *p) {
