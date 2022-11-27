@@ -3,7 +3,7 @@
 // Code related to calculations, vectors and collisions
 //
 // authors:		 Hafiz
-// contributors: Clement Chua,Nicholas Theong
+// contributors: Nicholas Theong
 //
 //
 // Nicholas:

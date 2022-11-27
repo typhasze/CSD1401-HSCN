@@ -9,7 +9,8 @@
 // -Everything
 // 
 // Clement: 
-// -Power ups and chest collision
+// -Chest Placement
+// -Power ups and Chest Collision
 // -Sound Design
 // -Level Design
 // 

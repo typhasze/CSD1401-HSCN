@@ -2,15 +2,17 @@
 // levelselect.c
 // Code for level select screen of the game
 //
-// authors:		 Hafiz
-// contributors: Clement Chua, Scott Sia
+// authors:		Clement Chua
+// contributors: Scott Sia, Hafiz
 // 
 // 
 //  Scott Sia:
 // -Character creation
 // -Player Movement and Control
 // 
-// 
+//	Clement Chua:
+// -Buttons
+// -Background
 // 
 //
 // 

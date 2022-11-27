@@ -15,7 +15,7 @@
 // 
 // Scott Sia:
 // Background
-// Background BGM
+// BGM
 // Tutorial
 //
 // Nicholas:
